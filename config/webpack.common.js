@@ -7,8 +7,9 @@ module.exports = {
   output: {
     path: path.join(__dirname, '../dist'),
     filename: '[name]',
-    libraryTarget: 'umd',
     library: 'Litepicker',
+    libraryTarget: 'umd',
+    libraryExport: 'Litepicker',
     umdNamedDefine: true
   },
   module: {
