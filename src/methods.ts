@@ -157,6 +157,8 @@ Litepicker.prototype.setStartDate = function (date) {
     this.options.format,
     this.options.lang,
   );
+
+  this.updateInput();
 };
 
 Litepicker.prototype.setEndDate = function (date) {
@@ -176,11 +178,15 @@ Litepicker.prototype.setEndDate = function (date) {
       this.options.lang,
     );
   }
+
+  this.updateInput();
 };
 
 Litepicker.prototype.setDateRange = function (date1, date2) {
   this.setStartDate(date1);
   this.setEndDate(date2);
+
+  this.updateInput();
 
   if (typeof this.options.onSelect === 'function') {
     this.options.onSelect.call(this, this.getStartDate(), this.getEndDate());

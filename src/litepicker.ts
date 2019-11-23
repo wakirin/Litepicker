@@ -33,12 +33,20 @@ export class Litepicker extends Calendar {
 
     if (this.options.startDate) {
       if (this.options.singleMode || this.options.endDate) {
-        startValue = new DateTime(this.options.startDate);
+        startValue = new DateTime(
+          this.options.startDate,
+          this.options.format,
+          this.options.lang,
+        );
       }
     }
 
     if (startValue && this.options.endDate) {
-      endValue = new DateTime(this.options.endDate);
+      endValue = new DateTime(
+        this.options.endDate,
+        this.options.format,
+        this.options.lang,
+      );
     }
 
     if (startValue instanceof Date && !isNaN(startValue.getTime())) {
