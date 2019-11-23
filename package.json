@@ -16,7 +16,8 @@
     "date",
     "picker",
     "range",
-    ""
+    "lightweight",
+    "no-dependencies"
   ],
   "repository": {
     "type": "git",

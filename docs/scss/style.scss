@@ -210,7 +210,8 @@ input.apple-switch {
       }
     }
 
-    &.table-grid-events {
+    &.table-grid-events,
+    &.table-grid-methods {
       .table-grid-header,
       .table-grid-body {
         grid-template-columns: repeat(5, 1fr);
@@ -342,7 +343,8 @@ input.apple-switch {
       }
     }
 
-    .table-grid.table-grid-events {
+    .table-grid.table-grid-events,
+    .table-grid.table-grid-methods {
       .table-grid-header {
         display: none;
       }

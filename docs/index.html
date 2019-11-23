@@ -432,6 +432,102 @@
             </div>
           </div>
         </div>
+        <hr>
+
+        <div class="lead">
+          Methods
+        </div>
+
+        <div class="table-grid table-grid-methods">
+          <div class="table-grid-body">
+            <div class="header-cell">name</div>
+            <div class="header-cell">arguments</div>
+            <div class="header-cell option-description">description</div>
+
+            <div>show</div>
+            <div class="option-default">-</div>
+            <div class="option-description">
+              <p>Make the picker visible.</p>
+            </div>
+
+            <div>hide</div>
+            <div class="option-default">-</div>
+            <div class="option-description">
+              <p>Hide the picker.</p>
+            </div>
+
+            <div>getDate</div>
+            <div class="option-default">-</div>
+            <div class="option-description">
+              <p>Alias of <strong>getStartDate</strong>.</p>
+            </div>
+
+            <div>getStartDate</div>
+            <div class="option-default">-</div>
+            <div class="option-description">
+              <p>Return current start of date range as Date Object.</p>
+            </div>
+
+            <div>getEndDate</div>
+            <div class="option-default">-</div>
+            <div class="option-description">
+              <p>Return current end of date range as Date Object.</p>
+            </div>
+
+            <div>setDate</div>
+            <div class="option-default">date</div>
+            <div class="option-description">
+              <p>Set date when <strong>singleDate</strong> is true.</p>
+              <p>date is should be Date Object or Unix Timestamp (with milliseconds) or String (must be equal to option
+                <strong>format</strong>).</p>
+            </div>
+
+            <div>setDateRange</div>
+            <div class="option-default">date1, date2</div>
+            <div class="option-description">
+              <p>Set date range.</p>
+              <p>date1, date2 is should be Date Object or Unix Timestamp (with milliseconds) or String (must be equal to
+                option
+                <strong>format</strong>).</p>
+            </div>
+
+            <div>setLockDays</div>
+            <div class="option-default">array</div>
+            <div class="option-description">
+              <p>Set lock days.</p>
+              <p>See options <strong>lockDays</strong> for format information.</p>
+            </div>
+
+            <div>setBookedDays</div>
+            <div class="option-default">array</div>
+            <div class="option-description">
+              <p>Set booked days.</p>
+              <p>See options <strong>bookedDays</strong> for format information.</p>
+            </div>
+
+            <div>gotoDate</div>
+            <div class="option-default">date, idx?</div>
+            <div class="option-description">
+              <p>Set month by the date.</p>
+              <p>date is should be Date Object or Unix Timestamp (with milliseconds) or String (must be equal to option
+                <strong>format</strong>).</p>
+              <p>idx is required when option <strong>splitView</strong> is enabled.</p>
+            </div>
+
+            <div>setOptions</div>
+            <div class="option-default">Object</div>
+            <div class="option-description">
+              <p>Set new options to the picker.</p>
+              <p>Options <strong>element, elementEnd, parentEl</strong> cannot be changed.</p>
+            </div>
+
+            <div>destroy</div>
+            <div class="option-default">-</div>
+            <div class="option-description">
+              <p>Destroy the picker.</p>
+            </div>
+          </div>
+        </div>
       </div>
 
       <hr>
