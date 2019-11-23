@@ -1,0 +1,376 @@
+:root {
+  --litepickerMonthButton: #ecafd3 !important;
+  --litepickerMonthButtonHover: #f781c3 !important;
+  --litepickerDayColorHover: #f68e6b !important;
+  --litepickerDayIsInRange: #f9dda5 !important;
+  --litepickerDayIsStartBg: #f68e6b !important;
+  --litepickerDayIsEndBg: #f68e6b !important;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.5;
+}
+hr {
+  border-top: 1px solid #fcc463;
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+code,
+.code {
+  color: #f44336;
+  background-color: #f1f1f1;
+  padding: 3px;
+  border-radius: 5px;
+  white-space: pre-line;
+}
+button.calendar-icon {
+  background-image: url(../images/calendar-icon.svg);
+  width: 22px;
+  height: 22px;
+  background-size: 100%;
+  border: 0;
+}
+.text-center {
+  text-align: center;
+}
+.text-right {
+  text-align: right;
+}
+.lead {
+  font-size: 2em;
+  margin-bottom: 1em;
+}
+
+.bg {
+  display: inline-block;
+  z-index: -20;
+  line-height: 0;
+  opacity: 1;
+  background-color: rgb(253, 251, 250);
+  background-image: url(../images/bg.png);
+  background-size: cover;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  background-position: center top;
+  background-attachment: fixed;
+}
+.bg:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.07;
+  background-color: rgb(255, 255, 255);
+}
+.wrapper {
+  margin: 3em 6em;
+
+  > .container {
+    padding: 25px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 0 15px 0 #ddd;
+  }
+}
+
+.header {
+  text-align: center;
+}
+.header h1 {
+  font-size: 3em;
+  margin-top: 0;
+  margin-bottom: 0.5em;
+  letter-spacing: 0.1em;
+}
+.header p {
+  font-size: 1.5em;
+}
+
+#demo {
+  display: flex;
+
+  #demo-options {
+    width: 400px;
+
+    h3 {
+      margin: 0;
+    }
+
+    #picker-options {
+      padding-left: 25px;
+
+      .picker-option-item {
+        display: flex;
+        margin-bottom: 5px;
+
+        > label {
+          font-weight: bold;
+          margin-right: 10px;
+          margin-top: 2px;
+        }
+
+        > div {
+          flex: 1;
+          display: flex;
+          justify-content: space-between;
+
+          .user-value-container {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+          }
+        }
+
+        .user-value-container input[type="number"] {
+          width: 50px;
+          border-radius: 5px;
+          border: 1px solid #ddd;
+          padding: 2px 5px;
+        }
+      }
+    }
+  }
+
+  #demo-preview {
+    flex: 1;
+    text-align: center;
+
+    #demo-preview-sticky {
+      position: sticky;
+      top: 25px;
+    }
+  }
+}
+
+#litepicker {
+  border-radius: 6px;
+  width: 500px;
+  border: 1px solid #ddd;
+  font-size: 1.5em;
+  text-align: center;
+}
+
+input.apple-switch {
+  position: relative;
+  -webkit-appearance: none;
+  outline: none;
+  width: 45px;
+  height: 20px;
+  background-color: #fff;
+  border: 1px solid #d9dadc;
+  border-radius: 25px;
+  box-shadow: inset -24px 0 0 0 #9e9e9e;
+
+  &:disabled {
+    background-color: #ddd;
+  }
+
+  &:after {
+    content: "";
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    background: transparent;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
+  }
+
+  &:checked {
+    box-shadow: inset 24px 0 0 0 #4cd964;
+    border-color: #4cd964;
+  }
+
+  &:after {
+    left: 22px;
+    box-shadow: -2px 2px 3px rgba(0, 0, 0, 0.05);
+  }
+}
+
+#options-description {
+  margin-top: 1em;
+
+  .lead {
+    margin-bottom: 0.5em;
+  }
+
+  .table-grid {
+    &.table-grid-options {
+      .table-grid-header,
+      .table-grid-body {
+        grid-template-columns: repeat(6, 1fr);
+      }
+    }
+
+    &.table-grid-events {
+      .table-grid-header,
+      .table-grid-body {
+        grid-template-columns: repeat(5, 1fr);
+      }
+    }
+    .table-grid-header,
+    .table-grid-body {
+      display: grid;
+
+      > div {
+        padding: 15px;
+        border-bottom: 1px solid #f1f1f1;
+        border-bottom: 1px solid #f1f1f1;
+        border-right: 1px solid #f1f1f1;
+
+        > p:first-child {
+          margin-top: 0;
+        }
+        
+        > p:last-child {
+          margin-bottom: 0;
+        }
+
+        &:last-child {
+          border-right: none;
+        }
+      }
+
+      .header-cell {
+        font-weight: bold;
+        text-align: center;
+      }
+    }
+
+    .table-grid-header {
+      > div {
+        font-weight: bold;
+        text-align: center;
+      }
+    }
+
+    .option {
+      &-type {
+        text-align: center;
+      }
+      &-default {
+        text-align: center;
+        font-family: monospace;
+      }
+      &-is-object {
+        white-space: pre-line;
+        text-align: left;
+        line-height: 1;
+      }
+      &-description {
+        grid-column: span 3;
+      }
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border-spacing: 0;
+
+      th,
+      td {
+        border: 1px solid #bdbdbd;
+        padding: 3px 10px;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .wrapper {
+    margin: 0;
+
+    > .container {
+      border-radius: 0;
+    }
+  }
+
+  #demo {
+    flex-direction: column-reverse;
+
+    #demo-options {
+      width: 100%;
+    }
+
+    #demo-preview {
+      margin-bottom: 2em;
+    }
+
+    #litepicker {
+      width: 100%;
+    }
+  }
+
+  #options-description {
+    .table-grid.table-grid-options {
+      .table-grid-header {
+        display: none;
+      }
+
+      .table-grid-body {
+        grid-template-columns: auto;
+
+        .header-cell {
+          display: none;
+        }
+
+        > div {
+          border-bottom: none;
+          border-right: none;
+          text-align: left;
+        }
+
+        > div:nth-child(4n) {
+          border-bottom: 1px solid #f1f1f1;
+        }
+
+        > div:nth-child(4n + 1) {
+          font-weight: bold;
+        }
+
+        .option-description {
+          grid-column: auto / auto;
+        }
+      }
+    }
+
+    .table-grid.table-grid-events {
+      .table-grid-header {
+        display: none;
+      }
+      .table-grid-body {
+        grid-template-columns: auto;
+
+        .header-cell {
+          display: none;
+        }
+
+        > div {
+          border-bottom: none;
+          border-right: none;
+          text-align: left;
+        }
+
+        > div:nth-child(3n) {
+          border-bottom: 1px solid #f1f1f1;
+        }
+
+        > div:nth-child(3n + 1) {
+          font-weight: bold;
+        }
+
+        .option-description {
+          grid-column: auto / auto;
+        }
+      }
+    }
+  }
+}

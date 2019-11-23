@@ -1,0 +1,569 @@
+import { Calendar } from './calendar';
+import { DateTime } from './datetime';
+import * as style from './scss/main.scss';
+
+export class Litepicker extends Calendar {
+  protected triggerElement: null;
+
+  constructor(options) {
+    super();
+
+    this.options = { ...this.options, ...options };
+
+    if ((this.options.allowRepick && this.options.inlineMode)
+      || !this.options.elementEnd) {
+      this.options.allowRepick = false;
+    }
+
+    if (this.options.lockDays.length) {
+      this.options.lockDays = DateTime.convertArray(
+        this.options.lockDays,
+        this.options.lockDaysFormat,
+      );
+    }
+
+    if (this.options.bookedDays.length) {
+      this.options.bookedDays = DateTime.convertArray(
+        this.options.bookedDays,
+        this.options.bookedDaysFormat,
+      );
+    }
+
+    let [startValue, endValue] = this.parseInput();
+
+    if (this.options.startDate) {
+      if (this.options.singleMode || this.options.endDate) {
+        startValue = new DateTime(this.options.startDate);
+      }
+    }
+
+    if (startValue && this.options.endDate) {
+      endValue = new DateTime(this.options.endDate);
+    }
+
+    if (startValue instanceof Date && !isNaN(startValue.getTime())) {
+      this.options.startDate = new DateTime(
+        startValue,
+        this.options.format,
+        this.options.lang,
+      );
+    }
+
+    if (this.options.startDate && endValue instanceof Date && !isNaN(endValue.getTime())) {
+      this.options.endDate = new DateTime(
+        endValue,
+        this.options.format,
+        this.options.lang,
+      );
+    }
+
+    for (let idx = 0; idx < this.options.numberOfMonths; idx += 1) {
+      const date = this.options.startDate
+        ? this.options.startDate.clone()
+        : new DateTime();
+      date.setMonth(date.getMonth() + idx);
+      this.calendars[idx] = date;
+    }
+
+    this.onInit();
+  }
+
+  private onInit() {
+    document.addEventListener('click', e => this.onClick(e), true);
+
+    this.picker = document.createElement('div');
+    this.picker.className = style.litepicker;
+    this.picker.style.display = 'none';
+    this.picker.addEventListener('keydown', e => this.onKeyDown(e), true);
+    this.picker.addEventListener('mouseenter', e => this.onMouseEnter(e), true);
+    this.picker.addEventListener('mouseleave', e => this.onMouseLeave(e), false);
+    if (this.options.element instanceof HTMLElement) {
+      this.options.element.addEventListener('change', e => this.onInput(e), true);
+    }
+    if (this.options.elementEnd instanceof HTMLElement) {
+      this.options.elementEnd.addEventListener('change', e => this.onInput(e), true);
+    }
+
+    this.render();
+
+    if (this.options.parentEl) {
+      if (this.options.parentEl instanceof HTMLElement) {
+        this.options.parentEl.appendChild(this.picker);
+      } else {
+        document.querySelector(this.options.parentEl).appendChild(this.picker);
+      }
+    } else {
+      if (this.options.inlineMode) {
+        if (this.options.element instanceof HTMLInputElement) {
+          this.options.element.parentNode.appendChild(this.picker);
+        } else {
+          this.options.element.appendChild(this.picker);
+        }
+      } else {
+        document.body.appendChild(this.picker);
+      }
+    }
+
+    if (this.options.inlineMode) {
+      this.show();
+    }
+
+    this.updateInput();
+  }
+
+  private parseInput() {
+    if (this.options.elementEnd) {
+      if (this.options.element instanceof HTMLElement
+        && this.options.element.value.length
+        && this.options.elementEnd instanceof HTMLElement
+        && this.options.elementEnd.value.length) {
+        return [
+          new DateTime(this.options.element.value),
+          new DateTime(this.options.elementEnd.value),
+        ];
+      }
+    } else if (this.options.singleMode) {
+      if (this.options.element instanceof HTMLElement
+        && this.options.element.value.length) {
+        return [
+          new DateTime(this.options.element.value),
+        ];
+      }
+    } else if (/\s\-\s/.test(this.options.element.value)) {
+      const values = this.options.element.value.split(' - ');
+      if (values.length === 2) {
+        return [
+          new DateTime(values[0]),
+          new DateTime(values[1]),
+        ];
+      }
+    }
+
+    return [];
+  }
+
+  private updateInput() {
+    if (!(this.options.element instanceof HTMLInputElement)) return;
+
+    if (this.options.singleMode && this.options.startDate) {
+      this.options.element.value = this.options.startDate
+        .format(this.options.format, this.options.lang);
+    } else if (!this.options.singleMode && this.options.startDate && this.options.endDate) {
+      const startValue = this.options.startDate
+        .format(this.options.format, this.options.lang);
+      const endValue = this.options.endDate
+        .format(this.options.format, this.options.lang);
+
+      if (this.options.elementEnd) {
+        this.options.element.value = startValue;
+        this.options.elementEnd.value = endValue;
+      } else {
+        this.options.element.value = `${startValue} - ${endValue}`;
+      }
+    }
+  }
+
+  private isSamePicker(el) {
+    const picker = el.closest(`.${style.litepicker}`);
+
+    return picker === this.picker;
+  }
+
+  private shouldShown(el) {
+    return el === this.options.element
+      || (this.options.elementEnd && el === this.options.elementEnd);
+  }
+
+  private shouldResetDatePicked() {
+    return this.options.singleMode || this.datePicked.length === 2;
+  }
+
+  private shouldSwapDatePicked() {
+    return this.datePicked.length === 2
+      && this.datePicked[0].getTime() > this.datePicked[1].getTime();
+  }
+
+  private shouldCheckLockDays() {
+    return this.options.disallowLockDaysInRange
+      && this.options.lockDays.length
+      && this.datePicked.length === 2;
+  }
+
+  private onClick(e) {
+    const target = e.target as HTMLElement;
+
+    if (!target || !this.picker) {
+      return;
+    }
+
+    // Click on element
+    if (this.shouldShown(target)) {
+      this.show(target);
+      return;
+    }
+
+    // Click outside picker
+    if (!target.closest(`.${style.litepicker}`)) {
+      this.hide();
+      return;
+    }
+
+    // Click on date
+    if (target.classList.contains(style.dayItem)) {
+      e.preventDefault();
+
+      if (!this.isSamePicker(target)) {
+        return;
+      }
+
+      if (target.classList.contains(style.isLocked)) {
+        return;
+      }
+
+      if (target.classList.contains(style.isBooked)) {
+        return;
+      }
+
+      if (this.shouldResetDatePicked()) {
+        this.datePicked.length = 0;
+      }
+
+      this.datePicked[this.datePicked.length] = new DateTime(target.dataset.time);
+
+      if (this.shouldSwapDatePicked()) {
+        const tempDate = this.datePicked[1].clone();
+        this.datePicked[1] = this.datePicked[0].clone();
+        this.datePicked[0] = tempDate.clone();
+      }
+
+      if (this.shouldCheckLockDays()) {
+        const locked = this.options.lockDays
+          .filter((d) => {
+            if (d instanceof Array) {
+              return d[0].isBetween(this.datePicked[0], this.datePicked[1])
+                || d[1].isBetween(this.datePicked[0], this.datePicked[1]);
+            }
+
+            return d.isBetween(this.datePicked[0], this.datePicked[1]);
+          }).length;
+
+        if (locked) {
+          this.datePicked.length = 0;
+
+          if (typeof this.options.onError === 'function') {
+            this.options.onError.call(this, 'INVALID_RANGE');
+          }
+        }
+      }
+
+      this.render();
+
+      if (this.options.autoApply) {
+        if (this.options.singleMode && this.datePicked.length) {
+          this.setDate(this.datePicked[0]);
+          this.hide();
+        } else if (!this.options.singleMode && this.datePicked.length === 2) {
+          this.setDateRange(this.datePicked[0], this.datePicked[1]);
+          this.hide();
+        }
+      }
+      return;
+    }
+
+    // Click on button previous month
+    if (target.classList.contains(style.buttonPreviousMonth)) {
+      e.preventDefault();
+
+      if (!this.isSamePicker(target)) {
+        return;
+      }
+
+      let idx = 0;
+      let numberOfMonths = this.options.numberOfMonths;
+
+      if (this.options.splitView) {
+        const monthItem = target.closest(`.${style.monthItem}`);
+        idx = [...monthItem.parentNode.childNodes].findIndex(el => el === monthItem);
+        numberOfMonths = 1;
+      }
+
+      this.calendars[idx].setMonth(this.calendars[idx].getMonth() - numberOfMonths);
+      this.gotoDate(this.calendars[idx], idx);
+
+      if (typeof this.options.onChangeMonth === 'function') {
+        this.options.onChangeMonth.call(this, this.calendars[idx], idx);
+      }
+      return;
+    }
+
+    // Click on button next month
+    if (target.classList.contains(style.buttonNextMonth)) {
+      e.preventDefault();
+
+      if (!this.isSamePicker(target)) {
+        return;
+      }
+
+      let idx = 0;
+      let numberOfMonths = this.options.numberOfMonths;
+
+      if (this.options.splitView) {
+        const monthItem = target.closest(`.${style.monthItem}`);
+        idx = [...monthItem.parentNode.childNodes].findIndex(el => el === monthItem);
+        numberOfMonths = 1;
+      }
+
+      this.calendars[idx].setMonth(this.calendars[idx].getMonth() + numberOfMonths);
+      this.gotoDate(this.calendars[idx], idx);
+
+      if (typeof this.options.onChangeMonth === 'function') {
+        this.options.onChangeMonth.call(this, this.calendars[idx], idx);
+      }
+      return;
+    }
+
+    // Click on button cancel
+    if (target.classList.contains(style.buttonCancel)) {
+      e.preventDefault();
+
+      if (!this.isSamePicker(target)) {
+        return;
+      }
+
+      this.hide();
+    }
+
+    // Click on button apple
+    if (target.classList.contains(style.buttonApply)) {
+      e.preventDefault();
+
+      if (!this.isSamePicker(target)) {
+        return;
+      }
+
+      if (this.options.singleMode && this.datePicked.length) {
+        this.setDate(this.datePicked[0]);
+      } else if (!this.options.singleMode && this.datePicked.length === 2) {
+        this.setDateRange(this.datePicked[0], this.datePicked[1]);
+      }
+
+      this.hide();
+    }
+  }
+
+  private showTooltip(element, text) {
+    const tooltip = this.picker.querySelector(`.${style.containerTooltip}`) as HTMLElement;
+    tooltip.style.visibility = 'visible';
+    tooltip.innerHTML = text;
+
+    const pickerBCR = this.picker.getBoundingClientRect();
+    const tooltipBCR = tooltip.getBoundingClientRect();
+    const dayBCR = element.getBoundingClientRect();
+    let top = dayBCR.top;
+    let left = dayBCR.left;
+
+    if (this.options.inlineMode && this.options.parentEl) {
+      const parentBCR = (this.picker.parentNode as HTMLElement).getBoundingClientRect();
+      top -= parentBCR.top;
+      left -= parentBCR.left;
+    } else {
+      top -= pickerBCR.top;
+      left -= pickerBCR.left;
+    }
+
+    // let top = dayR.top - pickerR.top - tooltipR.height;
+    // let left = (dayR.left - pickerR.left) - (tooltipR.width / 2) + (dayR.width / 2);
+
+    top -= tooltipBCR.height;
+    left -= tooltipBCR.width / 2;
+    left += dayBCR.width / 2;
+
+    tooltip.style.top = `${top}px`;
+    tooltip.style.left = `${left}px`;
+  }
+
+  private hideTooltip() {
+    const tooltip = this.picker.querySelector(`.${style.containerTooltip}`) as HTMLElement;
+    tooltip.style.visibility = 'hidden';
+  }
+
+  private shouldAllowMouseEnter(el) {
+    return !this.options.singleMode
+      && el.classList.contains(style.dayItem)
+      && !el.classList.contains(style.isLocked)
+      && !el.classList.contains(style.isBooked);
+  }
+
+  private shouldAllowRepick() {
+    return this.options.elementEnd
+      && this.options.allowRepick
+      && this.options.startDate
+      && this.options.endDate;
+  }
+
+  private onMouseEnter(event) {
+    const target = event.target as HTMLElement;
+
+    if (this.shouldAllowMouseEnter(target)) {
+      if (this.shouldAllowRepick()) {
+        if (this.triggerElement === this.options.element) {
+          this.datePicked[0] = this.options.endDate.clone();
+        } else {
+          this.datePicked[0] = this.options.startDate.clone();
+        }
+      }
+
+      if (this.datePicked.length !== 1) {
+        return;
+      }
+
+      const startDateElement = this.picker
+        .querySelector(`.${style.dayItem}[data-time="${this.datePicked[0].getTime()}"]`);
+      let date1 = this.datePicked[0].clone();
+      let date2 = new DateTime(target.dataset.time);
+      let isFlipped = false;
+
+      if (date1.getTime() > date2.getTime()) {
+        const tempDate = date1.clone();
+        date1 = date2.clone();
+        date2 = tempDate.clone();
+        isFlipped = true;
+      }
+
+      [...this.picker.querySelectorAll(`.${style.dayItem}`)].forEach((d: HTMLElement) => {
+        const date = new DateTime(d.dataset.time);
+        const day = this.renderDay(date);
+
+        if (date.isBetween(date1, date2)) {
+          day.classList.add(style.isInRange);
+        }
+
+        d.className = day.className;
+      });
+
+      target.classList.add(style.isEndDate);
+
+      if (isFlipped) {
+        if (startDateElement) {
+          startDateElement.classList.add(style.isFlipped);
+        }
+
+        target.classList.add(style.isFlipped);
+      } else {
+        if (startDateElement) {
+          startDateElement.classList.remove(style.isFlipped);
+        }
+        target.classList.remove(style.isFlipped);
+      }
+
+      if (this.options.showTooltip) {
+        const pr = new Intl.PluralRules(this.options.lang);
+        let days = date2.diff(date1, 'day');
+
+        if (!this.options.hotelMode) {
+          days += 1;
+        }
+
+        if (days > 0) {
+          const pluralName = pr.select(days);
+          const pluralText = this.options.tooltipText[pluralName]
+            ? this.options.tooltipText[pluralName]
+            : `[${pluralName}]`;
+          const text = `${days} ${pluralText}`;
+
+          this.showTooltip(target, text);
+        } else {
+          this.hideTooltip();
+        }
+      }
+    }
+  }
+
+  private onMouseLeave(event) {
+    const target = event.target as any;
+
+    if (!this.options.allowRepick) {
+      return;
+    }
+
+    this.datePicked.length = 0;
+    this.render();
+  }
+
+  private onKeyDown(event) {
+    const target = event.target as any;
+
+    switch (event.code) {
+      case 'ArrowUp':
+        if (target.classList.contains(style.dayItem)) {
+          event.preventDefault();
+
+          const idx = [...target.parentNode.childNodes].findIndex(el => el === target) - 7;
+
+          if (idx > 0 && target.parentNode.childNodes[idx]) {
+            target.parentNode.childNodes[idx].focus();
+          }
+        }
+        break;
+
+      case 'ArrowLeft':
+        if (target.classList.contains(style.dayItem) && target.previousSibling) {
+          event.preventDefault();
+
+          target.previousSibling.focus();
+        }
+        break;
+
+      case 'ArrowRight':
+        if (target.classList.contains(style.dayItem) && target.nextSibling) {
+          event.preventDefault();
+
+          target.nextSibling.focus();
+        }
+        break;
+
+      case 'ArrowDown':
+        if (target.classList.contains(style.dayItem)) {
+          event.preventDefault();
+
+          const idx = [...target.parentNode.childNodes].findIndex(el => el === target) + 7;
+
+          if (idx > 0 && target.parentNode.childNodes[idx]) {
+            target.parentNode.childNodes[idx].focus();
+          }
+        }
+        break;
+    }
+  }
+
+  private onInput(event) {
+    let [startValue, endValue] = this.parseInput();
+
+    if (startValue instanceof Date && !isNaN(startValue.getTime())
+      && endValue instanceof Date && !isNaN(endValue.getTime())) {
+
+      if (startValue.getTime() > endValue.getTime()) {
+        const tempDate = startValue.clone();
+        startValue = endValue.clone();
+        endValue = tempDate.clone();
+      }
+
+      this.options.startDate = new DateTime(
+        startValue,
+        this.options.format,
+        this.options.lang,
+      );
+
+      if (this.options.startDate) {
+        this.options.endDate = new DateTime(
+          endValue,
+          this.options.format,
+          this.options.lang,
+        );
+      }
+
+      this.updateInput();
+      this.render();
+    }
+  }
+}

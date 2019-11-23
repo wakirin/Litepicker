@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0">
+  <meta name="description"
+    content="Date range picker - lightweight, no dependencies. Date Range Picker can be attached to input element to pop up one or more calendars for selecting dates.">
+  <title>Litepicker - Date range picker - lightweight, no dependencies</title>
+  <link href="css/style.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div class="bg"></div>
+  <div class="wrapper">
+    <div class="container">
+      <div class="header">
+        <h1>Litepicker</h1>
+        <p>Date range picker - lightweight, no dependencies</p>
+        <div>
+          <a class="github-button" href="https://github.com/wakirin/litepicker" data-icon="octicon-star"
+            data-size="large" data-show-count="true" aria-label="Star wakirin/litepicker on GitHub">Star</a>
+
+          <a class="github-button" href="https://github.com/wakirin/litepicker/fork" data-icon="octicon-repo-forked"
+            data-size="large" data-show-count="true" aria-label="Fork wakirin/litepicker on GitHub">Fork</a>
+
+          <a class="github-button" href="https://github.com/wakirin/litepicker/" data-size="large"
+            aria-label="Go to wakirin/litepicker">Github</a>
+        </div>
+      </div>
+      <hr>
+
+      <div id="demo">
+        <div id="demo-options">
+          <h3>options: {</h3>
+          <div id="picker-options"></div>
+          <h3>}</h3>
+          <p>See all options below.</p>
+        </div>
+        <div id="demo-preview">
+          <div id="demo-preview-sticky">
+            <input id="litepicker" />
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="lead">
+        Installation
+      </div>
+      <div>
+        <code>npm i litepicker</code>
+      </div>
+
+      <hr>
+      <div class="lead">
+        Usage
+      </div>
+      <div>
+        <p>Litepicker can be bound to HTML element:</p>
+        <p><code>&lt;input type="text" id="litepicker"&gt;</code></p>
+        <p>Include Litepicker script to the end of your document:</p>
+        <div class="code">
+          &lt;script src="litepicker.js"&gt;&lt;/script&gt;
+          &lt;script&gt;
+          var picker = new Litepicker({ element: document.getElementById('litepicker') });
+          &lt;/script&gt;
+        </div>
+      </div>
+
+      <hr>
+
+      <div id="options-description">
+        <div class="lead">
+          Options
+        </div>
+
+        <div class="table-grid table-grid-options">
+          <div class="table-grid-body">
+            <div class="header-cell">option</div>
+            <div class="header-cell">type</div>
+            <div class="header-cell">default</div>
+            <div class="header-cell option-description">description</div>
+
+            <div>element (required)</div>
+            <div class="option-type">HTMLElement</div>
+            <div class="option-default">null</div>
+            <div class="option-description">Bind the datepicker to a element. Also is possible to bind to any element
+              (not input) for example you need inline calendar.</div>
+
+            <div>elementEnd</div>
+            <div class="option-type">HTMLInputElement</div>
+            <div class="option-default">null</div>
+            <div class="option-description">Bind the datepicker to a element for end date.</div>
+
+            <div>parentEl</div>
+            <div class="option-type">HTMLElement</div>
+            <div class="option-default">null</div>
+            <div class="option-description">Bind the datepicker to a element for end date.</div>
+
+            <div>firstDay</div>
+            <div class="option-type">Number</div>
+            <div class="option-default">1</div>
+            <div class="option-description">Day of start week. (0 - Sunday, 1 - Monday, 2 - Tuesday, etc...)</div>
+
+            <div>format</div>
+            <div class="option-type">String</div>
+            <div class="option-default">YYYY-MM-DD</div>
+            <div class="option-description">
+              <p>The default output format.</p>
+              <p>Allowed formats:</p>
+              <table>
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>Token</th>
+                    <th>Output</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="text-right"><strong>Day of Month</strong></td>
+                    <td>D</td>
+                    <td>1 2 ... 30 31</td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td>DD</td>
+                    <td>01 02 ... 30 31</td>
+                  </tr>
+                  <tr>
+                    <td class="text-right"><strong>Month</strong></td>
+                    <td>M</td>
+                    <td>1 2 ... 11 12</td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td>MM</td>
+                    <td>01 02 ... 11 12</td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td>MMM</td>
+                    <td>Jan Feb ... Nov Dec</td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td>MMMM</td>
+                    <td>January February ... November December</td>
+                  </tr>
+                  <tr>
+                    <td class="text-right"><strong>Year</strong></td>
+                    <td>YY</td>
+                    <td>70 71 ... 29 30</td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td>YYYY</td>
+                    <td>1970 1971 ... 2029 2030</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div>lang</div>
+            <div class="option-type">String</div>
+            <div class="option-default">en-US</div>
+            <div class="option-description">Language. This option affect to day names, month names via <a
+                href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleString"
+                target="_blank">Date.prototype.toLocaleString()</a>
+              and also affect to plural rules via <a
+                href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/PluralRules"
+                target="_blank">Intl.PluralRules</a>.
+            </div>
+
+            <div>numberOfMonths</div>
+            <div class="option-type">Number</div>
+            <div class="option-default">1</div>
+            <div class="option-description">Number of visible months.</div>
+
+            <div>numberOfColumns</div>
+            <div class="option-type">Number</div>
+            <div class="option-default">1</div>
+            <div class="option-description">Number of columns months.</div>
+
+            <div>startDate</div>
+            <div class="option-type">Date|Number|String</div>
+            <div class="option-default">null</div>
+            <div class="option-description">
+              <p>Preselect date. If option <strong>singleMode</strong> is disabled then <strong>endDate</strong> must be
+                set too.</p>
+              <p>Date Object or Unix Timestamp (with milliseconds) or String (must be equal to option
+                <strong>format</strong>).</p>
+            </div>
+
+            <div>endDate</div>
+            <div class="option-type">Date|Number|String</div>
+            <div class="option-default">null</div>
+            <div class="option-description">
+              <p>Preselect end date. Required <strong>startDate</strong>.</p>
+              <p>Date Object or Unix Timestamp (with milliseconds) or String (must be equal to option
+                <strong>format</strong>).</p>
+            </div>
+
+            <div>zIndex</div>
+            <div class="option-type">Number</div>
+            <div class="option-default">9999</div>
+            <div class="option-description">Control zIndex of the picker element.</div>
+
+            <div>minDate</div>
+            <div class="option-type">Date|Number|String</div>
+            <div class="option-default">null</div>
+            <div class="option-description">
+              <p>The minimum/earliest date that can be selected.</p>
+              <p>Date Object or Unix Timestamp (with milliseconds) or String (must be equal to option
+                <strong>format</strong>).</p>
+            </div>
+
+            <div>maxDate</div>
+            <div class="option-type">Date|Number|String</div>
+            <div class="option-default">null</div>
+            <div class="option-description">
+              <p>The maximum/latest date that can be selected.</p>
+              <p>Date Object or Unix Timestamp (with milliseconds) or String (must be equal to option
+                <strong>format</strong>).</p>
+            </div>
+
+            <div>minDays</div>
+            <div class="option-type">Number</div>
+            <div class="option-default">null</div>
+            <div class="option-description">The minimum days of the selected range.</div>
+
+            <div>maxDays</div>
+            <div class="option-type">Number</div>
+            <div class="option-default">null</div>
+            <div class="option-description">The maximum days of the selected range.</div>
+
+            <div>selectForward</div>
+            <div class="option-type">Boolean</div>
+            <div class="option-default">false</div>
+            <div class="option-description">Select second date after the first selected date.</div>
+
+            <div>selectBackward</div>
+            <div class="option-type">Boolean</div>
+            <div class="option-default">false</div>
+            <div class="option-description">Select second date before the first selected date.</div>
+
+            <div>splitView</div>
+            <div class="option-type">Boolean</div>
+            <div class="option-default">false</div>
+            <div class="option-description">Enable the previous and the next button for each month.</div>
+
+            <div>inlineMode</div>
+            <div class="option-type">Boolean</div>
+            <div class="option-default">false</div>
+            <div class="option-description">Show calendar inline.</div>
+
+            <div>singleMode</div>
+            <div class="option-type">Boolean</div>
+            <div class="option-default">true</div>
+            <div class="option-description">Choose a single date instead of a date range.</div>
+
+            <div>autoApply</div>
+            <div class="option-type">Boolean</div>
+            <div class="option-default">true</div>
+            <div class="option-description">Hide the apply and cancel buttons, and automatically apply a new date range
+              as soon as two dates are clicked.</div>
+
+            <div>allowRepick</div>
+            <div class="option-type">Boolean</div>
+            <div class="option-default">false</div>
+            <div class="option-description">
+              <p>Required <strong>elementEnd</strong>.</p>
+              <p>If date range is already selected, then user can change only one of start date or end date (depends on
+                clicked field) instead of new date range.</p>
+            </div>
+
+            <div>showWeekNumbers</div>
+            <div class="option-type">Boolean</div>
+            <div class="option-default">false</div>
+            <div class="option-description">Show week numbers. Based on option <strong>firstDay</strong>.</div>
+
+            <div>showTooltip</div>
+            <div class="option-type">Boolean</div>
+            <div class="option-default">true</div>
+            <div class="option-description">Showing tooltip with how much days will be selected.</div>
+
+            <div>hotelMode</div>
+            <div class="option-type">Boolean</div>
+            <div class="option-default">false</div>
+            <div class="option-description">
+              <p>Tooltip will shown nights count instead of days.</p>
+              <p>Also required to edit option <strong>tooltipText</strong>.</p>
+            </div>
+
+            <div>disableWeekends</div>
+            <div class="option-type">Boolean</div>
+            <div class="option-default">false</div>
+            <div class="option-description">Disable Saturday and Sunday.</div>
+
+            <div>scrollToDate</div>
+            <div class="option-type">Boolean</div>
+            <div class="option-default">true</div>
+            <div class="option-description">Scroll to start date on open.</div>
+
+            <div>lockDaysFormat</div>
+            <div class="option-type">String</div>
+            <div class="option-default">YYYY-MM-DD</div>
+            <div class="option-description">Date format for option <strong>lockDays</strong>.</div>
+
+            <div>lockDays</div>
+            <div class="option-type">Array</div>
+            <div class="option-default">[]</div>
+            <div class="option-description">
+              <p>Disable days for select. Can contains array with range:</p>
+              <p>ex: [ ['2019-01-01', '2019-01-10'], '2019-01-31' ].</p>
+              <p>This example will disable range from 01 Jan 2019 to 10 Jan 2019 and 31 Jan 2019.</p>
+              <p>Can contains Date Object or Unix Timestamp (with milliseconds) or String (must be equal to option
+                <strong>lockDaysFormat</strong>).</p>
+            </div>
+
+            <div>disallowLockDaysInRange</div>
+            <div class="option-type">Boolean</div>
+            <div class="option-default">false</div>
+            <div class="option-description">
+              <p>Prevent to select date ranges with locked dates.</p>
+              <p>Throw error «INVALID_RANGE» in the event <strong>onError</strong>.</p>
+            </div>
+
+            <div>bookedDaysFormat</div>
+            <div class="option-type">String</div>
+            <div class="option-default">YYYY-MM-DD</div>
+            <div class="option-description">Date format for option <strong>bookedDays</strong>.</div>
+
+            <div>bookedDays</div>
+            <div class="option-type">Array</div>
+            <div class="option-default">[]</div>
+            <div class="option-description">
+              <p>Disable days for select as start date. Can contains array with range:</p>
+              <p>ex: [ ['2019-01-01', '2019-01-10'], '2019-01-31' ].</p>
+              <p>This example will disable range from 01 Jan 2019 to 10 Jan 2019 and 31 Jan 2019.</p>
+              <p>Can contains Date Object or Unix Timestamp (with milliseconds) or String (must be equal to option
+                <strong>bookedDaysFormat</strong>).</p>
+              <p>Unlike the option <strong>lockDays</strong>, booked days after start date will be available for select.
+              </p>
+            </div>
+
+            <div>buttonText</div>
+            <div class="option-type">Object</div>
+            <div class="option-default option-is-object">
+              {
+              apply: 'Apply',
+              cancel: 'Cancel',
+              previousMonth: '&lt;svg .../&gt;&lt;/svg&gt;',
+              nextMonth: '&lt;svg .../&gt;&lt;/svg&gt;',
+              }
+            </div>
+            <div class="option-description">Text for buttons.</div>
+
+            <div>tooltipText</div>
+            <div class="option-type">Object</div>
+            <div class="option-default option-is-object">
+              {
+              one: 'day',
+              other: 'days',
+              }
+            </div>
+            <div class="option-description">
+              <p>Text for the tooltip.</p>
+              <p>Keys depends on option <strong>lang</strong> (see <a
+                  href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/PluralRules"
+                  target="_blank">Intl.PluralRules</a>).</p>
+            </div>
+          </div>
+        </div>
+
+
+        <hr>
+
+        <div class="lead">
+          Events
+        </div>
+
+        <div class="table-grid table-grid-events">
+          <div class="table-grid-body">
+            <div class="header-cell">name</div>
+            <div class="header-cell">default</div>
+            <div class="header-cell option-description">description</div>
+
+            <div>onShow</div>
+            <div class="option-default">null</div>
+            <div class="option-description">
+              <p>Trigger on show the picker.</p>
+              <p>Example: <code>onShow: function() { console.log('show'); }</code></p>
+            </div>
+
+            <div>onHide</div>
+            <div class="option-default">null</div>
+            <div class="option-description">
+              <p>Trigger on hide the picker.</p>
+              <p>Example: <code>onHide: function() { console.log('hide'); }</code></p>
+            </div>
+
+            <div>onSelect</div>
+            <div class="option-default">null</div>
+            <div class="option-description">
+              <p>Trigger on select date/date range.</p>
+              <p>Example: <code>onSelect: function(date1, date2) { console.log(date1, date2); }</code></p>
+              <p>date1 and date2 is Date Object.</p>
+              <p>date2 is avaiable when the option <strong>singleMode</strong> is false</p>
+            </div>
+
+            <div>onError</div>
+            <div class="option-default">null</div>
+            <div class="option-description">
+              <p>Trigger on error date/date range.</p>
+              <p>Example: <code>onError: function(error) { console.log(error); }</code></p>
+              <p>At the moment works only with option <strong>disallowLockDaysInRange</strong>.</p>
+            </div>
+
+            <div>onChangeMonth</div>
+            <div class="option-default">null</div>
+            <div class="option-description">
+              <p>Trigger on change month.</p>
+              <p>Example: <code>onChangeMonth: function(date, idx) { console.log(date, idx); }</code></p>
+              <p>date is Date Object, idx is Number.</p>
+              <p>idx is showing which calendar has change when option <strong>splitView</strong> is enabled.</p>
+              <p>idx starts from 0.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="lead">
+        Customize colors
+      </div>
+      <div>
+        <p>See predefined colors in <a href="https://github.com/wakirin/litepicker/blob/master/src/scss/main.sccs"
+            target="_blank">main.scss</a>.</p>
+        <p>You can override them with !important.</p>
+        <p>Example:</p>
+        <div class="code">
+          &lt;style&gt;
+          :root {
+          --litepickerDayIsStartBg: #f68e6b !important;
+          }
+          &lt;/style&gt;
+        </div>
+        <p>This example will change background color of the start date.</p>
+      </div>
+
+
+      <hr>
+
+      <div class="lead">
+        License
+      </div>
+      <div>
+        <p>The MIT License (MIT)</p>
+
+        <p>Copyright 2019 <a href="https://github.com/wakirin/" target="_blank">Rinat G.</a></p>
+
+        <p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+          documentation files (the "Software"), to deal in the Software without restriction, including without
+          limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the
+          Software, and to permit persons to whom the Software is furnished to do so, subject to the following
+          conditions:</p>
+
+        <p>The above copyright notice and this permission notice shall be included in all copies or substantial portions
+          of the Software.</p>
+
+        <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
+          TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+          THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
+          CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+          DEALINGS IN THE SOFTWARE.</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="./js/main.js"></script>
+  <script src="./js/demo.js"></script>
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+</body>
+
+</html>
