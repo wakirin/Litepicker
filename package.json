@@ -1,13 +1,13 @@
 {
   "name": "litepicker",
-  "version": "1.0.1",
+  "version": "1.0.4",
   "description": "Date range picker - lightweight, no dependencies",
-  "main": "webpack.common.js",
+  "main": "./dist/js/main.js",
   "scripts": {
-    "prod": "webpack --config webpack.prod.js && webpack --config webpack.docs.js",
-    "dev": "webpack --config webpack.dev.js && webpack --config webpack.docs.js",
-    "docs": "webpack --config webpack.docs.js",
-    "watch": "webpack -w --config webpack.dev.js"
+    "prod": "webpack --config config/webpack.prod.js",
+    "dev": "webpack --config config/webpack.dev.js",
+    "docs": "webpack --config config/webpack.docs.js",
+    "watch": "webpack -w --config config/webpack.dev.js"
   },
   "keywords": [
     "datepicker",

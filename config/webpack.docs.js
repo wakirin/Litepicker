@@ -1,14 +1,13 @@
 const path = require('path');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   mode: 'production',
   entry: {
-    'style': path.join(__dirname, '/docs/scss/style.scss'),
+    'style': path.join(__dirname, '../docs/scss/style.scss'),
   },
   output: {
-    path: path.join(__dirname, 'docs'),
+    path: path.join(__dirname, '../docs'),
     filename: '[name]',
   },
   module: {
@@ -43,9 +42,6 @@ module.exports = {
     extensions: [".ts", ".tsx", ".js"]
   },
   plugins: [
-    new CopyWebpackPlugin([
-      { from: 'dist/js/main.js', to: 'js/main.js' },
-    ]),
     new MiniCssExtractPlugin({
       filename: 'css/[name].css',
     }),

@@ -52,7 +52,11 @@
         Installation
       </div>
       <div>
+        <p><strong>Installing a Litepicker module</strong></p>
         <code>npm i litepicker</code>
+
+        <p><strong>Non-module environments</strong></p>
+        <code>&lt;script src="https://cdn.jsdelivr.net/npm/litepicker/dist/js/main.js"&gt;&lt;/script&gt;</code>
       </div>
 
       <hr>
@@ -60,15 +64,15 @@
         Usage
       </div>
       <div>
-        <p>Litepicker can be bound to HTML element:</p>
-        <p><code>&lt;input type="text" id="litepicker"&gt;</code></p>
-        <p>Include Litepicker script to the end of your document:</p>
-        <div class="code">
-          &lt;script src="litepicker.js"&gt;&lt;/script&gt;
-          &lt;script&gt;
-          var picker = new Litepicker({ element: document.getElementById('litepicker') });
-          &lt;/script&gt;
-        </div>
+          <p>If you’re using a bundler, e.g. webpack, you’ll need to import Litepicker.</p>
+          <code>import Litepicker from 'litepicker';</code>
+          <br>
+          <p>Now you can create Litepicker instance.</p>
+          <div class="code">
+            &lt;script&gt;
+            var picker = new Litepicker({ element: document.getElementById('litepicker') });
+            &lt;/script&gt;
+          </div>
       </div>
 
       <hr>
@@ -579,7 +583,7 @@
     </div>
   </div>
 
-  <script src="./js/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/js/main.js"></script>
   <script src="./js/demo.js"></script>
   <script async defer src="https://buttons.github.io/buttons.js"></script>
 </body>

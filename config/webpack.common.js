@@ -1,14 +1,15 @@
 const path = require('path');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: {
-    'js/main.js': path.join(__dirname, '/src/index.ts'),
+    'js/main.js': path.join(__dirname, '../src/index.ts'),
   },
   output: {
-    path: path.join(__dirname, 'dist'),
+    path: path.join(__dirname, '../dist'),
     filename: '[name]',
     libraryTarget: 'umd',
+    library: 'Litepicker',
+    umdNamedDefine: true
   },
   module: {
     rules: [

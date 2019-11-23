@@ -25,6 +25,9 @@ code,
   border-radius: 5px;
   white-space: pre-line;
 }
+.code:first-line {
+  line-height: 0;
+}
 button.calendar-icon {
   background-image: url(../images/calendar-icon.svg);
   width: 22px;
