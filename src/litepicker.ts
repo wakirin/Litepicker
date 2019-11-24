@@ -1,9 +1,11 @@
 import { Calendar } from './calendar';
 import { DateTime } from './datetime';
 import * as style from './scss/main.scss';
+import { isMobile } from './utils';
 
 export class Litepicker extends Calendar {
-  protected triggerElement: null;
+  protected triggerElement;
+  protected backdrop;
 
   constructor(options) {
     super();
@@ -65,8 +67,17 @@ export class Litepicker extends Calendar {
       );
     }
 
+    if (this.options.singleMode && !(this.options.startDate instanceof Date)) {
+      this.options.startDate = null;
+    }
+    if (!this.options.singleMode
+      && (!(this.options.startDate instanceof Date) || !(this.options.endDate instanceof Date))) {
+      this.options.startDate = null;
+      this.options.endDate = null;
+    }
+
     for (let idx = 0; idx < this.options.numberOfMonths; idx += 1) {
-      const date = this.options.startDate
+      const date = this.options.startDate instanceof Date
         ? this.options.startDate.clone()
         : new DateTime();
       date.setMonth(date.getMonth() + idx);
@@ -110,6 +121,32 @@ export class Litepicker extends Calendar {
       } else {
         document.body.appendChild(this.picker);
       }
+    }
+
+    if (this.options.mobileFriendly) {
+      this.backdrop = document.createElement('div');
+      this.backdrop.className = style.litepickerBackdrop;
+      this.backdrop.addEventListener('click', this.hide());
+      this.options.element.parentNode.appendChild(this.backdrop);
+
+      window.addEventListener('orientationchange', () => {
+        if (this.options.mobileFriendly && this.isShowning()) {
+          switch (screen.orientation.angle) {
+            case -90:
+            case 90:
+              this.options.numberOfMonths = 2;
+              this.options.numberOfColumns = 2;
+              break;
+
+            default:
+              this.options.numberOfMonths = 1;
+              this.options.numberOfColumns = 1;
+              break;
+          }
+
+          this.render();
+        }
+      });
     }
 
     if (this.options.inlineMode) {
@@ -573,5 +610,9 @@ export class Litepicker extends Calendar {
       this.updateInput();
       this.render();
     }
+  }
+
+  private isShowning() {
+    return this.picker && this.picker.style.display !== 'none';
   }
 }

@@ -6,8 +6,8 @@ let defaultOptions = {
   firstDay: 1,
   format: 'D MMM, YYYY',
   lang: 'en-US',
-  numberOfMonths: window.innerWidth > 480 ? 2 : 1,
-  numberOfColumns: window.innerWidth > 480 ? 2 : 1,
+  numberOfMonths: 2,
+  numberOfColumns: 2,
   startDate: new Date(now.getFullYear(), now.getMonth(), 7),
   endDate: new Date(now.getFullYear(), now.getMonth() + 1, 11),
   zIndex: 9999,
@@ -28,6 +28,7 @@ let defaultOptions = {
   hotelMode: false,
   disableWeekends: false,
   scrollToDate: true,
+  mobileFriendly: true,
 
   lockDaysFormat: 'YYYY-MM-DD',
   lockDays: [],
@@ -324,6 +325,7 @@ Object.keys(proxyOptions).forEach((opt) => {
     case 'disableWeekends':
       // case 'scrollToDate':
       // case 'disallowLockDaysInRange':
+    case 'mobileFriendly':
       createCheckboxContainer(value, opt);
       break;
 

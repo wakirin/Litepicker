@@ -297,6 +297,11 @@ input.apple-switch {
     }
   }
 
+  code,
+  .code {
+    word-break: break-all;
+  }
+
   #demo {
     flex-direction: column-reverse;
 

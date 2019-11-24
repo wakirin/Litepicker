@@ -31,6 +31,7 @@ export class Calendar {
     hotelMode: false,
     disableWeekends: false,
     scrollToDate: true,
+    mobileFriendly: false,
 
     lockDaysFormat: 'YYYY-MM-DD',
     lockDays: [],
@@ -67,6 +68,7 @@ export class Calendar {
     months.className = style.containerMonths;
 
     if (style[`columns${this.options.numberOfColumns}`]) {
+      months.classList.remove(style.columns2, style.columns3, style.columns4);
       months.classList.add(style[`columns${this.options.numberOfColumns}`]);
     }
 

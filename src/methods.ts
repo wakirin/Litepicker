@@ -1,5 +1,7 @@
 import { DateTime } from './datetime';
 import { Litepicker } from './litepicker';
+import * as style from './scss/main.scss';
+import { getOrientation, isMobile } from './utils';
 
 declare module './litepicker' {
   interface Litepicker {
@@ -32,6 +34,8 @@ Litepicker.prototype.show = function (el = null) {
     this.picker.style.display = 'inline-block';
     this.picker.style.top = null;
     this.picker.style.left = null;
+    this.picker.style.bottom = null;
+    this.picker.style.right = null;
     return;
   }
 
@@ -41,6 +45,35 @@ Litepicker.prototype.show = function (el = null) {
     } else if (el && this.options.endDate && el === this.options.elementEnd) {
       this.calendars[0] = this.options.endDate.clone();
     }
+  }
+
+  if (this.options.mobileFriendly && isMobile()) {
+    this.picker.style.position = 'fixed';
+    this.picker.style.display = 'block';
+    this.picker.style.top = null;
+    this.picker.style.left = 0;
+    this.picker.style.right = 0;
+    this.picker.style.bottom = 0;
+    this.picker.style.zIndex = this.options.zIndex;
+
+    if (getOrientation() === 'portrait') {
+      this.options.numberOfMonths = 1;
+      this.options.numberOfColumns = 1;
+    } else {
+      this.options.numberOfMonths = 2;
+      this.options.numberOfColumns = 2;
+    }
+
+    this.backdrop.style.display = 'block';
+    this.backdrop.style.zIndex = this.options.zIndex - 1;
+    document.body.classList.add(style.litepickerOpen);
+
+    this.render();
+
+    if (typeof this.options.onShow === 'function') {
+      this.options.onShow.call(this);
+    }
+    return;
   }
 
   this.render();
@@ -93,6 +126,8 @@ Litepicker.prototype.show = function (el = null) {
 
   this.picker.style.top = `${(topAlt ? topAlt : top) + scrollY}px`;
   this.picker.style.left = `${(leftAlt ? leftAlt : left) + scrollX}px`;
+  this.picker.style.right = null;
+  this.picker.style.bottom = null;
 
   if (typeof this.options.onShow === 'function') {
     this.options.onShow.call(this);
@@ -102,7 +137,7 @@ Litepicker.prototype.show = function (el = null) {
 };
 
 Litepicker.prototype.hide = function () {
-  if (this.picker.style.display === 'none') {
+  if (!this.isShowning()) {
     return;
   }
 
@@ -118,6 +153,11 @@ Litepicker.prototype.hide = function () {
 
   if (typeof this.options.onHide === 'function') {
     this.options.onHide.call(this);
+  }
+
+  if (this.options.mobileFriendly) {
+    document.body.classList.remove(style.litepickerOpen);
+    this.backdrop.style.display = 'none';
   }
 };
 
@@ -237,6 +277,16 @@ Litepicker.prototype.setOptions = function (options) {
 
   this.options = { ...this.options, ...options };
 
+  if (this.options.singleMode && !(this.options.startDate instanceof Date)) {
+    this.options.startDate = null;
+    this.options.endDate = null;
+  }
+  if (!this.options.singleMode
+    && (!(this.options.startDate instanceof Date) || !(this.options.endDate instanceof Date))) {
+    this.options.startDate = null;
+    this.options.endDate = null;
+  }
+
   for (let idx = 0; idx < this.options.numberOfMonths; idx += 1) {
     const date = this.options.startDate
       ? this.options.startDate.clone()
@@ -255,8 +305,12 @@ Litepicker.prototype.setOptions = function (options) {
 };
 
 Litepicker.prototype.destroy = function () {
-  if (this.picker.parentNode) {
+  if (this.picker && this.picker.parentNode) {
     this.picker.parentNode.removeChild(this.picker);
     this.picker = null;
+  }
+
+  if (this.backdrop && this.backdrop.parentNode) {
+    this.backdrop.parentNode.removeChild(this.backdrop);
   }
 };
