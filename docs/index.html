@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <meta charset="utf-8">
@@ -24,7 +24,7 @@
     <div class="container">
       <div class="header">
         <h1>Litepicker</h1>
-        <p>Date range picker - lightweight, no dependencies</p>
+        <h2>Date range picker - lightweight, no dependencies</h2>
         <div>
           <a class="github-button" href="https://github.com/wakirin/litepicker" data-icon="octicon-star"
             data-size="large" data-show-count="true" aria-label="Star wakirin/litepicker on GitHub">Star</a>
@@ -318,7 +318,7 @@
 
             <div>mobileFriendly</div>
             <div class="option-type">Boolean</div>
-            <div class="option-default">false</div>
+            <div class="option-default">true</div>
             <div class="option-description">
               <p>Enable mobile friendly.</p>
               <p>In portrait orientation, 1 calendar will be displayed at the bottom of the screen.</p>
@@ -570,7 +570,6 @@
         <p>This example will change background color of the start date.</p>
       </div>
 
-
       <hr>
 
       <div class="lead">
@@ -596,12 +595,30 @@
           CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
           DEALINGS IN THE SOFTWARE.</p>
       </div>
+
+      <hr>
+
+      <div class="lead">
+        Comments
+      </div>
+      <div>
+        <div id="disqus_thread"></div>
+      </div>
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/litepicker@latest/dist/js/main.js"></script>
   <script src="./js/demo.js"></script>
   <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <script>
+    (function() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://litepicker.disqus.com/embed.js';
+    s.async = true;
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+    </script>
 </body>
 
 </html>

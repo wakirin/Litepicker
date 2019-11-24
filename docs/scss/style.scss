@@ -85,15 +85,21 @@ button.calendar-icon {
 
 .header {
   text-align: center;
-}
-.header h1 {
-  font-size: 3em;
-  margin-top: 0;
-  margin-bottom: 0.5em;
-  letter-spacing: 0.1em;
-}
-.header p {
-  font-size: 1.5em;
+
+  h1 {
+    font-size: 3em;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    letter-spacing: 0.1em;
+  }
+
+  h2 {
+    font-weight: normal;
+  }
+
+  p {
+    font-size: 1.5em;
+  }
 }
 
 #demo {
@@ -233,7 +239,7 @@ input.apple-switch {
         > p:first-child {
           margin-top: 0;
         }
-        
+
         > p:last-child {
           margin-bottom: 0;
         }

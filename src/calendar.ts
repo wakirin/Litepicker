@@ -31,7 +31,7 @@ export class Calendar {
     hotelMode: false,
     disableWeekends: false,
     scrollToDate: true,
-    mobileFriendly: false,
+    mobileFriendly: true,
 
     lockDaysFormat: 'YYYY-MM-DD',
     lockDays: [],
