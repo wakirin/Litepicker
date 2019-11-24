@@ -73,6 +73,12 @@ Litepicker.prototype.show = function (el = null) {
     if (typeof this.options.onShow === 'function') {
       this.options.onShow.call(this);
     }
+
+    if (el) {
+      el.blur();
+    } else {
+      this.options.element.blur();
+    }
     return;
   }
 
