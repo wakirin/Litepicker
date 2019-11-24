@@ -24,5 +24,4 @@ See more details in docs.
 
 ## Roadmap
 * Time picker
-* Mobile adaptive
-* ???
+* ...
