@@ -1,4 +1,4 @@
-[![npm version](https://badge.fury.io/js/litepicker.svg)](https://www.npmjs.com/package/litepicker) [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/wakirin/Litepicker/blob/master/README.md)
+[![npm version](https://badge.fury.io/js/litepicker.svg)](https://www.npmjs.com/package/litepicker) [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/wakirin/Litepicker/blob/master/README.md)![](https://github.com/wakirin/litepicker/workflows/CI/badge.svg)
 
 Litepicker
 =========
