@@ -25,3 +25,6 @@ See more details in docs.
 ## Roadmap
 * Time picker
 * ...
+
+## BrowserStack
+[![](docs/images/Browserstack-logo.png)](https://www.browserstack.com/)
