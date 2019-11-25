@@ -5,6 +5,7 @@ module.exports = {
   mode: 'production',
   entry: {
     'style': path.join(__dirname, '../docs/scss/style.scss'),
+    'js/demo.js': path.join(__dirname, '../docs/js/demo.ts'),
   },
   output: {
     path: path.join(__dirname, '../docs'),
@@ -12,6 +13,11 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        exclude: /node_modules/,
+        test: /docs\/js\/demo\.ts?$/,
+        loader: 'babel-loader',
+      },
       {
         exclude: /node_modules/,
         test: /docs\/scss\/style\.scss$/,

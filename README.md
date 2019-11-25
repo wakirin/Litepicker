@@ -33,7 +33,7 @@ See more details in docs.
 * ...
 
 ## Tested on real browsers
-Tested on real browsers via BrowserStack.
-Thanks to the BrowserStack for supporting the open-source projects.
+Tested on real browsers via BrowserStack.  
+Thanks to the BrowserStack for supporting the open-source projects.  
 
 [![](docs/images/Browserstack-logo.png)](https://www.browserstack.com/)

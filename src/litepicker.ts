@@ -126,7 +126,9 @@ export class Litepicker extends Calendar {
       this.backdrop = document.createElement('div');
       this.backdrop.className = style.litepickerBackdrop;
       this.backdrop.addEventListener('click', this.hide());
-      this.options.element.parentNode.appendChild(this.backdrop);
+      if (this.options.element && this.options.element.parentNode) {
+        this.options.element.parentNode.appendChild(this.backdrop);
+      }
 
       window.addEventListener('orientationchange', () => {
         if (this.options.mobileFriendly && this.isShowning()) {
