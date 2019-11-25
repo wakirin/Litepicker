@@ -1,7 +1,6 @@
 import { Calendar } from './calendar';
 import { DateTime } from './datetime';
 import * as style from './scss/main.scss';
-import { isMobile } from './utils';
 
 export class Litepicker extends Calendar {
   protected triggerElement;

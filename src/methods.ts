@@ -210,15 +210,15 @@ Litepicker.prototype.setStartDate = function (date) {
 Litepicker.prototype.setEndDate = function (date) {
   if (!date) return;
 
-  if (this.options.startDate.getTime() > date.getTime()) {
+  this.options.endDate = new DateTime(
+    date,
+    this.options.format,
+    this.options.lang,
+  );
+
+  if (this.options.startDate.getTime() > this.options.endDate.getTime()) {
     this.options.endDate = this.options.startDate.clone();
     this.options.startDate = new DateTime(
-      date,
-      this.options.format,
-      this.options.lang,
-    );
-  } else {
-    this.options.endDate = new DateTime(
       date,
       this.options.format,
       this.options.lang,
