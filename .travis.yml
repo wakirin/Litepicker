@@ -8,9 +8,13 @@ install:
   
 script:
   - npm test
-
+addons:
+  browserstack:
+    username: "Your BrowserStack username"
+    access_key:
+      secure: "The secure string output of `travis encrypt`"
 addons:
   browserstack:
     username: "browserstack1548"
     access_key:
-      secure: "mu3op5S3/dkiK0dYkIO3alR/NfkGlkO4FRlat0zcWFmpL76261c6QuhX8sacaYgqpIv2EgJ0ShlXb+oyoFiy48yiZZYbAaP0tWzlqR4gm+NttuebeVxudcCE9ltn1xmTfVPm5akUHaYkutEv0F8AvLcc0BjwltUb1jKo6Dq8yBpJeNt91vgOPReYP8Q950mH3s2nHAUGPz9V8rG7gsqWltPCAIRuexMqWEjo1uqKlMWR1es5xUykJ1i4g0emKXOPOeqdvWpmYDNyn9esndb/M9aIgTtsLOK460txFDUFCNIeI/ItuIOuIrB7GUoTLCNYpbEa3vWa+48RO2jSi2IxEIuvOto5PWdL+4TPF2oT7Vftxa8My/6X2+CtQ30ZvLRCZlIwtl4hSqcBor1I0U1b0Lx2VJCokYDavrbA/PPmv5Tv48DWw/UkLGIQpD/bmfwDt1ux7Y2X88sIctaNKP+zlhBo+QrJFnv7oOoGc5sFjxH4oSiZlIwk7RjyBZXoMFDt7clY4Rofz5d3/Op7tvexm3pura1RIwVxhii24+2Utr0aMxX2NITCgWmnRSlgmULrrAwsSe2uiOktp6+0JCmqKx+w9g1rHZARAwDlF6au+OusYpz2BU15J/6R7kAYoMhjfjQdfljAH5TMncAi7ZMk3alUb08BQXDFAO3SqjUIELY="
+      secure: "CQXyJkr6b2SU4IW1eEKBhfcWMklNk+IOq/2o9aOqYmuJ4EdicJSOMWh5z5YIzO6vuGHc65BtrgQc50V5b0sjitiECQzK1jna2ZzNiEok2BzYeskZ2MHk8NirzVueTHdo/HS5FSzbdxld+OyKhW8LX/LjB0DlvtP6tq9uiit5RJljSfv9Tdu9ftr5Avb46fqtT+flK4hjhfmLSCnnjkEtKcjl9TZVS85Rpt5PEL/D9F3/eP3KiI+AolLjbAPYKYKqcLMvPmFDSQwxsQHJoY6wEzl8dH3f/xFkPCbjE27Vlg6C6+bp78hf/qO3D3KSm9zWyVVOGikJ06AMf8dC72uqBHnkVo3j0qkOtYTENOxvms72O79h3uHpjahc3GcDLeENAh12PSJFgNNmgkpCsrIedNxVu7h99ouIYckgPtA6B8xu1YN5PmHfTNHtpl9lnTcmy/YvtETgRSeaOmtoFOy7tFuS+R4pXm6DH0pAXo7tQXY/Pnw/tMT9oT0z5IZSl/h1aMuovzenuDt0zxm5ZbitFnrPEUccxySyzhAjY4LgIpqQHmUtKzmP+X9kdj/IM5ZCpquR9CSyWb9hAFW2K4Gzy2ezNkerjimdHv6SfLdBblQKMTHi5fJw1UL+tKb2PZh7KiTDUbrO2LkC6VZRpjxQoMTOTArgCHify22Gvj6oo4A="
