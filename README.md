@@ -20,11 +20,20 @@ See more details in docs.
 ## [Demo & Docs](https://wakirin.github.io/Litepicker)
 
 ## Compatibility
-@TODO check browsers
+* ~~IE~~
+* Edge 17+
+* Chrome 58+
+* Firefox 54+
+* Safari 11+
+* Opera 48+
 
 ## Roadmap
+* Improve compatibility
 * Time picker
 * ...
 
-## BrowserStack
+## Tested on real browsers
+Tested on real browsers via BrowserStack.
+Thanks to the BrowserStack for supporting the open-source projects.
+
 [![](docs/images/Browserstack-logo.png)](https://www.browserstack.com/)
