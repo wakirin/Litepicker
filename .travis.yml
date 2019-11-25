@@ -8,3 +8,9 @@ install:
   
 script:
   - npm test
+
+addons:
+  browserstack:
+    username: "Rinat G."
+    access_key:
+      secure: "PwS4/kMyotxqSrI7yp05znPFH8AP9ZvSa/sf2fyzpm4qOYtwkNUnaFUGMrBD/jUEIMEUzvf/A0qB62Vd3Igl5vz7urEJ0qBZ2VJYq4mj+eDBpv/inYvM7xecfnfBhisZ2/2aWEOMD3icbGoNWik4hG4XdcAllG5eBSOdiXSTEMCN9RDIMxpgLXYqnjGafh89GSTWxzu3+IAbRlNVA6KLA6yL+czVSSKV0cO216UCkRU+fFfEENzsdIs82vFYMAaRxm9dyp9aex7TmLV2R9mKCLlY3BzwNYAnDCLszXFOZphKPSbWL5OaCXCR38i837e+IgoyE1E4OjUMe9feQvguug8h/xhE4MhuvWCnh2OP1e2qRHdq9+OS3Y8RcD451yJkqa7vKDm69VHoUNA31Z2ThDKqay7DdZGC+iwAnYHJpolAC1X33CiiRd606CKtOJUYCBVtnV/Iq1ioYc2Bzu5tvdy6m/cbEZLlDyqaZRu2wQeR0aZnnJIXHlj5yN4svnG98Pnc2/NhoUqarBUWOj++F/8o/0v6FmFsaxpWAFs6IIY2h+QHYuQqv98k1WbQvpxbmwNWlviQ/1kN9HyhKMwwV7OmFTwZjtt+4seAt+yOuSC2P2v/5LVCzKwlRVPg3wFkYECI/Id6izVbrWR6UERndqi4z2KFS9nHaLRXsIFCIeY="
