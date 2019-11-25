@@ -8,9 +8,3 @@ install:
   
 script:
   - npm test
-
-addons:
-  browserstack:
-    username: "browserstack1548"
-    access_key:
-      secure: "qrDI4Fr/MR2LFSi4GUuVc1IbxXjujirLLAob5gXqk1ej9IULgoSfsjFAMsx21R7M7DR8du4wviR8aEF2ZuC8d737ud1lVJVFdW5mFT4jvxU3+ryMNVSEnR5JNwkqMzD+GekkPBoMV/b3pxZqZH9opBoFKpV3LBOWrHLAPJDnd6sbWEtdy467UIwNeIQMZCTbqjjfuKYzk5t6o0OIP3tgeZymOgeugqRAObydjVOrQQr7M+DB5dZ+UFwLYNFhTKtm9cmSK06fQoprR5cASo4xeLp30WPVdXL5hWTRMODB66yb/K9Au3tDQ2KAaRtNKNy23iWRM9sWNsv4gbv5R4cqu0KRJy35YcPIphjpk91Ch+0i1Dj/Oqq5d8fwQE2vcfr5+oYhA3Yjv9oVoMKdTWkEaM29tqzurm+3h3PHXg9jnjMQjBjocmS5f2m3xty3JYid3EG5pL1Iy9cn2nbFCsjZtNdPyLLWD5xxoEHpo+EcCUw4CM+lQVXjk44NMSPFj7qO2PIwk1F6ou3PcfAshgO04oqGlV/iYtw05y+KcMhR2Iuo3D36yLEm5L0cOmfArj3NjuqdU3STLUWjactftgnF2CdRlmbLh2mn4J+tDp1pUyGd8Bn67e8yvwgcLMuWqGNxJCyrurQFyCf1dyLftiXT6JGQroh/LzAY1HEK5VYShc4="
