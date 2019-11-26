@@ -1,8 +1,12 @@
 :root {
   --litepickerBgColor: #fff;
+
+  --litepickerMonthHeaderTextColor: #333;
   --litepickerMonthButton: #9e9e9e;
   --litepickerMonthButtonHover: #2196f3;
-  --litepickerWeekdayColor: #9e9e9e;
+  --litepickerMonthWidth: calc(var(--litepickerDayWidth) * 10);
+  --litepickerMonthWeekdayColor: #9e9e9e;
+
   --litepickerDayColor: #333;
   --litepickerDayColorHover: #2196f3;
   --litepickerDayIsTodayColor: #f44336;
@@ -13,11 +17,12 @@
   --litepickerDayIsStartBg: #2196f3;
   --litepickerDayIsEndColor: #fff;
   --litepickerDayIsEndBg: #2196f3;
+  --litepickerDayWidth: 28px;
+
   --litepickerButtonCancelColor: #fff;
   --litepickerButtonCancelBg: #9e9e9e;
   --litepickerButtonApplyColor: #fff;
   --litepickerButtonApplyBg: #2196f3;
-  --litepickerWidthMonth: 280px;
 }
 .litepicker {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -33,15 +38,15 @@
       box-shadow: 0 0 5px #ddd;
 
       &.columns-2 {
-        width: calc(var(--litepickerWidthMonth) * 2);
+        width: calc(var(--litepickerMonthWidth) * 2);
       }
 
       &.columns-3 {
-        width: calc(var(--litepickerWidthMonth) * 3);
+        width: calc(var(--litepickerMonthWidth) * 3);
       }
 
       &.columns-4 {
-        width: calc(var(--litepickerWidthMonth) * 4);
+        width: calc(var(--litepickerMonthWidth) * 4);
       }
 
       &.split-view {
@@ -57,7 +62,7 @@
 
       .month-item {
         padding: 5px 0;
-        width: var(--litepickerWidthMonth);
+        width: var(--litepickerMonthWidth);
 
         &-header {
           display: flex;
@@ -66,6 +71,7 @@
           padding: 10px 5px;
           text-align: center;
           align-items: center;
+          color: var(--litepickerMonthHeaderTextColor);
 
           .button-previous-month,
           .button-next-month {
@@ -97,7 +103,7 @@
           display: flex;
           justify-self: center;
           justify-content: flex-start;
-          color: var(--litepickerWeekdayColor);
+          color: var(--litepickerMonthWeekdayColor);
           padding: 0 5px;
 
           > div {
