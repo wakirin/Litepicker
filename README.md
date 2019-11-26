@@ -22,8 +22,8 @@ See more details in docs.
 ## Compatibility
 * ~~IE~~
 * Edge 17+
-* Chrome 58+
-* Firefox 54+
+* Chrome 60+
+* Firefox 52+
 * Safari 11+
 * Opera 48+
 
