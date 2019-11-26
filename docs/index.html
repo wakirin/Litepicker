@@ -88,312 +88,310 @@
           Options
         </div>
 
-        <div class="table-grid table-grid-options">
-          <div class="table-grid-body">
-            <div class="header-cell">option</div>
-            <div class="header-cell">type</div>
-            <div class="header-cell">default</div>
-            <div class="header-cell option-description">description</div>
+        <div id="options-table">
+          <div class="header-cell">option</div>
+          <div class="header-cell">type</div>
+          <div class="header-cell">default</div>
+          <div class="header-cell option-description">description</div>
 
-            <div>element (required)</div>
-            <div class="option-type">HTMLElement</div>
-            <div class="option-default">null</div>
-            <div class="option-description">Bind the datepicker to a element. Also is possible to bind to any element
-              (not input) for example you need inline calendar.</div>
+          <div>element (required)</div>
+          <div class="option-type">HTMLElement</div>
+          <div class="option-default">null</div>
+          <div class="option-description">Bind the datepicker to a element. Also is possible to bind to any element
+            (not input) for example you need inline calendar.</div>
 
-            <div>elementEnd</div>
-            <div class="option-type">HTMLInputElement</div>
-            <div class="option-default">null</div>
-            <div class="option-description">Bind the datepicker to a element for end date.</div>
+          <div>elementEnd</div>
+          <div class="option-type">HTMLInputElement</div>
+          <div class="option-default">null</div>
+          <div class="option-description">Bind the datepicker to a element for end date.</div>
 
-            <div>parentEl</div>
-            <div class="option-type">HTMLElement</div>
-            <div class="option-default">null</div>
-            <div class="option-description">Bind the datepicker to a element for end date.</div>
+          <div>parentEl</div>
+          <div class="option-type">HTMLElement</div>
+          <div class="option-default">null</div>
+          <div class="option-description">Bind the datepicker to a element for end date.</div>
 
-            <div>firstDay</div>
-            <div class="option-type">Number</div>
-            <div class="option-default">1</div>
-            <div class="option-description">Day of start week. (0 - Sunday, 1 - Monday, 2 - Tuesday, etc...)</div>
+          <div>firstDay</div>
+          <div class="option-type">Number</div>
+          <div class="option-default">1</div>
+          <div class="option-description">Day of start week. (0 - Sunday, 1 - Monday, 2 - Tuesday, etc...)</div>
 
-            <div>format</div>
-            <div class="option-type">String</div>
-            <div class="option-default">YYYY-MM-DD</div>
-            <div class="option-description">
-              <p>The default output format.</p>
-              <p>Allowed formats:</p>
-              <table>
-                <thead>
-                  <tr>
-                    <th></th>
-                    <th>Token</th>
-                    <th>Output</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="text-right"><strong>Day of Month</strong></td>
-                    <td>D</td>
-                    <td>1 2 ... 30 31</td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td>DD</td>
-                    <td>01 02 ... 30 31</td>
-                  </tr>
-                  <tr>
-                    <td class="text-right"><strong>Month</strong></td>
-                    <td>M</td>
-                    <td>1 2 ... 11 12</td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td>MM</td>
-                    <td>01 02 ... 11 12</td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td>MMM</td>
-                    <td>Jan Feb ... Nov Dec</td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td>MMMM</td>
-                    <td>January February ... November December</td>
-                  </tr>
-                  <tr>
-                    <td class="text-right"><strong>Year</strong></td>
-                    <td>YY</td>
-                    <td>70 71 ... 29 30</td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td>YYYY</td>
-                    <td>1970 1971 ... 2029 2030</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+          <div>format</div>
+          <div class="option-type">String</div>
+          <div class="option-default">YYYY-MM-DD</div>
+          <div class="option-description">
+            <p>The default output format.</p>
+            <p>Allowed formats:</p>
+            <table>
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Token</th>
+                  <th>Output</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="text-right"><strong>Day of Month</strong></td>
+                  <td>D</td>
+                  <td>1 2 ... 30 31</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>DD</td>
+                  <td>01 02 ... 30 31</td>
+                </tr>
+                <tr>
+                  <td class="text-right"><strong>Month</strong></td>
+                  <td>M</td>
+                  <td>1 2 ... 11 12</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>MM</td>
+                  <td>01 02 ... 11 12</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>MMM</td>
+                  <td>Jan Feb ... Nov Dec</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>MMMM</td>
+                  <td>January February ... November December</td>
+                </tr>
+                <tr>
+                  <td class="text-right"><strong>Year</strong></td>
+                  <td>YY</td>
+                  <td>70 71 ... 29 30</td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td>YYYY</td>
+                  <td>1970 1971 ... 2029 2030</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
-            <div>lang</div>
-            <div class="option-type">String</div>
-            <div class="option-default">en-US</div>
-            <div class="option-description">Language. This option affect to day names, month names via <a
-                href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleString"
-                target="_blank">Date.prototype.toLocaleString()</a>
-              and also affect to plural rules via <a
+          <div>lang</div>
+          <div class="option-type">String</div>
+          <div class="option-default">en-US</div>
+          <div class="option-description">Language. This option affect to day names, month names via <a
+              href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleString"
+              target="_blank">Date.prototype.toLocaleString()</a>
+            and also affect to plural rules via <a
+              href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/PluralRules"
+              target="_blank">Intl.PluralRules</a>.
+          </div>
+
+          <div>numberOfMonths</div>
+          <div class="option-type">Number</div>
+          <div class="option-default">1</div>
+          <div class="option-description">Number of visible months.</div>
+
+          <div>numberOfColumns</div>
+          <div class="option-type">Number</div>
+          <div class="option-default">1</div>
+          <div class="option-description">Number of columns months.</div>
+
+          <div>startDate</div>
+          <div class="option-type">Date|Number|String</div>
+          <div class="option-default">null</div>
+          <div class="option-description">
+            <p>Preselect date. If option <strong>singleMode</strong> is disabled then <strong>endDate</strong> must be
+              set too.</p>
+            <p>Date Object or Unix Timestamp (with milliseconds) or String (must be equal to option
+              <strong>format</strong>).</p>
+          </div>
+
+          <div>endDate</div>
+          <div class="option-type">Date|Number|String</div>
+          <div class="option-default">null</div>
+          <div class="option-description">
+            <p>Preselect end date. Required <strong>startDate</strong>.</p>
+            <p>Date Object or Unix Timestamp (with milliseconds) or String (must be equal to option
+              <strong>format</strong>).</p>
+          </div>
+
+          <div>zIndex</div>
+          <div class="option-type">Number</div>
+          <div class="option-default">9999</div>
+          <div class="option-description">Control zIndex of the picker element.</div>
+
+          <div>minDate</div>
+          <div class="option-type">Date|Number|String</div>
+          <div class="option-default">null</div>
+          <div class="option-description">
+            <p>The minimum/earliest date that can be selected.</p>
+            <p>Date Object or Unix Timestamp (with milliseconds) or String (must be equal to option
+              <strong>format</strong>).</p>
+          </div>
+
+          <div>maxDate</div>
+          <div class="option-type">Date|Number|String</div>
+          <div class="option-default">null</div>
+          <div class="option-description">
+            <p>The maximum/latest date that can be selected.</p>
+            <p>Date Object or Unix Timestamp (with milliseconds) or String (must be equal to option
+              <strong>format</strong>).</p>
+          </div>
+
+          <div>minDays</div>
+          <div class="option-type">Number</div>
+          <div class="option-default">null</div>
+          <div class="option-description">The minimum days of the selected range.</div>
+
+          <div>maxDays</div>
+          <div class="option-type">Number</div>
+          <div class="option-default">null</div>
+          <div class="option-description">The maximum days of the selected range.</div>
+
+          <div>selectForward</div>
+          <div class="option-type">Boolean</div>
+          <div class="option-default">false</div>
+          <div class="option-description">Select second date after the first selected date.</div>
+
+          <div>selectBackward</div>
+          <div class="option-type">Boolean</div>
+          <div class="option-default">false</div>
+          <div class="option-description">Select second date before the first selected date.</div>
+
+          <div>splitView</div>
+          <div class="option-type">Boolean</div>
+          <div class="option-default">false</div>
+          <div class="option-description">Enable the previous and the next button for each month.</div>
+
+          <div>inlineMode</div>
+          <div class="option-type">Boolean</div>
+          <div class="option-default">false</div>
+          <div class="option-description">Show calendar inline.</div>
+
+          <div>singleMode</div>
+          <div class="option-type">Boolean</div>
+          <div class="option-default">true</div>
+          <div class="option-description">Choose a single date instead of a date range.</div>
+
+          <div>autoApply</div>
+          <div class="option-type">Boolean</div>
+          <div class="option-default">true</div>
+          <div class="option-description">Hide the apply and cancel buttons, and automatically apply a new date range
+            as soon as two dates are clicked.</div>
+
+          <div>allowRepick</div>
+          <div class="option-type">Boolean</div>
+          <div class="option-default">false</div>
+          <div class="option-description">
+            <p>Required <strong>elementEnd</strong>.</p>
+            <p>If date range is already selected, then user can change only one of start date or end date (depends on
+              clicked field) instead of new date range.</p>
+          </div>
+
+          <div>showWeekNumbers</div>
+          <div class="option-type">Boolean</div>
+          <div class="option-default">false</div>
+          <div class="option-description">Show week numbers. Based on option <strong>firstDay</strong>.</div>
+
+          <div>showTooltip</div>
+          <div class="option-type">Boolean</div>
+          <div class="option-default">true</div>
+          <div class="option-description">Showing tooltip with how much days will be selected.</div>
+
+          <div>hotelMode</div>
+          <div class="option-type">Boolean</div>
+          <div class="option-default">false</div>
+          <div class="option-description">
+            <p>Tooltip will shown nights count instead of days.</p>
+            <p>Also required to edit option <strong>tooltipText</strong>.</p>
+          </div>
+
+          <div>disableWeekends</div>
+          <div class="option-type">Boolean</div>
+          <div class="option-default">false</div>
+          <div class="option-description">Disable Saturday and Sunday.</div>
+
+          <div>scrollToDate</div>
+          <div class="option-type">Boolean</div>
+          <div class="option-default">true</div>
+          <div class="option-description">Scroll to start date on open.</div>
+
+          <div>mobileFriendly</div>
+          <div class="option-type">Boolean</div>
+          <div class="option-default">true</div>
+          <div class="option-description">
+            <p>Enable mobile friendly.</p>
+            <p>In portrait orientation, 1 calendar will be displayed at the bottom of the screen.</p>
+            <p>In landscape orientation 2 calendar will be displayed.</p>
+            <p>See demo above.</p>
+          </div>
+
+          <div>lockDaysFormat</div>
+          <div class="option-type">String</div>
+          <div class="option-default">YYYY-MM-DD</div>
+          <div class="option-description">Date format for option <strong>lockDays</strong>.</div>
+
+          <div>lockDays</div>
+          <div class="option-type">Array</div>
+          <div class="option-default">[]</div>
+          <div class="option-description">
+            <p>Disable days for select. Can contains array with range:</p>
+            <p>ex: [ ['2019-01-01', '2019-01-10'], '2019-01-31' ].</p>
+            <p>This example will disable range from 01 Jan 2019 to 10 Jan 2019 and 31 Jan 2019.</p>
+            <p>Can contains Date Object or Unix Timestamp (with milliseconds) or String (must be equal to option
+              <strong>lockDaysFormat</strong>).</p>
+          </div>
+
+          <div>disallowLockDaysInRange</div>
+          <div class="option-type">Boolean</div>
+          <div class="option-default">false</div>
+          <div class="option-description">
+            <p>Prevent to select date ranges with locked dates.</p>
+            <p>Throw error «INVALID_RANGE» in the event <strong>onError</strong>.</p>
+          </div>
+
+          <div>bookedDaysFormat</div>
+          <div class="option-type">String</div>
+          <div class="option-default">YYYY-MM-DD</div>
+          <div class="option-description">Date format for option <strong>bookedDays</strong>.</div>
+
+          <div>bookedDays</div>
+          <div class="option-type">Array</div>
+          <div class="option-default">[]</div>
+          <div class="option-description">
+            <p>Disable days for select as start date. Can contains array with range:</p>
+            <p>ex: [ ['2019-01-01', '2019-01-10'], '2019-01-31' ].</p>
+            <p>This example will disable range from 01 Jan 2019 to 10 Jan 2019 and 31 Jan 2019.</p>
+            <p>Can contains Date Object or Unix Timestamp (with milliseconds) or String (must be equal to option
+              <strong>bookedDaysFormat</strong>).</p>
+            <p>Unlike the option <strong>lockDays</strong>, booked days after start date will be available for select.
+            </p>
+          </div>
+
+          <div>buttonText</div>
+          <div class="option-type">Object</div>
+          <div class="option-default option-is-object">
+            {
+            apply: 'Apply',
+            cancel: 'Cancel',
+            previousMonth: '&lt;svg .../&gt;&lt;/svg&gt;',
+            nextMonth: '&lt;svg .../&gt;&lt;/svg&gt;',
+            }
+          </div>
+          <div class="option-description">Text for buttons.</div>
+
+          <div>tooltipText</div>
+          <div class="option-type">Object</div>
+          <div class="option-default option-is-object">
+            {
+            one: 'day',
+            other: 'days',
+            }
+          </div>
+          <div class="option-description">
+            <p>Text for the tooltip.</p>
+            <p>Keys depends on option <strong>lang</strong> (see <a
                 href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/PluralRules"
-                target="_blank">Intl.PluralRules</a>.
-            </div>
-
-            <div>numberOfMonths</div>
-            <div class="option-type">Number</div>
-            <div class="option-default">1</div>
-            <div class="option-description">Number of visible months.</div>
-
-            <div>numberOfColumns</div>
-            <div class="option-type">Number</div>
-            <div class="option-default">1</div>
-            <div class="option-description">Number of columns months.</div>
-
-            <div>startDate</div>
-            <div class="option-type">Date|Number|String</div>
-            <div class="option-default">null</div>
-            <div class="option-description">
-              <p>Preselect date. If option <strong>singleMode</strong> is disabled then <strong>endDate</strong> must be
-                set too.</p>
-              <p>Date Object or Unix Timestamp (with milliseconds) or String (must be equal to option
-                <strong>format</strong>).</p>
-            </div>
-
-            <div>endDate</div>
-            <div class="option-type">Date|Number|String</div>
-            <div class="option-default">null</div>
-            <div class="option-description">
-              <p>Preselect end date. Required <strong>startDate</strong>.</p>
-              <p>Date Object or Unix Timestamp (with milliseconds) or String (must be equal to option
-                <strong>format</strong>).</p>
-            </div>
-
-            <div>zIndex</div>
-            <div class="option-type">Number</div>
-            <div class="option-default">9999</div>
-            <div class="option-description">Control zIndex of the picker element.</div>
-
-            <div>minDate</div>
-            <div class="option-type">Date|Number|String</div>
-            <div class="option-default">null</div>
-            <div class="option-description">
-              <p>The minimum/earliest date that can be selected.</p>
-              <p>Date Object or Unix Timestamp (with milliseconds) or String (must be equal to option
-                <strong>format</strong>).</p>
-            </div>
-
-            <div>maxDate</div>
-            <div class="option-type">Date|Number|String</div>
-            <div class="option-default">null</div>
-            <div class="option-description">
-              <p>The maximum/latest date that can be selected.</p>
-              <p>Date Object or Unix Timestamp (with milliseconds) or String (must be equal to option
-                <strong>format</strong>).</p>
-            </div>
-
-            <div>minDays</div>
-            <div class="option-type">Number</div>
-            <div class="option-default">null</div>
-            <div class="option-description">The minimum days of the selected range.</div>
-
-            <div>maxDays</div>
-            <div class="option-type">Number</div>
-            <div class="option-default">null</div>
-            <div class="option-description">The maximum days of the selected range.</div>
-
-            <div>selectForward</div>
-            <div class="option-type">Boolean</div>
-            <div class="option-default">false</div>
-            <div class="option-description">Select second date after the first selected date.</div>
-
-            <div>selectBackward</div>
-            <div class="option-type">Boolean</div>
-            <div class="option-default">false</div>
-            <div class="option-description">Select second date before the first selected date.</div>
-
-            <div>splitView</div>
-            <div class="option-type">Boolean</div>
-            <div class="option-default">false</div>
-            <div class="option-description">Enable the previous and the next button for each month.</div>
-
-            <div>inlineMode</div>
-            <div class="option-type">Boolean</div>
-            <div class="option-default">false</div>
-            <div class="option-description">Show calendar inline.</div>
-
-            <div>singleMode</div>
-            <div class="option-type">Boolean</div>
-            <div class="option-default">true</div>
-            <div class="option-description">Choose a single date instead of a date range.</div>
-
-            <div>autoApply</div>
-            <div class="option-type">Boolean</div>
-            <div class="option-default">true</div>
-            <div class="option-description">Hide the apply and cancel buttons, and automatically apply a new date range
-              as soon as two dates are clicked.</div>
-
-            <div>allowRepick</div>
-            <div class="option-type">Boolean</div>
-            <div class="option-default">false</div>
-            <div class="option-description">
-              <p>Required <strong>elementEnd</strong>.</p>
-              <p>If date range is already selected, then user can change only one of start date or end date (depends on
-                clicked field) instead of new date range.</p>
-            </div>
-
-            <div>showWeekNumbers</div>
-            <div class="option-type">Boolean</div>
-            <div class="option-default">false</div>
-            <div class="option-description">Show week numbers. Based on option <strong>firstDay</strong>.</div>
-
-            <div>showTooltip</div>
-            <div class="option-type">Boolean</div>
-            <div class="option-default">true</div>
-            <div class="option-description">Showing tooltip with how much days will be selected.</div>
-
-            <div>hotelMode</div>
-            <div class="option-type">Boolean</div>
-            <div class="option-default">false</div>
-            <div class="option-description">
-              <p>Tooltip will shown nights count instead of days.</p>
-              <p>Also required to edit option <strong>tooltipText</strong>.</p>
-            </div>
-
-            <div>disableWeekends</div>
-            <div class="option-type">Boolean</div>
-            <div class="option-default">false</div>
-            <div class="option-description">Disable Saturday and Sunday.</div>
-
-            <div>scrollToDate</div>
-            <div class="option-type">Boolean</div>
-            <div class="option-default">true</div>
-            <div class="option-description">Scroll to start date on open.</div>
-
-            <div>mobileFriendly</div>
-            <div class="option-type">Boolean</div>
-            <div class="option-default">true</div>
-            <div class="option-description">
-              <p>Enable mobile friendly.</p>
-              <p>In portrait orientation, 1 calendar will be displayed at the bottom of the screen.</p>
-              <p>In landscape orientation 2 calendar will be displayed.</p>
-              <p>See demo above.</p>
-            </div>
-
-            <div>lockDaysFormat</div>
-            <div class="option-type">String</div>
-            <div class="option-default">YYYY-MM-DD</div>
-            <div class="option-description">Date format for option <strong>lockDays</strong>.</div>
-
-            <div>lockDays</div>
-            <div class="option-type">Array</div>
-            <div class="option-default">[]</div>
-            <div class="option-description">
-              <p>Disable days for select. Can contains array with range:</p>
-              <p>ex: [ ['2019-01-01', '2019-01-10'], '2019-01-31' ].</p>
-              <p>This example will disable range from 01 Jan 2019 to 10 Jan 2019 and 31 Jan 2019.</p>
-              <p>Can contains Date Object or Unix Timestamp (with milliseconds) or String (must be equal to option
-                <strong>lockDaysFormat</strong>).</p>
-            </div>
-
-            <div>disallowLockDaysInRange</div>
-            <div class="option-type">Boolean</div>
-            <div class="option-default">false</div>
-            <div class="option-description">
-              <p>Prevent to select date ranges with locked dates.</p>
-              <p>Throw error «INVALID_RANGE» in the event <strong>onError</strong>.</p>
-            </div>
-
-            <div>bookedDaysFormat</div>
-            <div class="option-type">String</div>
-            <div class="option-default">YYYY-MM-DD</div>
-            <div class="option-description">Date format for option <strong>bookedDays</strong>.</div>
-
-            <div>bookedDays</div>
-            <div class="option-type">Array</div>
-            <div class="option-default">[]</div>
-            <div class="option-description">
-              <p>Disable days for select as start date. Can contains array with range:</p>
-              <p>ex: [ ['2019-01-01', '2019-01-10'], '2019-01-31' ].</p>
-              <p>This example will disable range from 01 Jan 2019 to 10 Jan 2019 and 31 Jan 2019.</p>
-              <p>Can contains Date Object or Unix Timestamp (with milliseconds) or String (must be equal to option
-                <strong>bookedDaysFormat</strong>).</p>
-              <p>Unlike the option <strong>lockDays</strong>, booked days after start date will be available for select.
-              </p>
-            </div>
-
-            <div>buttonText</div>
-            <div class="option-type">Object</div>
-            <div class="option-default option-is-object">
-              {
-              apply: 'Apply',
-              cancel: 'Cancel',
-              previousMonth: '&lt;svg .../&gt;&lt;/svg&gt;',
-              nextMonth: '&lt;svg .../&gt;&lt;/svg&gt;',
-              }
-            </div>
-            <div class="option-description">Text for buttons.</div>
-
-            <div>tooltipText</div>
-            <div class="option-type">Object</div>
-            <div class="option-default option-is-object">
-              {
-              one: 'day',
-              other: 'days',
-              }
-            </div>
-            <div class="option-description">
-              <p>Text for the tooltip.</p>
-              <p>Keys depends on option <strong>lang</strong> (see <a
-                  href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/PluralRules"
-                  target="_blank">Intl.PluralRules</a>).</p>
-            </div>
+                target="_blank">Intl.PluralRules</a>).</p>
           </div>
         </div>
 
@@ -404,148 +402,145 @@
           Events
         </div>
 
-        <div class="table-grid table-grid-events">
-          <div class="table-grid-body">
-            <div class="header-cell">name</div>
-            <div class="header-cell">default</div>
-            <div class="header-cell option-description">description</div>
+        <div id="events-table">
+          <div class="header-cell">name</div>
+          <div class="header-cell">default</div>
+          <div class="header-cell option-description">description</div>
 
-            <div>onShow</div>
-            <div class="option-default">null</div>
-            <div class="option-description">
-              <p>Trigger on show the picker.</p>
-              <p>Example: <code>onShow: function() { console.log('show'); }</code></p>
-            </div>
+          <div>onShow</div>
+          <div class="option-default">null</div>
+          <div class="option-description">
+            <p>Trigger on show the picker.</p>
+            <p>Example: <code>onShow: function() { console.log('show'); }</code></p>
+          </div>
 
-            <div>onHide</div>
-            <div class="option-default">null</div>
-            <div class="option-description">
-              <p>Trigger on hide the picker.</p>
-              <p>Example: <code>onHide: function() { console.log('hide'); }</code></p>
-            </div>
+          <div>onHide</div>
+          <div class="option-default">null</div>
+          <div class="option-description">
+            <p>Trigger on hide the picker.</p>
+            <p>Example: <code>onHide: function() { console.log('hide'); }</code></p>
+          </div>
 
-            <div>onSelect</div>
-            <div class="option-default">null</div>
-            <div class="option-description">
-              <p>Trigger on select date/date range.</p>
-              <p>Example: <code>onSelect: function(date1, date2) { console.log(date1, date2); }</code></p>
-              <p>date1 and date2 is Date Object.</p>
-              <p>date2 is avaiable when the option <strong>singleMode</strong> is false</p>
-            </div>
+          <div>onSelect</div>
+          <div class="option-default">null</div>
+          <div class="option-description">
+            <p>Trigger on select date/date range.</p>
+            <p>Example: <code>onSelect: function(date1, date2) { console.log(date1, date2); }</code></p>
+            <p>date1 and date2 is Date Object.</p>
+            <p>date2 is avaiable when the option <strong>singleMode</strong> is false</p>
+          </div>
 
-            <div>onError</div>
-            <div class="option-default">null</div>
-            <div class="option-description">
-              <p>Trigger on error date/date range.</p>
-              <p>Example: <code>onError: function(error) { console.log(error); }</code></p>
-              <p>At the moment works only with option <strong>disallowLockDaysInRange</strong>.</p>
-            </div>
+          <div>onError</div>
+          <div class="option-default">null</div>
+          <div class="option-description">
+            <p>Trigger on error date/date range.</p>
+            <p>Example: <code>onError: function(error) { console.log(error); }</code></p>
+            <p>At the moment works only with option <strong>disallowLockDaysInRange</strong>.</p>
+          </div>
 
-            <div>onChangeMonth</div>
-            <div class="option-default">null</div>
-            <div class="option-description">
-              <p>Trigger on change month.</p>
-              <p>Example: <code>onChangeMonth: function(date, idx) { console.log(date, idx); }</code></p>
-              <p>date is Date Object, idx is Number.</p>
-              <p>idx is showing which calendar has change when option <strong>splitView</strong> is enabled.</p>
-              <p>idx starts from 0.</p>
-            </div>
+          <div>onChangeMonth</div>
+          <div class="option-default">null</div>
+          <div class="option-description">
+            <p>Trigger on change month.</p>
+            <p>Example: <code>onChangeMonth: function(date, idx) { console.log(date, idx); }</code></p>
+            <p>date is Date Object, idx is Number.</p>
+            <p>idx is showing which calendar has change when option <strong>splitView</strong> is enabled.</p>
+            <p>idx starts from 0.</p>
           </div>
         </div>
+
         <hr>
 
         <div class="lead">
           Methods
         </div>
 
-        <div class="table-grid table-grid-methods">
-          <div class="table-grid-body">
-            <div class="header-cell">name</div>
-            <div class="header-cell">arguments</div>
-            <div class="header-cell option-description">description</div>
+        <div id="methods-table">
+          <div class="header-cell">name</div>
+          <div class="header-cell">arguments</div>
+          <div class="header-cell option-description">description</div>
 
-            <div>show</div>
-            <div class="option-default">-</div>
-            <div class="option-description">
-              <p>Make the picker visible.</p>
-            </div>
+          <div>show</div>
+          <div class="option-default">-</div>
+          <div class="option-description">
+            <p>Make the picker visible.</p>
+          </div>
 
-            <div>hide</div>
-            <div class="option-default">-</div>
-            <div class="option-description">
-              <p>Hide the picker.</p>
-            </div>
+          <div>hide</div>
+          <div class="option-default">-</div>
+          <div class="option-description">
+            <p>Hide the picker.</p>
+          </div>
 
-            <div>getDate</div>
-            <div class="option-default">-</div>
-            <div class="option-description">
-              <p>Alias of <strong>getStartDate</strong>.</p>
-            </div>
+          <div>getDate</div>
+          <div class="option-default">-</div>
+          <div class="option-description">
+            <p>Alias of <strong>getStartDate</strong>.</p>
+          </div>
 
-            <div>getStartDate</div>
-            <div class="option-default">-</div>
-            <div class="option-description">
-              <p>Return current start of date range as Date Object.</p>
-            </div>
+          <div>getStartDate</div>
+          <div class="option-default">-</div>
+          <div class="option-description">
+            <p>Return current start of date range as Date Object.</p>
+          </div>
 
-            <div>getEndDate</div>
-            <div class="option-default">-</div>
-            <div class="option-description">
-              <p>Return current end of date range as Date Object.</p>
-            </div>
+          <div>getEndDate</div>
+          <div class="option-default">-</div>
+          <div class="option-description">
+            <p>Return current end of date range as Date Object.</p>
+          </div>
 
-            <div>setDate</div>
-            <div class="option-default">date</div>
-            <div class="option-description">
-              <p>Set date when <strong>singleDate</strong> is true.</p>
-              <p>date is should be Date Object or Unix Timestamp (with milliseconds) or String (must be equal to option
-                <strong>format</strong>).</p>
-            </div>
+          <div>setDate</div>
+          <div class="option-default">date</div>
+          <div class="option-description">
+            <p>Set date when <strong>singleDate</strong> is true.</p>
+            <p>date is should be Date Object or Unix Timestamp (with milliseconds) or String (must be equal to option
+              <strong>format</strong>).</p>
+          </div>
 
-            <div>setDateRange</div>
-            <div class="option-default">date1, date2</div>
-            <div class="option-description">
-              <p>Set date range.</p>
-              <p>date1, date2 is should be Date Object or Unix Timestamp (with milliseconds) or String (must be equal to
-                option
-                <strong>format</strong>).</p>
-            </div>
+          <div>setDateRange</div>
+          <div class="option-default">date1, date2</div>
+          <div class="option-description">
+            <p>Set date range.</p>
+            <p>date1, date2 is should be Date Object or Unix Timestamp (with milliseconds) or String (must be equal to
+              option
+              <strong>format</strong>).</p>
+          </div>
 
-            <div>setLockDays</div>
-            <div class="option-default">array</div>
-            <div class="option-description">
-              <p>Set lock days.</p>
-              <p>See options <strong>lockDays</strong> for format information.</p>
-            </div>
+          <div>setLockDays</div>
+          <div class="option-default">array</div>
+          <div class="option-description">
+            <p>Set lock days.</p>
+            <p>See options <strong>lockDays</strong> for format information.</p>
+          </div>
 
-            <div>setBookedDays</div>
-            <div class="option-default">array</div>
-            <div class="option-description">
-              <p>Set booked days.</p>
-              <p>See options <strong>bookedDays</strong> for format information.</p>
-            </div>
+          <div>setBookedDays</div>
+          <div class="option-default">array</div>
+          <div class="option-description">
+            <p>Set booked days.</p>
+            <p>See options <strong>bookedDays</strong> for format information.</p>
+          </div>
 
-            <div>gotoDate</div>
-            <div class="option-default">date, idx?</div>
-            <div class="option-description">
-              <p>Set month by the date.</p>
-              <p>date is should be Date Object or Unix Timestamp (with milliseconds) or String (must be equal to option
-                <strong>format</strong>).</p>
-              <p>idx is required when option <strong>splitView</strong> is enabled.</p>
-            </div>
+          <div>gotoDate</div>
+          <div class="option-default">date, idx?</div>
+          <div class="option-description">
+            <p>Set month by the date.</p>
+            <p>date is should be Date Object or Unix Timestamp (with milliseconds) or String (must be equal to option
+              <strong>format</strong>).</p>
+            <p>idx is required when option <strong>splitView</strong> is enabled.</p>
+          </div>
 
-            <div>setOptions</div>
-            <div class="option-default">Object</div>
-            <div class="option-description">
-              <p>Set new options to the picker.</p>
-              <p>Options <strong>element, elementEnd, parentEl</strong> cannot be changed.</p>
-            </div>
+          <div>setOptions</div>
+          <div class="option-default">Object</div>
+          <div class="option-description">
+            <p>Set new options to the picker.</p>
+            <p>Options <strong>element, elementEnd, parentEl</strong> cannot be changed.</p>
+          </div>
 
-            <div>destroy</div>
-            <div class="option-default">-</div>
-            <div class="option-description">
-              <p>Destroy the picker.</p>
-            </div>
+          <div>destroy</div>
+          <div class="option-default">-</div>
+          <div class="option-description">
+            <p>Destroy the picker.</p>
           </div>
         </div>
       </div>

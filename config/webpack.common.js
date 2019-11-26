@@ -17,7 +17,7 @@ module.exports = {
       {
         exclude: /node_modules/,
         test: /\.ts?$/,
-        loader: 'babel-loader',
+        loader: 'ts-loader',
       },
       {
         test: /\.scss$/,

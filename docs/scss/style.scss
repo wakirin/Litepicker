@@ -160,7 +160,8 @@ button.calendar-icon {
 
 #litepicker {
   border-radius: 6px;
-  width: 500px;
+  max-width: 500px;
+  width: 100%;
   border: 1px solid #ddd;
   font-size: 1.5em;
   text-align: center;
@@ -211,86 +212,79 @@ input.apple-switch {
     margin-bottom: 0.5em;
   }
 
-  .table-grid {
-    &.table-grid-options {
-      .table-grid-header,
-      .table-grid-body {
-        grid-template-columns: repeat(6, 1fr);
-      }
+  .option {
+    &-type {
+      text-align: center;
+    }
+    &-default {
+      text-align: center;
+      font-family: monospace;
+    }
+    &-is-object {
+      white-space: pre-line;
+      text-align: left;
+      line-height: 1;
+    }
+  }
+}
+
+#options-table,
+#events-table,
+#methods-table {
+  display: flex;
+  flex-wrap: wrap;
+
+  > div {
+    padding: 15px;
+    border-bottom: 1px solid #f1f1f1;
+    border-bottom: 1px solid #f1f1f1;
+    border-right: 1px solid #f1f1f1;
+
+    &:last-child {
+      border-right: none;
     }
 
-    &.table-grid-events,
-    &.table-grid-methods {
-      .table-grid-header,
-      .table-grid-body {
-        grid-template-columns: repeat(5, 1fr);
-      }
-    }
-    .table-grid-header,
-    .table-grid-body {
-      display: grid;
-
-      > div {
-        padding: 15px;
-        border-bottom: 1px solid #f1f1f1;
-        border-bottom: 1px solid #f1f1f1;
-        border-right: 1px solid #f1f1f1;
-
-        > p:first-child {
-          margin-top: 0;
-        }
-
-        > p:last-child {
-          margin-bottom: 0;
-        }
-
-        &:last-child {
-          border-right: none;
-        }
-      }
-
-      .header-cell {
-        font-weight: bold;
-        text-align: center;
-      }
+    > p:first-child {
+      margin-top: 0;
     }
 
-    .table-grid-header {
-      > div {
-        font-weight: bold;
-        text-align: center;
-      }
+    > p:last-child {
+      margin-bottom: 0;
     }
+  }
 
-    .option {
-      &-type {
-        text-align: center;
-      }
-      &-default {
-        text-align: center;
-        font-family: monospace;
-      }
-      &-is-object {
-        white-space: pre-line;
-        text-align: left;
-        line-height: 1;
-      }
-      &-description {
-        grid-column: span 3;
-      }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+
+    th,
+    td {
+      border: 1px solid #bdbdbd;
+      padding: 3px 10px;
     }
+  }
+}
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      border-spacing: 0;
+#options-table > div {
+  &:nth-child(4n + 1),
+  &:nth-child(4n + 2),
+  &:nth-child(4n + 3) {
+    width: 15%;
+  }
+  &:nth-child(4n + 4) {
+    flex-basis: 40%;
+  }
+}
 
-      th,
-      td {
-        border: 1px solid #bdbdbd;
-        padding: 3px 10px;
-      }
-    }
+#events-table > div,
+#methods-table > div {
+  &:nth-child(3n + 1),
+  &:nth-child(3n + 2) {
+    width: 15%;
+  }
+  &:nth-child(3n + 3) {
+    flex-basis: 55%;
   }
 }
 
@@ -318,75 +312,45 @@ input.apple-switch {
     #demo-preview {
       margin-bottom: 2em;
     }
-
-    #litepicker {
-      width: 100%;
-    }
   }
 
   #options-description {
-    .table-grid.table-grid-options {
-      .table-grid-header {
-        display: none;
-      }
+    .table-grid-header {
+      display: none;
+    }
+  }
 
-      .table-grid-body {
-        grid-template-columns: auto;
-
-        .header-cell {
-          display: none;
-        }
-
-        > div {
-          border-bottom: none;
-          border-right: none;
-          text-align: left;
-        }
-
-        > div:nth-child(4n) {
-          border-bottom: 1px solid #f1f1f1;
-        }
-
-        > div:nth-child(4n + 1) {
-          font-weight: bold;
-        }
-
-        .option-description {
-          grid-column: auto / auto;
-        }
-      }
+  #options-table,
+  #events-table,
+  #methods-table {
+    > div:nth-child(n) {
+      border-bottom: none;
+      border-right: none;
+      text-align: left;
+      flex-basis: 100%;
     }
 
-    .table-grid.table-grid-events,
-    .table-grid.table-grid-methods {
-      .table-grid-header {
-        display: none;
-      }
-      .table-grid-body {
-        grid-template-columns: auto;
+    .header-cell {
+      display: none;
+    }
+  }
 
-        .header-cell {
-          display: none;
-        }
+  #options-table > div {
+    &:nth-child(4n) {
+      border-bottom: 1px solid #f1f1f1;
+    }
+    &:nth-child(4n + 1) {
+      font-weight: bold;
+    }
+  }
+  #events-table > div,
+  #methods-table > div {
+    &::nth-child(3n) {
+      border-bottom: 1px solid #f1f1f1;
+    }
 
-        > div {
-          border-bottom: none;
-          border-right: none;
-          text-align: left;
-        }
-
-        > div:nth-child(3n) {
-          border-bottom: 1px solid #f1f1f1;
-        }
-
-        > div:nth-child(3n + 1) {
-          font-weight: bold;
-        }
-
-        .option-description {
-          grid-column: auto / auto;
-        }
-      }
+    &:nth-child(3n + 1) {
+      font-weight: bold;
     }
   }
 }

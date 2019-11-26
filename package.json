@@ -36,17 +36,9 @@
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
-    "@babel/core": "^7.7.4",
-    "@babel/plugin-proposal-class-properties": "^7.7.4",
-    "@babel/polyfill": "^7.7.0",
-    "@babel/preset-env": "^7.7.4",
-    "@babel/preset-react": "^7.7.4",
-    "@babel/preset-typescript": "^7.7.4",
-    "@babel/register": "^7.7.4",
     "@types/jest": "^24.0.23",
     "@types/node": "^12.12.7",
     "autoprefixer": "^9.7.2",
-    "babel-loader": "^8.0.6",
     "copy-webpack-plugin": "^5.0.5",
     "css-loader": "^3.2.0",
     "dts-css-modules-loader": "^1.0.1",
@@ -72,15 +64,5 @@
     "not ie < 11",
     "last 2 versions",
     "> 1%"
-  ],
-  "babel": {
-    "presets": [
-      "@babel/preset-env",
-      "@babel/preset-react",
-      "@babel/preset-typescript"
-    ],
-    "plugins": [
-      ["@babel/plugin-proposal-class-properties", { "loose": true }]
-    ]
-  }
+  ]
 }
