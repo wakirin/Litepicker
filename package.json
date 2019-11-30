@@ -1,6 +1,6 @@
 {
   "name": "litepicker",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "Date range picker - lightweight, no dependencies",
   "main": "./dist/js/main.js",
   "scripts": {

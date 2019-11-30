@@ -76,6 +76,10 @@ export class Calendar {
       months.classList.add(style.splitView);
     }
 
+    if (this.options.showWeekNumbers) {
+      months.classList.add(style.showWeekNumbers);
+    }
+
     const startDate = this.calendars[0].clone();
     const startMonthIdx = startDate.getMonth();
     const totalMonths = startDate.getMonth() + this.options.numberOfMonths;
@@ -116,10 +120,6 @@ export class Calendar {
 
     const month = document.createElement('div');
     month.className = style.monthItem;
-
-    if (this.options.showWeekNumbers) {
-      month.classList.add(style.showWeekNumbers);
-    }
 
     const monthHeader = document.createElement('div');
     monthHeader.className = style.monthItemHeader;
