@@ -146,6 +146,10 @@ export class Litepicker extends Calendar {
           }
 
           this.render();
+
+          const pickerBCR = this.picker.getBoundingClientRect();
+          this.picker.style.top = `calc(50% - ${(pickerBCR.height / 2)}px)`;
+          this.picker.style.left = `calc(50% - ${(pickerBCR.width / 2)}px)`;
         }
       });
     }

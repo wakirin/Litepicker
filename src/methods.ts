@@ -50,11 +50,6 @@ Litepicker.prototype.show = function (el = null) {
   if (this.options.mobileFriendly && isMobile()) {
     this.picker.style.position = 'fixed';
     this.picker.style.display = 'block';
-    this.picker.style.top = null;
-    this.picker.style.left = 0;
-    this.picker.style.right = 0;
-    this.picker.style.bottom = 0;
-    this.picker.style.zIndex = this.options.zIndex;
 
     if (getOrientation() === 'portrait') {
       this.options.numberOfMonths = 1;
@@ -64,11 +59,18 @@ Litepicker.prototype.show = function (el = null) {
       this.options.numberOfColumns = 2;
     }
 
+    this.render();
+
+    const pickerBCR = this.picker.getBoundingClientRect();
+    this.picker.style.top = `calc(50% - ${(pickerBCR.height / 2)}px)`;
+    this.picker.style.left = `calc(50% - ${(pickerBCR.width / 2)}px)`;
+    this.picker.style.right = null;
+    this.picker.style.bottom = null;
+    this.picker.style.zIndex = this.options.zIndex;
+
     this.backdrop.style.display = 'block';
     this.backdrop.style.zIndex = this.options.zIndex - 1;
     document.body.classList.add(style.litepickerOpen);
-
-    this.render();
 
     if (typeof this.options.onShow === 'function') {
       this.options.onShow.call(this);
