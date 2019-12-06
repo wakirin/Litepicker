@@ -296,6 +296,7 @@ export class DateTime extends Date {
 
   public diff(date, unit = 'seconds') {
     const oneDay = 1000 * 60 * 60 * 24;
+
     switch (unit) {
       default:
       case 'second':
@@ -304,7 +305,7 @@ export class DateTime extends Date {
 
       case 'day':
       case 'days':
-        return (this.getTime() - date.getTime()) / oneDay;
+        return Math.round((this.getTime() - date.getTime()) / oneDay);
 
       case 'month':
       case 'months':
