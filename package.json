@@ -39,7 +39,6 @@
     "@types/jest": "^24.0.23",
     "@types/node": "^12.12.7",
     "autoprefixer": "^9.7.2",
-    "copy-webpack-plugin": "^5.0.5",
     "css-loader": "^3.2.0",
     "dts-css-modules-loader": "^1.0.1",
     "identity-obj-proxy": "^3.0.0",
