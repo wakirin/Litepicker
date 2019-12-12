@@ -367,8 +367,9 @@ export class Calendar {
 
   protected renderWeekNumber(date) {
     const wn = document.createElement('div');
+    const week = date.getWeek(this.options.firstDay);
     wn.className = style.weekNumber;
-    wn.innerHTML = date.getWeek(this.options.firstDay);
+    wn.innerHTML = week === 53 && date.getMonth() === 0 ? '53 / 1' : week;
 
     return wn;
   }
