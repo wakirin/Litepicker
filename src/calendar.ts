@@ -24,6 +24,7 @@ export class Calendar {
     splitView: false,
     inlineMode: false,
     singleMode: true,
+    isRtl: false,
     autoApply: true,
     allowRepick: false,
     showWeekNumbers: false,
@@ -64,6 +65,11 @@ export class Calendar {
   protected datePicked: DateTime[] = [];
 
   protected render() {
+    if (this.options.isRtl) {
+      this.options.previousMonth = '<svg width="11" height="16" xmlns="http://www.w3.org/2000/svg"><path d="M2.748 16L0 13.333 5.333 8 0 2.667 2.748 0l7.919 8z" fill-rule="nonzero"/></svg>',
+      this.options.nextMonth = '<svg width="11" height="16" xmlns="http://www.w3.org/2000/svg"><path d="M7.919 0l2.748 2.667L5.333 8l5.334 5.333L7.919 16 0 8z" fill-rule="nonzero"/></svg>'
+    }
+
     const months = document.createElement('div');
     months.className = style.containerMonths;
 
@@ -204,6 +210,9 @@ export class Calendar {
     if (this.datePicked.length) {
       if (this.datePicked[0].toDateString() === date.toDateString()) {
         day.classList.add(style.isStartDate);
+        if (this.options.isRtl) {
+          day.classList.add(style.isFlipped);
+        }
 
         if (this.options.singleMode) {
           day.classList.add(style.isEndDate);
@@ -213,6 +222,9 @@ export class Calendar {
       if (this.datePicked.length === 2
         && this.datePicked[1].toDateString() === date.toDateString()) {
         day.classList.add(style.isEndDate);
+        if (this.options.isRtl) {
+          day.classList.add(style.isFlipped);
+        }
       }
 
       if (this.datePicked.length === 2) {
@@ -223,6 +235,9 @@ export class Calendar {
     } else if (this.options.startDate) {
       if (this.options.startDate.toDateString() === date.toDateString()) {
         day.classList.add(style.isStartDate);
+        if (this.options.isRtl) {
+          day.classList.add(style.isFlipped);
+        }
 
         if (this.options.singleMode) {
           day.classList.add(style.isEndDate);
@@ -231,6 +246,9 @@ export class Calendar {
 
       if (this.options.endDate && this.options.endDate.toDateString() === date.toDateString()) {
         day.classList.add(style.isEndDate);
+        if (this.options.isRtl) {
+          day.classList.add(style.isFlipped);
+        }
       }
 
       if (this.options.startDate && this.options.endDate) {

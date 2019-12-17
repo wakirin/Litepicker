@@ -472,12 +472,18 @@ export class Litepicker extends Calendar {
       let date1 = this.datePicked[0].clone();
       let date2 = new DateTime(target.dataset.time);
       let isFlipped = false;
+      if (this.options.isRtl) {
+        isFlipped = true;
+      }
 
       if (date1.getTime() > date2.getTime()) {
         const tempDate = date1.clone();
         date1 = date2.clone();
         date2 = tempDate.clone();
         isFlipped = true;
+        if (this.options.isRtl) {
+          isFlipped = false;
+        }
       }
 
       [...this.picker.querySelectorAll(`.${style.dayItem}`)].forEach((d: HTMLElement) => {

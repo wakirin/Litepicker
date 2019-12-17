@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0">
+    <title>Litepicker - Date range picker - lightweight, no dependencies</title>
+</head>
+
+<body style="text-align: center;">
+<div id="parent">
+    <input id="datepicker" />
+</div>
+<script src="../dist/js/main.js"></script>
+<script>
+    let picker = new Litepicker({
+        element: document.getElementById('datepicker'),
+        parentEl: document.getElementById('parent'),
+        firstDay: 0,
+        lang: 'he-IL',
+        format: 'DD/MM/YYYY',
+        lockDaysFormat: 'DD/MM/YYYY',
+        bookedDaysFormat: 'YYYY-MM-DD',
+        buttonText: {
+            apply: 'החל',
+            cancel: 'ביטול',
+            previousMonth: '<svg width="11" height="16" xmlns="http://www.w3.org/2000/svg"><path d="M2.748 16L0 13.333 5.333 8 0 2.667 2.748 0l7.919 8z" fill-rule="nonzero"/></svg>',
+            nextMonth: '<svg width="11" height="16" xmlns="http://www.w3.org/2000/svg"><path d="M7.919 0l2.748 2.667L5.333 8l5.334 5.333L7.919 16 0 8z" fill-rule="nonzero"/></svg>'
+        },
+        tooltipText: {
+            one: 'יום',
+            other: 'ימים'
+        },
+        scrollToDate: true,
+        mobileFriendly: true,
+        autoApply: true,
+        showTooltip: true,
+        singleMode: false,
+        selectForward: false,
+        isRtl: true,
+    });
+</script>
+</body>
+
+</html>
