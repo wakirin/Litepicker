@@ -32,7 +32,9 @@ module.exports = {
           {
             loader: 'css-loader',
             options: {
-              modules: true, // this option must be enabled
+              modules: {
+                localIdentName: '[local]',
+              },
               localsConvention: 'camelCaseOnly'
             }
           },
