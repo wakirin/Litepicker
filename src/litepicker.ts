@@ -163,9 +163,9 @@ export class Litepicker extends Calendar {
 
   private parseInput() {
     if (this.options.elementEnd) {
-      if (this.options.element instanceof HTMLElement
+      if (this.options.element instanceof HTMLInputElement
         && this.options.element.value.length
-        && this.options.elementEnd instanceof HTMLElement
+        && this.options.elementEnd instanceof HTMLInputElement
         && this.options.elementEnd.value.length) {
         return [
           new DateTime(this.options.element.value),
@@ -173,7 +173,7 @@ export class Litepicker extends Calendar {
         ];
       }
     } else if (this.options.singleMode) {
-      if (this.options.element instanceof HTMLElement
+      if (this.options.element instanceof HTMLInputElement
         && this.options.element.value.length) {
         return [
           new DateTime(this.options.element.value),

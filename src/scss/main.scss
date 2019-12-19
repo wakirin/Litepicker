@@ -41,6 +41,7 @@
       border-radius: 5px;
       box-shadow: 0 0 5px #ddd;
       width: calc(var(--litepickerMonthWidth) + 10px); // 10px is padding (left 5px, right: 5px)
+      box-sizing: content-box;
 
       &.columns-2 {
         width: calc((var(--litepickerMonthWidth) * 2) + 20px);
