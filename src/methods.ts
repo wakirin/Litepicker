@@ -41,9 +41,13 @@ Litepicker.prototype.show = function (el = null) {
 
   if (this.options.scrollToDate) {
     if (this.options.startDate && (!el || el === this.options.element)) {
-      this.calendars[0] = this.options.startDate.clone();
+      const startDate = this.options.startDate.clone();
+      startDate.setDate(1);
+      this.calendars[0] = startDate.clone();
     } else if (el && this.options.endDate && el === this.options.elementEnd) {
-      this.calendars[0] = this.options.endDate.clone();
+      const endDate = this.options.endDate.clone();
+      endDate.setDate(1);
+      this.calendars[0] = endDate.clone();
     }
   }
 
@@ -242,7 +246,9 @@ Litepicker.prototype.setDateRange = function (date1, date2) {
 };
 
 Litepicker.prototype.gotoDate = function (date, idx = 0) {
-  this.calendars[idx] = new DateTime(date);
+  const toDate = new DateTime(date);
+  toDate.setDate(1);
+  this.calendars[idx] = toDate.clone();
   this.render();
 };
 
@@ -299,6 +305,7 @@ Litepicker.prototype.setOptions = function (options) {
     const date = this.options.startDate
       ? this.options.startDate.clone()
       : new DateTime();
+    date.setDate(1);
     date.setMonth(date.getMonth() + idx);
     this.calendars[idx] = date;
   }

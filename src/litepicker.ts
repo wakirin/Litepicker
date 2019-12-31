@@ -79,6 +79,7 @@ export class Litepicker extends Calendar {
       const date = this.options.startDate instanceof Date
         ? this.options.startDate.clone()
         : new DateTime();
+      date.setDate(1);
       date.setMonth(date.getMonth() + idx);
       this.calendars[idx] = date;
     }
