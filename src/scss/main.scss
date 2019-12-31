@@ -69,6 +69,7 @@
       .month-item {
         padding: 5px;
         width: var(--litepickerMonthWidth);
+        box-sizing: content-box;
 
         &-header {
           display: flex;
@@ -78,6 +79,10 @@
           text-align: center;
           align-items: center;
           color: var(--litepickerMonthHeaderTextColor);
+
+          div > strong {
+            margin-right: 5px;
+          }
 
           .button-previous-month,
           .button-next-month {
@@ -116,6 +121,7 @@
             font-size: 85%;
             flex: 1;
             width: var(--litepickerDayWidth);
+            text-align: center;
           }
         }
 
@@ -151,6 +157,7 @@
       justify-self: center;
       justify-content: flex-start;
       text-align: center;
+      box-sizing: content-box;
 
       > div,
       > a {

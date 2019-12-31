@@ -379,6 +379,22 @@
             </p>
           </div>
 
+          <div>dropdowns</div>
+          <div class="option-type">Object</div>
+          <div class="option-default option-is-object">
+            {
+              minYear: 1990,
+              maxYear: null,
+              months: false,
+              years: false,
+            }
+          </div>
+          <div class="option-description">
+            Enable dropdowns for months, years. 
+            <br>
+            If <code>maxYear</code> is <code>null</code> then <code>maxYear</code> will be equal to <code>(new Date()).getFullYear()</code>.
+          </div>
+
           <div>buttonText</div>
           <div class="option-type">Object</div>
           <div class="option-default option-is-object">
@@ -614,7 +630,7 @@
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/litepicker@1.0.19/dist/js/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/litepicker@1.0.20/dist/js/main.js"></script>
   <script src="./js/demo.js"></script>
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <script>

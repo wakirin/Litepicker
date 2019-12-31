@@ -40,6 +40,13 @@ const defaultOptions = {
   bookedDaysFormat: 'YYYY-MM-DD',
   bookedDays: [],
 
+  dropdowns: {
+    minYear: 1990,
+    maxYear: null,
+    months: false,
+    years: false,
+  },
+
   buttonText: {
     apply: 'Apply',
     cancel: 'Cancel',

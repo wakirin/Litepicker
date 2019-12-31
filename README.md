@@ -20,7 +20,6 @@ See more details in docs.
 ## [Demo & Docs](https://wakirin.github.io/Litepicker)
 
 ## Compatibility
-* ~~IE~~
 * Edge 17+
 * Chrome 60+
 * Firefox 52+

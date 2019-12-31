@@ -40,6 +40,13 @@ export class Calendar {
     bookedDaysFormat: 'YYYY-MM-DD',
     bookedDays: [],
 
+    dropdowns: {
+      minYear: 1990,
+      maxYear: null,
+      months: false,
+      years: false,
+    },
+
     buttonText: {
       apply: 'Apply',
       cancel: 'Cancel',
@@ -88,6 +95,7 @@ export class Calendar {
     // tslint:disable-next-line: prefer-for-of
     for (let idx = startMonthIdx; idx < totalMonths; idx += 1) {
       let dateIterator = startDate.clone();
+      dateIterator.setDate(1);
 
       if (this.options.splitView) {
         dateIterator = this.calendars[calendarIdx].clone();
@@ -114,7 +122,6 @@ export class Calendar {
 
   protected renderMonth(date: DateTime) {
     const startDate = date.clone();
-    startDate.setDate(1);
 
     const totalDays = 32 - new Date(startDate.getFullYear(), startDate.getMonth(), 32).getDate();
 
@@ -123,14 +130,119 @@ export class Calendar {
 
     const monthHeader = document.createElement('div');
     monthHeader.className = style.monthItemHeader;
-    monthHeader.innerHTML = `
-      <a href="#" class="${style.buttonPreviousMonth}">${this.options.buttonText.previousMonth}</a>
-      <div>
-        <strong>${date.toLocaleString(this.options.lang, { month: 'long' })}</strong>
-        ${date.getFullYear()}
-      </div>
-      <a href="#" class="${style.buttonNextMonth}">${this.options.buttonText.nextMonth}</a>
-    `;
+
+    const monthAndYear = document.createElement('div');
+
+    if (this.options.dropdowns.months) {
+      const selectMonths = document.createElement('select');
+
+      for (let x = 0; x < 12; x += 1) {
+        const option = document.createElement('option');
+        const optionMonth = new DateTime(new Date(date.getFullYear(), x, 1, 0, 0, 0));
+
+        option.value = String(x);
+        option.text = optionMonth.toLocaleString(this.options.lang, { month: 'long' });
+        option.disabled = (this.options.minDate
+          && optionMonth.isBefore(new DateTime(this.options.minDate), 'month'))
+          || (this.options.maxDate && optionMonth.isBefore(new DateTime(this.options.maxDate), 'month'));
+        option.selected = optionMonth.getMonth() === date.getMonth();
+
+        selectMonths.appendChild(option);
+      }
+
+      selectMonths.addEventListener('change', (e) => {
+        const target = e.target as HTMLSelectElement;
+
+        let idx = 0;
+
+        if (this.options.splitView) {
+          const monthItem = target.closest(`.${style.monthItem}`);
+          idx = [...monthItem.parentNode.childNodes].findIndex(el => el === monthItem);
+        }
+
+        this.calendars[idx].setMonth(Number(target.value));
+        this.render();
+
+        if (typeof this.options.onChangeMonth === 'function') {
+          this.options.onChangeMonth.call(this, this.calendars[idx], idx);
+        }
+      });
+
+      monthAndYear.appendChild(selectMonths);
+    } else {
+      const monthName = document.createElement('strong');
+      monthName.innerHTML = date.toLocaleString(this.options.lang, { month: 'long' });
+      monthAndYear.appendChild(monthName);
+    }
+
+    if (this.options.dropdowns.years) {
+      const selectYears = document.createElement('select');
+
+      const minYear = this.options.dropdowns.minYear;
+      const maxYear = this.options.dropdowns.maxYear
+        ? this.options.dropdowns.maxYear
+        : (new Date()).getFullYear();
+
+      if (date.getFullYear() > maxYear) {
+        const option = document.createElement('option');
+        option.value = String(date.getFullYear());
+        option.text = String(date.getFullYear());
+        option.selected = true;
+        option.disabled = true;
+
+        selectYears.appendChild(option);
+      }
+
+      for (let x = maxYear; x >= minYear; x -= 1) {
+        const option = document.createElement('option');
+        const optionYear = new DateTime(new Date(x, 0, 1, 0, 0, 0));
+        option.value = x;
+        option.text = x;
+        option.disabled = (this.options.minDate
+          && optionYear.isBefore(new DateTime(this.options.minDate), 'month'))
+          || (this.options.maxDate && optionYear.isBefore(new DateTime(this.options.maxDate), 'month'));
+        option.selected = date.getFullYear() === x;
+
+        selectYears.appendChild(option);
+      }
+
+      selectYears.addEventListener('change', (e) => {
+        const target = e.target as HTMLSelectElement;
+
+        let idx = 0;
+
+        if (this.options.splitView) {
+          const monthItem = target.closest(`.${style.monthItem}`);
+          idx = [...monthItem.parentNode.childNodes].findIndex(el => el === monthItem);
+        }
+
+        this.calendars[idx].setFullYear(Number(target.value));
+        this.render();
+
+        if (typeof this.options.onChangeYear === 'function') {
+          this.options.onChangeYear.call(this, this.calendars[idx], idx);
+        }
+      });
+
+      monthAndYear.appendChild(selectYears);
+    } else {
+      const monthYear = document.createTextNode(String(date.getFullYear()));
+      monthAndYear.appendChild(monthYear);
+    }
+
+    const previousMonthButton = document.createElement('a');
+    previousMonthButton.href = '#';
+    previousMonthButton.className = style.buttonPreviousMonth;
+    previousMonthButton.innerHTML = this.options.buttonText.previousMonth;
+
+    const nextMonthButton = document.createElement('a');
+    nextMonthButton.href = '#';
+    nextMonthButton.className = style.buttonNextMonth;
+    nextMonthButton.innerHTML = this.options.buttonText.nextMonth;
+
+    monthHeader.appendChild(previousMonthButton);
+    monthHeader.appendChild(monthAndYear);
+    monthHeader.appendChild(nextMonthButton);
 
     if (this.options.minDate
       && startDate.isSameOrBefore(new DateTime(this.options.minDate), 'month')) {
