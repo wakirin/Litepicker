@@ -1,7 +1,7 @@
 import { DateTime } from '../src/datetime';
 
 // 23 Nov, 2019 - repository creation date
-const date = new Date(2019, 10, 23, 0, 0, 0);
+const date = new Date(2019, 10, 23, 0, 0, 0, 0);
 
 test('new DateTime', () => {
   const dt1 = new DateTime();

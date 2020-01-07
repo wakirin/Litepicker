@@ -2,12 +2,10 @@ export class DateTime extends Date {
 
   public static parseDateTime(date, format = 'YYYY-MM-DD', lang = 'en-US') {
     if (!date) return new Date(NaN);
-    if (date instanceof Date) return new Date(date);
-    if (/^\d{10,}$/.test(date)) {
-      const d = new Date(Number(date));
 
-      return new Date(d.getFullYear(), d.getMonth(), d.getDate(), 0, 0, 0, 0);
-    }
+    if (date instanceof Date) return DateTime.getDateZeroTime(new Date(date));
+
+    if (/^\d{10,}$/.test(date)) return DateTime.getDateZeroTime(new Date(Number(date)));
 
     if (typeof date === 'string') {
       const match = format.match(/\[([^\]]+)]|Y{2,4}|M{1,4}|D{1,2}|d{1,4}/g);
@@ -96,7 +94,7 @@ export class DateTime extends Date {
       }
     }
 
-    return new Date(date);
+    return DateTime.getDateZeroTime(new Date(date));
   }
 
   public static convertArray(array, format) {
@@ -109,6 +107,10 @@ export class DateTime extends Date {
       });
   }
 
+  public static getDateZeroTime(date) {
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0);
+  }
+
   protected lang;
 
   constructor(date = null, format = null, lang = 'en-US') {
@@ -117,7 +119,7 @@ export class DateTime extends Date {
     } else if (date) {
       super(DateTime.parseDateTime(date));
     } else {
-      super();
+      super(DateTime.parseDateTime(new Date()));
     }
 
     this.lang = lang;
@@ -137,10 +139,6 @@ export class DateTime extends Date {
 
   public clone() {
     return new DateTime(this.getTime());
-  }
-
-  public timestamp() {
-    return new Date(this.getFullYear(), this.getMonth(), this.getDate(), 0, 0, 0, 0).getTime();
   }
 
   public isBetween(date1, date2, inclusivity = '()') {
@@ -165,7 +163,7 @@ export class DateTime extends Date {
     switch (unit) {
       case 'second':
       case 'seconds':
-        return date.getTime() > this.timestamp();
+        return date.getTime() > this.getTime();
 
       case 'day':
       case 'days':
@@ -185,7 +183,7 @@ export class DateTime extends Date {
     switch (unit) {
       case 'second':
       case 'seconds':
-        return date.getTime() >= this.timestamp();
+        return date.getTime() >= this.getTime();
 
       case 'day':
       case 'days':
@@ -205,7 +203,7 @@ export class DateTime extends Date {
     switch (unit) {
       case 'second':
       case 'seconds':
-        return this.timestamp() > date.getTime();
+        return this.getTime() > date.getTime();
 
       case 'day':
       case 'days':
@@ -225,7 +223,7 @@ export class DateTime extends Date {
     switch (unit) {
       case 'second':
       case 'seconds':
-        return this.timestamp() >= date.getTime();
+        return this.getTime() >= date.getTime();
 
       case 'day':
       case 'days':
@@ -245,7 +243,7 @@ export class DateTime extends Date {
     switch (unit) {
       case 'second':
       case 'seconds':
-        return this.timestamp() === date.getTime();
+        return this.getTime() === date.getTime();
 
       case 'day':
       case 'days':
@@ -310,7 +308,7 @@ export class DateTime extends Date {
       default:
       case 'second':
       case 'seconds':
-        return this.timestamp() - date.getTime();
+        return this.getTime() - date.getTime();
 
       case 'day':
       case 'days':
@@ -386,5 +384,9 @@ export class DateTime extends Date {
     }
 
     return response;
+  }
+
+  private timestamp() {
+    return new Date(this.getFullYear(), this.getMonth(), this.getDate(), 0, 0, 0, 0).getTime();
   }
 }
