@@ -87,7 +87,7 @@ export class DateTime extends Date {
           }
           const day = Number(d[datePattern.day]) || 1;
 
-          return new Date(year, month, day);
+          return new Date(year, month, day, 0, 0, 0, 0);
         }
       }
     }
