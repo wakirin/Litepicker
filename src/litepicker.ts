@@ -306,14 +306,15 @@ export class Litepicker extends Calendar {
       }
 
       if (this.shouldCheckLockDays()) {
+        const inclusivity = this.options.lockDaysInclusivity;
         const locked = this.options.lockDays
           .filter((d) => {
             if (d instanceof Array) {
-              return d[0].isBetween(this.datePicked[0], this.datePicked[1])
-                || d[1].isBetween(this.datePicked[0], this.datePicked[1]);
+              return d[0].isBetween(this.datePicked[0], this.datePicked[1], inclusivity)
+                || d[1].isBetween(this.datePicked[0], this.datePicked[1], inclusivity);
             }
 
-            return d.isBetween(this.datePicked[0], this.datePicked[1]);
+            return d.isBetween(this.datePicked[0], this.datePicked[1], inclusivity);
           }).length;
 
         if (locked) {
@@ -326,17 +327,26 @@ export class Litepicker extends Calendar {
       }
 
       if (this.shouldCheckBookedDays()) {
-        const locked = this.options.bookedDays
+        let inclusivity = this.options.bookedDaysInclusivity;
+
+        if (this.options.hotelMode && this.datePicked.length === 2) {
+          inclusivity = '()';
+        }
+
+        const booked = this.options.bookedDays
           .filter((d) => {
             if (d instanceof Array) {
-              return d[0].isBetween(this.datePicked[0], this.datePicked[1])
-                || d[1].isBetween(this.datePicked[0], this.datePicked[1]);
+              return d[0].isBetween(this.datePicked[0], this.datePicked[1], inclusivity)
+              || d[1].isBetween(this.datePicked[0], this.datePicked[1], inclusivity);
             }
 
             return d.isBetween(this.datePicked[0], this.datePicked[1]);
           }).length;
 
-        if (locked) {
+        const anyBookedDaysAsCheckout = this.options.anyBookedDaysAsCheckout
+          && this.datePicked.length === 1;
+
+        if (booked && !anyBookedDaysAsCheckout) {
           this.datePicked.length = 0;
 
           if (typeof this.options.onError === 'function') {
