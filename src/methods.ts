@@ -39,6 +39,9 @@ Litepicker.prototype.show = function (el = null) {
     return;
   }
 
+  const element = el ? el : this.options.element;
+  this.triggerElement = element;
+
   if (this.options.scrollToDate) {
     if (this.options.startDate && (!el || el === this.options.element)) {
       const startDate = this.options.startDate.clone();
@@ -94,7 +97,6 @@ Litepicker.prototype.show = function (el = null) {
   this.picker.style.display = 'block';
   this.picker.style.zIndex = this.options.zIndex;
 
-  const element = el ? el : this.options.element;
   const elBCR = element.getBoundingClientRect();
   const pickerBCR = this.picker.getBoundingClientRect();
 
@@ -144,8 +146,6 @@ Litepicker.prototype.show = function (el = null) {
   if (typeof this.options.onShow === 'function') {
     this.options.onShow.call(this);
   }
-
-  this.triggerElement = element;
 };
 
 Litepicker.prototype.hide = function () {
