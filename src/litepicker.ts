@@ -30,6 +30,18 @@ export class Litepicker extends Calendar {
       );
     }
 
+    if (this.options.hotelMode && !('bookedDaysInclusivity' in options)) {
+      this.options.bookedDaysInclusivity = '[)';
+    }
+
+    if (this.options.hotelMode && !('disallowBookedDaysInRange' in options)) {
+      this.options.disallowBookedDaysInRange = true;
+    }
+
+    if (this.options.hotelMode && !('selectForward' in options)) {
+      this.options.selectForward = true;
+    }
+
     let [startValue, endValue] = this.parseInput();
 
     if (this.options.startDate) {
@@ -240,6 +252,12 @@ export class Litepicker extends Calendar {
       && this.datePicked.length === 2;
   }
 
+  private shouldCheckBookedDays() {
+    return this.options.disallowBookedDaysInRange
+      && this.options.bookedDays.length
+      && this.datePicked.length === 2;
+  }
+
   private onClick(e) {
     const target = e.target as HTMLElement;
 
@@ -289,6 +307,26 @@ export class Litepicker extends Calendar {
 
       if (this.shouldCheckLockDays()) {
         const locked = this.options.lockDays
+          .filter((d) => {
+            if (d instanceof Array) {
+              return d[0].isBetween(this.datePicked[0], this.datePicked[1])
+                || d[1].isBetween(this.datePicked[0], this.datePicked[1]);
+            }
+
+            return d.isBetween(this.datePicked[0], this.datePicked[1]);
+          }).length;
+
+        if (locked) {
+          this.datePicked.length = 0;
+
+          if (typeof this.options.onError === 'function') {
+            this.options.onError.call(this, 'INVALID_RANGE');
+          }
+        }
+      }
+
+      if (this.shouldCheckBookedDays()) {
+        const locked = this.options.bookedDays
           .filter((d) => {
             if (d instanceof Array) {
               return d[0].isBetween(this.datePicked[0], this.datePicked[1])

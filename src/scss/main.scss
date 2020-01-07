@@ -80,8 +80,14 @@
           align-items: center;
           color: var(--litepickerMonthHeaderTextColor);
 
-          div > strong {
-            margin-right: 5px;
+          div {
+            > .month-item-name {
+              margin-right: 5px;
+            }
+
+            > .month-item-year {
+              padding: 0;
+            }
           }
 
           .button-previous-month,

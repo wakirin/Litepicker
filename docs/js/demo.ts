@@ -35,10 +35,13 @@ const defaultOptions = {
 
   lockDaysFormat: 'YYYY-MM-DD',
   lockDays: [],
-  disallowLockDaysInRange: false,
+  // disallowLockDaysInRange: false,
+  // lockDaysInclusivity: '[]',
 
   bookedDaysFormat: 'YYYY-MM-DD',
   bookedDays: [],
+  // disallowBookedDaysInRange: true,
+  // bookedDaysInclusivity: '[]',
 
   dropdowns: {
     minYear: 1990,

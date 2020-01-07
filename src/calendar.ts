@@ -36,9 +36,13 @@ export class Calendar {
     lockDaysFormat: 'YYYY-MM-DD',
     lockDays: [],
     disallowLockDaysInRange: false,
+    lockDaysInclusivity: '[]',
 
     bookedDaysFormat: 'YYYY-MM-DD',
     bookedDays: [],
+    disallowBookedDaysInRange: false,
+    bookedDaysInclusivity: '[]',
+    anyBookedDaysAsCheckout: false,
 
     dropdowns: {
       minYear: 1990,
@@ -135,6 +139,7 @@ export class Calendar {
 
     if (this.options.dropdowns.months) {
       const selectMonths = document.createElement('select');
+      selectMonths.className = style.monthItemName;
 
       for (let x = 0; x < 12; x += 1) {
         const option = document.createElement('option');
@@ -171,12 +176,14 @@ export class Calendar {
       monthAndYear.appendChild(selectMonths);
     } else {
       const monthName = document.createElement('strong');
+      monthName.className = style.monthItemName;
       monthName.innerHTML = date.toLocaleString(this.options.lang, { month: 'long' });
       monthAndYear.appendChild(monthName);
     }
 
     if (this.options.dropdowns.years) {
       const selectYears = document.createElement('select');
+      selectYears.className = style.monthItemYear;
 
       const minYear = this.options.dropdowns.minYear;
       const maxYear = this.options.dropdowns.maxYear
@@ -226,7 +233,9 @@ export class Calendar {
 
       monthAndYear.appendChild(selectYears);
     } else {
-      const monthYear = document.createTextNode(String(date.getFullYear()));
+      const monthYear = document.createElement('span');
+      monthYear.className = style.monthItemYear;
+      monthYear.innerHTML = String(date.getFullYear());
       monthAndYear.appendChild(monthYear);
     }
 
@@ -404,7 +413,7 @@ export class Calendar {
       const locked = this.options.lockDays
         .filter((d) => {
           if (d instanceof Array) {
-            return date.isBetween(d[0], d[1]);
+            return date.isBetween(d[0], d[1], this.options.lockDaysInclusivity);
           }
 
           return d.isSame(date, 'day');
@@ -417,18 +426,27 @@ export class Calendar {
 
     if (this.datePicked.length <= 1
       && this.options.bookedDays.length) {
-      const locked = this.options.bookedDays
+      let inclusivity = this.options.bookedDaysInclusivity;
+      let blockSingleBooked = true;
+
+      if (this.options.hotelMode && this.datePicked.length === 1) {
+        inclusivity = '()';
+        blockSingleBooked = false;
+      }
+
+      const booked = this.options.bookedDays
         .filter((d) => {
           if (d instanceof Array) {
-            return date.isBetween(d[0], d[1]);
+            return date.isBetween(d[0], d[1], inclusivity);
           }
 
-          return d.isSame(date, 'day');
+          return d.isSame(date, 'day') && blockSingleBooked;
         }).length;
-      const isBefore = this.datePicked.length === 0
-        || date.isBefore(this.datePicked[0]);
 
-      if (locked && isBefore) {
+      const anyBookedDaysAsCheckout = this.options.anyBookedDaysAsCheckout
+        && this.datePicked.length === 1;
+
+      if (booked && !anyBookedDaysAsCheckout) {
         day.classList.add(style.isBooked);
       }
     }

@@ -310,6 +310,20 @@ Litepicker.prototype.setOptions = function (options) {
     this.calendars[idx] = date;
   }
 
+  if (this.options.lockDays.length) {
+    this.options.lockDays = DateTime.convertArray(
+      this.options.lockDays,
+      this.options.lockDaysFormat,
+    );
+  }
+
+  if (this.options.bookedDays.length) {
+    this.options.bookedDays = DateTime.convertArray(
+      this.options.bookedDays,
+      this.options.bookedDaysFormat,
+    );
+  }
+
   this.render();
 
   if (this.options.inlineMode) {

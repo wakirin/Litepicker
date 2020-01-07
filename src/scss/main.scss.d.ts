@@ -9,6 +9,8 @@ export const monthItemHeader: string;
 export const buttonPreviousMonth: string;
 export const buttonNextMonth: string;
 export const monthItem: string;
+export const monthItemName: string;
+export const monthItemYear: string;
 export const monthItemWeekdaysRow: string;
 export const noPreviousMonth: string;
 export const noNextMonth: string;
