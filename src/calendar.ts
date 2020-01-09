@@ -427,26 +427,28 @@ export class Calendar {
     if (this.datePicked.length <= 1
       && this.options.bookedDays.length) {
       let inclusivity = this.options.bookedDaysInclusivity;
-      let blockSingleBooked = true;
 
       if (this.options.hotelMode && this.datePicked.length === 1) {
         inclusivity = '()';
-        blockSingleBooked = false;
       }
 
-      const booked = this.options.bookedDays
-        .filter((d) => {
-          if (d instanceof Array) {
-            return date.isBetween(d[0], d[1], inclusivity);
-          }
+      const dateBefore = date.clone();
+      dateBefore.subtract(1, 'day');
 
-          return d.isSame(date, 'day') && blockSingleBooked;
-        }).length;
+      const dateAfter = date.clone();
+      dateAfter.add(1, 'day');
+
+      const booked = this.dateIsBooked(date, inclusivity);
+      const isBookedBefore = this.dateIsBooked(dateBefore, '[]');
+      // const isBookedAfter = this.dateIsBooked(dateAfter, '[]');
+
+      const shouldBooked = (this.datePicked.length === 0 && booked)
+        || (this.datePicked.length === 1 && isBookedBefore && booked);
 
       const anyBookedDaysAsCheckout = this.options.anyBookedDaysAsCheckout
         && this.datePicked.length === 1;
 
-      if (booked && !anyBookedDaysAsCheckout) {
+      if (shouldBooked && !anyBookedDaysAsCheckout) {
         day.classList.add(style.isBooked);
       }
     }
@@ -509,6 +511,17 @@ export class Calendar {
     t.className = style.containerTooltip;
 
     return t;
+  }
+
+  protected dateIsBooked(date, inclusivity) {
+    return this.options.bookedDays
+      .filter((d) => {
+        if (d instanceof Array) {
+          return date.isBetween(d[0], d[1], inclusivity);
+        }
+
+        return d.isSame(date, 'day');
+      }).length;
   }
 
   private weekdayName(day, representation = 'short') {
