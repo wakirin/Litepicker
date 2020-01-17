@@ -224,6 +224,14 @@ export class Litepicker extends Calendar {
         this.options.element.value = `${startValue} - ${endValue}`;
       }
     }
+
+    if (!this.options.startDate && !this.options.endDate) {
+      this.options.element.value = '';
+
+      if (this.options.elementEnd) {
+        this.options.elementEnd.value = '';
+      }
+    }
   }
 
   private isSamePicker(el) {

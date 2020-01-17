@@ -170,7 +170,7 @@ let optionTrigger = {
     }
 
     return true;
-  }
+  },
 };
 
 let proxyOptions;

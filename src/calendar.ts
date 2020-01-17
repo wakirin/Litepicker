@@ -440,10 +440,12 @@ export class Calendar {
 
       const booked = this.dateIsBooked(date, inclusivity);
       const isBookedBefore = this.dateIsBooked(dateBefore, '[]');
+      const isCheckInAndCheckOut = this.dateIsBooked(date, '(]');
       // const isBookedAfter = this.dateIsBooked(dateAfter, '[]');
 
       const shouldBooked = (this.datePicked.length === 0 && booked)
-        || (this.datePicked.length === 1 && isBookedBefore && booked);
+        || (this.datePicked.length === 1 && isBookedBefore && booked)
+        || (this.datePicked.length === 1 && isBookedBefore && isCheckInAndCheckOut);
 
       const anyBookedDaysAsCheckout = this.options.anyBookedDaysAsCheckout
         && this.datePicked.length === 1;

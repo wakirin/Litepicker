@@ -24,6 +24,8 @@ declare module './litepicker' {
 
     setOptions(options);
 
+    clearSelection();
+
     destroy();
   }
 }
@@ -50,6 +52,9 @@ Litepicker.prototype.show = function (el = null) {
     } else if (el && this.options.endDate && el === this.options.elementEnd) {
       const endDate = this.options.endDate.clone();
       endDate.setDate(1);
+      if (this.options.numberOfMonths > 1) {
+        endDate.setMonth(endDate.getMonth() - (this.options.numberOfMonths - 1));
+      }
       this.calendars[0] = endDate.clone();
     }
   }
@@ -331,6 +336,18 @@ Litepicker.prototype.setOptions = function (options) {
   }
 
   this.updateInput();
+};
+
+Litepicker.prototype.clearSelection = function () {
+  this.options.startDate = null;
+  this.options.endDate = null;
+  this.datePicked.length = 0;
+
+  this.updateInput();
+
+  if (this.isShowning()) {
+    this.render();
+  }
 };
 
 Litepicker.prototype.destroy = function () {
