@@ -31,6 +31,9 @@ See more details in docs.
 * Time picker
 * ...
 
+## See also:
+* [Drupal module](https://www.drupal.org/project/date_range_picker) by [kviolka](https://github.com/kviolka)
+
 ## Tested on real browsers
 Tested on real browsers via BrowserStack.  
 Thanks to the BrowserStack for supporting the open-source projects.  
