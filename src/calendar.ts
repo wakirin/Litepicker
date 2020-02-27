@@ -67,6 +67,7 @@ export class Calendar {
     onHide: null,
     onSelect: null,
     onError: null,
+    onRender: null,
     onChangeMonth: null,
     onChangeYear: null,
   };
@@ -121,6 +122,10 @@ export class Calendar {
 
     if (this.options.showTooltip) {
       this.picker.appendChild(this.renderTooltip());
+    }
+
+    if (typeof this.options.onRender === 'function') {
+      this.options.onRender.call(this);
     }
   }
 
