@@ -75,6 +75,8 @@ export class Calendar {
     onRender: null,
     onChangeMonth: null,
     onChangeYear: null,
+
+    resetBtnCallback: null,
   };
   protected calendars: DateTime[] = [];
   protected picker: HTMLElement;
@@ -268,6 +270,7 @@ export class Calendar {
     monthHeader.appendChild(nextMonthButton);
 
     if (this.options.useResetBtn) {
+      resetButton.addEventListener('click', this.options.resetBtnCallback);
       monthHeader.appendChild(resetButton);
     }
 
