@@ -23,6 +23,9 @@
   --litepickerButtonCancelBg: #9e9e9e;
   --litepickerButtonApplyColor: #fff;
   --litepickerButtonApplyBg: #2196f3;
+  
+  --litepickerButtonResetBtn: #909090;
+  --litepickerButtonResetBtnHover: #2196f3
 }
 .show-week-numbers {
   --litepickerMonthWidth: calc(var(--litepickerDayWidth) * 8);
@@ -87,6 +90,26 @@
 
             > .month-item-year {
               padding: 0;
+            }
+          }
+
+          .reset-button {
+            position: absolute;
+            right: 12px;
+            color: var(--litepickerButtonResetBtn);
+          
+            > svg,
+            > img {
+              fill: var(--litepickerButtonResetBtn);
+              pointer-events: none;
+            }
+          
+            &:hover {
+              color: var(--litepickerButtonResetBtnHover);
+          
+              > svg {
+                fill: var(--litepickerButtonResetBtnHover);
+              }
             }
           }
 

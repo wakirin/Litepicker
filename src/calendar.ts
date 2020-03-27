@@ -56,6 +56,10 @@ export class Calendar {
       cancel: 'Cancel',
       previousMonth: '<svg width="11" height="16" xmlns="http://www.w3.org/2000/svg"><path d="M7.919 0l2.748 2.667L5.333 8l5.334 5.333L7.919 16 0 8z" fill-rule="nonzero"/></svg>',
       nextMonth: '<svg width="11" height="16" xmlns="http://www.w3.org/2000/svg"><path d="M2.748 16L0 13.333 5.333 8 0 2.667 2.748 0l7.919 8z" fill-rule="nonzero"/></svg>',
+      reset: `<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+        <path d="M0 0h24v24H0z" fill="none"/>
+        <path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/>
+      </svg>`,
     },
     tooltipText: {
       one: 'day',
@@ -254,9 +258,14 @@ export class Calendar {
     nextMonthButton.className = style.buttonNextMonth;
     nextMonthButton.innerHTML = this.options.buttonText.nextMonth;
 
+    const resetButton = document.createElement('span');
+    resetButton.className = style.resetButton;
+    resetButton.innerHTML = this.options.buttonText.reset;
+
     monthHeader.appendChild(previousMonthButton);
     monthHeader.appendChild(monthAndYear);
     monthHeader.appendChild(nextMonthButton);
+    monthHeader.appendChild(resetButton);
 
     if (this.options.minDate
       && startDate.isSameOrBefore(new DateTime(this.options.minDate), 'month')) {
