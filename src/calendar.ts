@@ -32,6 +32,7 @@ export class Calendar {
     disableWeekends: false,
     scrollToDate: true,
     mobileFriendly: true,
+    useResetBtn: false,
 
     lockDaysFormat: 'YYYY-MM-DD',
     lockDays: [],
@@ -265,7 +266,10 @@ export class Calendar {
     monthHeader.appendChild(previousMonthButton);
     monthHeader.appendChild(monthAndYear);
     monthHeader.appendChild(nextMonthButton);
-    monthHeader.appendChild(resetButton);
+
+    if (this.options.useResetBtn) {
+      monthHeader.appendChild(resetButton);
+    }
 
     if (this.options.minDate
       && startDate.isSameOrBefore(new DateTime(this.options.minDate), 'month')) {
