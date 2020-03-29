@@ -135,6 +135,10 @@ export class Litepicker extends Calendar {
       }
     }
 
+    if (this.options.useResetBtn && !this.options.resetBtnCallback) {
+      this.options.resetBtnCallback = this.clearSelection.bind(this);
+    }
+
     if (this.options.mobileFriendly) {
       this.backdrop = document.createElement('div');
       this.backdrop.className = style.litepickerBackdrop;

@@ -354,6 +354,13 @@
             <p>See demo above.</p>
           </div>
 
+          <div id="option-useResetBtn">useResetBtn</div>
+          <div class="option-type">Boolean</div>
+          <div class="option-default">false</div>
+          <div class="option-description">
+            <p>Adds a reset button to clear the current selection.</p>
+          </div>
+
           <div id="option-lockDaysFormat">lockDaysFormat</div>
           <div class="option-type">String</div>
           <div class="option-default">YYYY-MM-DD</div>
@@ -480,6 +487,7 @@
             cancel: 'Cancel',
             previousMonth: '&lt;svg .../&gt;&lt;/svg&gt;',
             nextMonth: '&lt;svg .../&gt;&lt;/svg&gt;',
+            reset: '&lt;svg .../&gt;&lt;/svg&gt;',
             }
           </div>
           <div class="option-description">Text for buttons.</div>
@@ -497,6 +505,17 @@
             <p>Keys depends on option <strong>lang</strong> (see <a
                 href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/PluralRules"
                 target="_blank">Intl.PluralRules</a>).</p>
+          </div>
+
+          <div id="option-resetBtnCallback">resetBtnCallback</div>
+          <div class="option-type">Function</div>
+          <div class="option-default">
+            null
+          </div>
+          <div class="option-description">
+            <p><code>useResetBtn</code> must be at <b>true</b>.</p>
+            <p>This function is call when the reset button is click.</p>
+            <p>By default it will call the <code>clearSelection</code> method.</p>
           </div>
         </div>
 
