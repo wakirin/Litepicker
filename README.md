@@ -33,6 +33,7 @@ See more details in docs.
 
 ## See also:
 * [Drupal module](https://www.drupal.org/project/date_range_picker) by [kviolka](https://github.com/kviolka)
+* [Wordpress Ninja forms](https://github.com/soderlind/date-range-ninja-forms) by [soderlind](https://github.com/soderlind)
 
 ## Tested on real browsers
 Tested on real browsers via BrowserStack.  
