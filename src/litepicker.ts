@@ -100,7 +100,7 @@ export class Litepicker extends Calendar {
   }
 
   private onInit() {
-    document.addEventListener('click', e => this.onClick(e), true);
+    document.addEventListener('click', e => this.onClick(e, true), true);
 
     this.picker = document.createElement('div');
     this.picker.className = style.litepicker;
@@ -109,9 +109,11 @@ export class Litepicker extends Calendar {
     this.picker.addEventListener('mouseenter', e => this.onMouseEnter(e), true);
     this.picker.addEventListener('mouseleave', e => this.onMouseLeave(e), false);
     if (this.options.element instanceof HTMLElement) {
+      this.options.element.addEventListener('click', e => this.onClick(e, false), true);
       this.options.element.addEventListener('change', e => this.onInput(e), true);
     }
     if (this.options.elementEnd instanceof HTMLElement) {
+      this.options.elementEnd.addEventListener('click', e => this.onClick(e, false), true);
       this.options.elementEnd.addEventListener('change', e => this.onInput(e), true);
     }
 
@@ -244,7 +246,7 @@ export class Litepicker extends Calendar {
     return picker === this.picker;
   }
 
-  private shouldShown(el) {
+  private shouldShow(el) {
     return el === this.options.element
       || (this.options.elementEnd && el === this.options.elementEnd);
   }
@@ -270,7 +272,7 @@ export class Litepicker extends Calendar {
       && this.datePicked.length === 2;
   }
 
-  private onClick(e) {
+  private onClick(e, isDocumentClickHandler) {
     const target = e.target as HTMLElement;
 
     if (!target || !this.picker) {
@@ -278,8 +280,11 @@ export class Litepicker extends Calendar {
     }
 
     // Click on element
-    if (this.shouldShown(target)) {
-      this.show(target);
+    if (this.shouldShow(target)) {
+      // Allow the click handler(s) setup for element and elementEnd to handle show
+      if (!isDocumentClickHandler) {
+        this.show(target);
+      }
       return;
     }
 
