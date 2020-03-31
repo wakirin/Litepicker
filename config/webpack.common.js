@@ -1,4 +1,22 @@
+const webpack = require('webpack');
 const path = require('path');
+const getPackageJson = require('./getPackageJson');
+
+const {
+  version,
+  name,
+  license,
+} = getPackageJson('version', 'name', 'license');
+
+const banner = `
+    Litepicker v${version} (https://github.com/wakirin/Litepicker)
+    Package: ${name} (https://www.npmjs.com/package/litepicker)
+    License: ${license} (https://github.com/wakirin/Litepicker/blob/master/LICENCE.md)
+    Copyright 2019-${new Date().getFullYear()} Rinat G.
+    
+    Hash: [hash]
+    Generated on: ${Date.now()}
+    `;
 
 module.exports = {
   entry: {
@@ -55,5 +73,7 @@ module.exports = {
   resolve: {
     extensions: [".ts", ".tsx", ".js"]
   },
-  plugins: [],
+  plugins: [
+    new webpack.BannerPlugin(banner)
+  ],
 }
