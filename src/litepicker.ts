@@ -1,10 +1,13 @@
 import { Calendar } from './calendar';
 import { DateTime } from './datetime';
+import { findNestedMonthItem } from './utils';
 import * as style from './scss/main.scss';
 
 export class Litepicker extends Calendar {
   protected triggerElement;
   protected backdrop;
+
+  private readonly plural_selector: Function;
 
   constructor(options) {
     super();
@@ -95,6 +98,25 @@ export class Litepicker extends Calendar {
       date.setMonth(date.getMonth() + idx);
       this.calendars[idx] = date;
     }
+
+    if (this.options.showTooltip) {
+      if (this.options.tooltipPluralSelector) {
+        this.plural_selector = this.options.tooltipPluralSelector;
+      } else {
+        try {
+          const plural_rules = new Intl.PluralRules(this.options.lang);
+          this.plural_selector = plural_rules.select.bind(plural_rules);
+        } catch {
+          // fallback
+          this.plural_selector = function (arg0: number): String {
+            if (Math.abs(arg0) == 0) return "one";
+            return "other";
+          }
+        }
+      }
+    }
+
+    this.loadPolyfillsForIE11();
 
     this.onInit();
   }
@@ -349,7 +371,7 @@ export class Litepicker extends Calendar {
           .filter((d) => {
             if (d instanceof Array) {
               return d[0].isBetween(this.datePicked[0], this.datePicked[1], inclusivity)
-              || d[1].isBetween(this.datePicked[0], this.datePicked[1], inclusivity);
+                || d[1].isBetween(this.datePicked[0], this.datePicked[1], inclusivity);
             }
 
             return d.isBetween(this.datePicked[0], this.datePicked[1]);
@@ -394,7 +416,7 @@ export class Litepicker extends Calendar {
 
       if (this.options.splitView) {
         const monthItem = target.closest(`.${style.monthItem}`);
-        idx = [...monthItem.parentNode.childNodes].findIndex(el => el === monthItem);
+        idx = findNestedMonthItem(monthItem);
         numberOfMonths = 1;
       }
 
@@ -420,7 +442,7 @@ export class Litepicker extends Calendar {
 
       if (this.options.splitView) {
         const monthItem = target.closest(`.${style.monthItem}`);
-        idx = [...monthItem.parentNode.childNodes].findIndex(el => el === monthItem);
+        idx = findNestedMonthItem(monthItem)
         numberOfMonths = 1;
       }
 
@@ -540,8 +562,13 @@ export class Litepicker extends Calendar {
         date2 = tempDate.clone();
         isFlipped = true;
       }
-
-      [...this.picker.querySelectorAll(`.${style.dayItem}`)].forEach((d: HTMLElement) => {
+      const allDayItems = this.picker.querySelectorAll(`.${style.dayItem}`);
+      const tmpArray: Element[] = new Array(allDayItems.length)
+      for (let i = 0; i < allDayItems.length; i++) {
+        const curElem = allDayItems.item(i);
+        tmpArray[i] = curElem;
+      }
+      tmpArray.forEach((d: HTMLElement) => {
         const date = new DateTime(d.dataset.time);
         const day = this.renderDay(date);
 
@@ -568,7 +595,6 @@ export class Litepicker extends Calendar {
       }
 
       if (this.options.showTooltip) {
-        const pr = new Intl.PluralRules(this.options.lang);
         let days = date2.diff(date1, 'day');
 
         if (!this.options.hotelMode) {
@@ -576,7 +602,7 @@ export class Litepicker extends Calendar {
         }
 
         if (days > 0) {
-          const pluralName = pr.select(days);
+          const pluralName = this.plural_selector(days);
           const pluralText = this.options.tooltipText[pluralName]
             ? this.options.tooltipText[pluralName]
             : `[${pluralName}]`;
@@ -680,5 +706,36 @@ export class Litepicker extends Calendar {
 
   private isShowning() {
     return this.picker && this.picker.style.display !== 'none';
+  }
+
+  private loadPolyfillsForIE11(): void {
+    // Support for Object.entries(...)
+    // copied from 
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
+    if (!Object.entries) {
+      Object.entries = function (obj) {
+        var ownProps = Object.keys(obj),
+          i = ownProps.length,
+          resArray = new Array(i); // preallocate the Array
+        while (i--)
+          resArray[i] = [ownProps[i], obj[ownProps[i]]];
+
+        return resArray;
+      };
+    }
+    // Support for Element.closest(...)
+    // copied from
+    // https://developer.mozilla.org/en-US/docs/Web/API/Element/closest#Polyfill
+    if (!Element.prototype.closest) {
+      Element.prototype.closest = function (s) {
+        var el = this;
+
+        do {
+          if (el.matches(s)) return el;
+          el = el.parentElement || el.parentNode;
+        } while (el !== null && el.nodeType === 1);
+        return null;
+      };
+    }
   }
 }

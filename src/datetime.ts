@@ -1,9 +1,12 @@
-export class DateTime extends Date {
+export class DateTime {
+
+  private static readonly MONTHS_JS = [0,1,2,3,4,5,6,7,8,9,10,11] 
 
   public static parseDateTime(date, format = 'YYYY-MM-DD', lang = 'en-US') {
     if (!date) return new Date(NaN);
 
     if (date instanceof Date) return DateTime.getDateZeroTime(new Date(date));
+    if (date instanceof DateTime) return date.clone();
 
     if (/^\d{10,}$/.test(date)) return DateTime.getDateZeroTime(new Date(Number(date)));
 
@@ -19,13 +22,12 @@ export class DateTime extends Date {
         let shortMonths = null;
         let longMonths = null;
 
-        if (match.includes('MMM')) {
-          shortMonths = [...Array(12).keys()]
-            .map(x => new Date(2019, x).toLocaleString(lang, { month: 'short' }));
+        if (match.indexOf('MMM') !== -1) {
+            shortMonths = this.MONTHS_JS.map(x => new Date(2019, x).toLocaleString(lang, { month: 'short' }));
         }
 
-        if (match.includes('MMMM')) {
-          longMonths = [...Array(12).keys()]
+        if (match.indexOf('MMMM') !== -1) {
+          longMonths = [0,1,2,3,4,5,6,7,8,9,10,11]
             .map(x => new Date(2019, x).toLocaleString(lang, { month: 'long' }));
         }
 
@@ -113,13 +115,17 @@ export class DateTime extends Date {
 
   protected lang;
 
-  constructor(date = null, format = null, lang = 'en-US') {
+  private _date;
+
+
+  constructor(date = null, format:string = null, lang = 'en-US') {
     if (format) {
-      super(DateTime.parseDateTime(date, format, lang));
+      this._date = (DateTime.parseDateTime(date, format, lang));
     } else if (date) {
-      super(DateTime.parseDateTime(date));
+      if (date)
+      this._date = (DateTime.parseDateTime(date));
     } else {
-      super(DateTime.parseDateTime(new Date()));
+      this._date = (DateTime.parseDateTime(new Date()));
     }
 
     this.lang = lang;
@@ -327,14 +333,13 @@ export class DateTime extends Date {
     if (match) {
       let shortMonths = null;
       let longMonths = null;
-
-      if (match.includes('MMM')) {
-        shortMonths = [...Array(12).keys()]
+      if (match.indexOf('MMM') !== -1) {
+        shortMonths = [0,1,2,3,4,5,6,7,8,9,10,11]
           .map(x => new Date(2019, x).toLocaleString(lang, { month: 'short' }));
       }
 
-      if (match.includes('MMMM')) {
-        longMonths = [...Array(12).keys()]
+      if (match.indexOf('MMMM')) {
+        longMonths = [0,1,2,3,4,5,6,7,8,9,10,11]
           .map(x => new Date(2019, x).toLocaleString(lang, { month: 'long' }));
       }
 
@@ -388,5 +393,53 @@ export class DateTime extends Date {
 
   private timestamp() {
     return new Date(this.getFullYear(), this.getMonth(), this.getDate(), 0, 0, 0, 0).getTime();
+  }
+
+  public toLocaleString(arg0, arg1) {
+    return this._date.toLocaleString(arg0, arg1);
+  }
+
+  public toDateString() {
+    return this._date.toDateString();
+  }
+
+  public getSeconds() {
+    return this._date.getSeconds();
+  }
+
+  public getDay() {
+    return this._date.getDay();
+  }
+
+  public getTime() {
+    return this._date.getTime();
+  }
+
+  public getDate() {
+    return this._date.getDate();
+  }
+
+  public getMonth() {
+    return this._date.getMonth();
+  }
+
+  public getFullYear() {
+    return this._date.getFullYear();
+  }
+
+  public setMonth(arg) {
+    return this._date.setMonth(arg);
+  }
+
+  public setSeconds(arg) {
+    return this._date.setSeconds(arg);
+  }
+
+  public setDate(arg) {
+    return this._date.setDate(arg);
+  }
+
+  public setFullYear(arg) {
+    return this._date.setFullYear(arg);
   }
 }
