@@ -65,33 +65,25 @@ export class Litepicker extends Calendar {
       );
     }
 
-    if (startValue instanceof Date && !isNaN(startValue.getTime())) {
-      this.options.startDate = new DateTime(
-        startValue,
-        this.options.format,
-        this.options.lang,
-      );
+    if (startValue instanceof DateTime && !isNaN(startValue.getTime())) {
+      this.options.startDate = startValue;
+    }
+    
+    if (this.options.startDate && endValue instanceof DateTime && !isNaN(endValue.getTime())) {
+      this.options.endDate = endValue;
     }
 
-    if (this.options.startDate && endValue instanceof Date && !isNaN(endValue.getTime())) {
-      this.options.endDate = new DateTime(
-        endValue,
-        this.options.format,
-        this.options.lang,
-      );
-    }
-
-    if (this.options.singleMode && !(this.options.startDate instanceof Date)) {
+    if (this.options.singleMode && !(this.options.startDate instanceof DateTime)) {
       this.options.startDate = null;
     }
     if (!this.options.singleMode
-      && (!(this.options.startDate instanceof Date) || !(this.options.endDate instanceof Date))) {
+      && (!(this.options.startDate instanceof DateTime) || !(this.options.endDate instanceof DateTime))) {
       this.options.startDate = null;
       this.options.endDate = null;
     }
 
     for (let idx = 0; idx < this.options.numberOfMonths; idx += 1) {
-      const date = this.options.startDate instanceof Date
+      const date = this.options.startDate instanceof DateTime
         ? this.options.startDate.clone()
         : new DateTime();
       date.setDate(1);
