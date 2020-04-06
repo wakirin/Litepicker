@@ -100,7 +100,7 @@ export class Calendar {
     if (this.options.showWeekNumbers) {
       months.classList.add(style.showWeekNumbers);
     }
-    
+
     const startDate = this.calendars[0].clone();
     const startMonthIdx = startDate.getMonth();
     const totalMonths = startDate.getMonth() + this.options.numberOfMonths;

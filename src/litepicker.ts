@@ -7,7 +7,7 @@ export class Litepicker extends Calendar {
   protected triggerElement;
   protected backdrop;
 
-  private readonly plural_selector: Function;
+  private readonly pluralSelector: (arg: number) => string;
 
   constructor(options) {
     super();
@@ -68,7 +68,7 @@ export class Litepicker extends Calendar {
     if (startValue instanceof DateTime && !isNaN(startValue.getTime())) {
       this.options.startDate = startValue;
     }
-    
+
     if (this.options.startDate && endValue instanceof DateTime && !isNaN(endValue.getTime())) {
       this.options.endDate = endValue;
     }
@@ -77,7 +77,8 @@ export class Litepicker extends Calendar {
       this.options.startDate = null;
     }
     if (!this.options.singleMode
-      && (!(this.options.startDate instanceof DateTime) || !(this.options.endDate instanceof DateTime))) {
+      && (!(this.options.startDate instanceof DateTime)
+          || !(this.options.endDate instanceof DateTime))) {
       this.options.startDate = null;
       this.options.endDate = null;
     }
@@ -93,17 +94,17 @@ export class Litepicker extends Calendar {
 
     if (this.options.showTooltip) {
       if (this.options.tooltipPluralSelector) {
-        this.plural_selector = this.options.tooltipPluralSelector;
+        this.pluralSelector = this.options.tooltipPluralSelector;
       } else {
         try {
-          const plural_rules = new Intl.PluralRules(this.options.lang);
-          this.plural_selector = plural_rules.select.bind(plural_rules);
+          const pluralRules = new Intl.PluralRules(this.options.lang);
+          this.pluralSelector = pluralRules.select.bind(pluralRules);
         } catch {
           // fallback
-          this.plural_selector = function (arg0: number): String {
-            if (Math.abs(arg0) == 0) return "one";
-            return "other";
-          }
+          this.pluralSelector = (arg0: number) => {
+            if (Math.abs(arg0) === 0) return 'one';
+            return 'other';
+          };
         }
       }
     }
@@ -434,7 +435,7 @@ export class Litepicker extends Calendar {
 
       if (this.options.splitView) {
         const monthItem = target.closest(`.${style.monthItem}`);
-        idx = findNestedMonthItem(monthItem)
+        idx = findNestedMonthItem(monthItem);
         numberOfMonths = 1;
       }
 
@@ -555,8 +556,8 @@ export class Litepicker extends Calendar {
         isFlipped = true;
       }
       const allDayItems = this.picker.querySelectorAll(`.${style.dayItem}`);
-      const tmpArray: Element[] = new Array(allDayItems.length)
-      for (let i = 0; i < allDayItems.length; i++) {
+      const tmpArray: Element[] = new Array(allDayItems.length);
+      for (let i = 0; i < allDayItems.length; i = i + 1) {
         const curElem = allDayItems.item(i);
         tmpArray[i] = curElem;
       }
@@ -594,7 +595,7 @@ export class Litepicker extends Calendar {
         }
 
         if (days > 0) {
-          const pluralName = this.plural_selector(days);
+          const pluralName = this.pluralSelector(days);
           const pluralText = this.options.tooltipText[pluralName]
             ? this.options.tooltipText[pluralName]
             : `[${pluralName}]`;
@@ -702,16 +703,17 @@ export class Litepicker extends Calendar {
 
   private loadPolyfillsForIE11(): void {
     // Support for Object.entries(...)
-    // copied from 
+    // copied from
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
     if (!Object.entries) {
-      Object.entries = function (obj) {
-        var ownProps = Object.keys(obj),
-          i = ownProps.length,
-          resArray = new Array(i); // preallocate the Array
-        while (i--)
+      Object.entries = (obj) => {
+        const ownProps = Object.keys(obj);
+        let i = ownProps.length;
+        const  resArray = new Array(i); // preallocate the Array
+        while (i) {
+          i = i - 1;
           resArray[i] = [ownProps[i], obj[ownProps[i]]];
-
+        }
         return resArray;
       };
     }
@@ -720,7 +722,7 @@ export class Litepicker extends Calendar {
     // https://developer.mozilla.org/en-US/docs/Web/API/Element/closest#Polyfill
     if (!Element.prototype.closest) {
       Element.prototype.closest = function (s) {
-        var el = this;
+        let el = this;
 
         do {
           if (el.matches(s)) return el;

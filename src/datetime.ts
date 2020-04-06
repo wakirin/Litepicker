@@ -1,7 +1,5 @@
 export class DateTime {
 
-  private static readonly MONTHS_JS = [0,1,2,3,4,5,6,7,8,9,10,11] 
-
   public static parseDateTime(date, format = 'YYYY-MM-DD', lang = 'en-US') {
     if (!date) return new Date(NaN);
 
@@ -23,11 +21,11 @@ export class DateTime {
         let longMonths = null;
 
         if (match.indexOf('MMM') !== -1) {
-            shortMonths = this.MONTHS_JS.map(x => new Date(2019, x).toLocaleString(lang, { month: 'short' }));
+          shortMonths = this.MONTH_JS.map(x => new Date(2019, x).toLocaleString(lang, { month: 'short' }));
         }
 
         if (match.indexOf('MMMM') !== -1) {
-          longMonths = [0,1,2,3,4,5,6,7,8,9,10,11]
+          longMonths = this.MONTH_JS
             .map(x => new Date(2019, x).toLocaleString(lang, { month: 'long' }));
         }
 
@@ -113,22 +111,70 @@ export class DateTime {
     return new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0);
   }
 
+  private static readonly MONTH_JS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+
   protected lang;
 
-  private _date;
+  private dateInstance;
 
-
-  constructor(date = null, format:string = null, lang = 'en-US') {
+  constructor(date = null, format: string = null, lang = 'en-US') {
     if (format) {
-      this._date = (DateTime.parseDateTime(date, format, lang));
+      this.dateInstance = (DateTime.parseDateTime(date, format, lang));
     } else if (date) {
-      if (date)
-      this._date = (DateTime.parseDateTime(date));
+      this.dateInstance = (DateTime.parseDateTime(date));
     } else {
-      this._date = (DateTime.parseDateTime(new Date()));
+      this.dateInstance = (DateTime.parseDateTime(new Date()));
     }
 
     this.lang = lang;
+  }
+
+  public toLocaleString(arg0, arg1) {
+    return this.dateInstance.toLocaleString(arg0, arg1);
+  }
+
+  public toDateString() {
+    return this.dateInstance.toDateString();
+  }
+
+  public getSeconds() {
+    return this.dateInstance.getSeconds();
+  }
+
+  public getDay() {
+    return this.dateInstance.getDay();
+  }
+
+  public getTime() {
+    return this.dateInstance.getTime();
+  }
+
+  public getDate() {
+    return this.dateInstance.getDate();
+  }
+
+  public getMonth() {
+    return this.dateInstance.getMonth();
+  }
+
+  public getFullYear() {
+    return this.dateInstance.getFullYear();
+  }
+
+  public setMonth(arg) {
+    return this.dateInstance.setMonth(arg);
+  }
+
+  public setSeconds(arg) {
+    return this.dateInstance.setSeconds(arg);
+  }
+
+  public setDate(arg) {
+    return this.dateInstance.setDate(arg);
+  }
+
+  public setFullYear(arg) {
+    return this.dateInstance.setFullYear(arg);
   }
 
   public getWeek(firstDay) {
@@ -334,12 +380,12 @@ export class DateTime {
       let shortMonths = null;
       let longMonths = null;
       if (match.indexOf('MMM') !== -1) {
-        shortMonths = [0,1,2,3,4,5,6,7,8,9,10,11]
+        shortMonths = DateTime.MONTH_JS
           .map(x => new Date(2019, x).toLocaleString(lang, { month: 'short' }));
       }
 
       if (match.indexOf('MMMM')) {
-        longMonths = [0,1,2,3,4,5,6,7,8,9,10,11]
+        longMonths = DateTime.MONTH_JS
           .map(x => new Date(2019, x).toLocaleString(lang, { month: 'long' }));
       }
 
@@ -395,51 +441,4 @@ export class DateTime {
     return new Date(this.getFullYear(), this.getMonth(), this.getDate(), 0, 0, 0, 0).getTime();
   }
 
-  public toLocaleString(arg0, arg1) {
-    return this._date.toLocaleString(arg0, arg1);
-  }
-
-  public toDateString() {
-    return this._date.toDateString();
-  }
-
-  public getSeconds() {
-    return this._date.getSeconds();
-  }
-
-  public getDay() {
-    return this._date.getDay();
-  }
-
-  public getTime() {
-    return this._date.getTime();
-  }
-
-  public getDate() {
-    return this._date.getDate();
-  }
-
-  public getMonth() {
-    return this._date.getMonth();
-  }
-
-  public getFullYear() {
-    return this._date.getFullYear();
-  }
-
-  public setMonth(arg) {
-    return this._date.setMonth(arg);
-  }
-
-  public setSeconds(arg) {
-    return this._date.setSeconds(arg);
-  }
-
-  public setDate(arg) {
-    return this._date.setDate(arg);
-  }
-
-  public setFullYear(arg) {
-    return this._date.setFullYear(arg);
-  }
 }
