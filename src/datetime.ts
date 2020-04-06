@@ -174,6 +174,10 @@ export class DateTime extends Date {
       case 'months':
         return new Date(date.getFullYear(), date.getMonth(), 1).getTime()
           > new Date(this.getFullYear(), this.getMonth(), 1).getTime();
+
+      case 'year':
+      case 'years':
+        return date.getFullYear() > this.getFullYear();
     }
 
     throw new Error('isBefore: Invalid unit!');
@@ -214,6 +218,10 @@ export class DateTime extends Date {
       case 'months':
         return new Date(this.getFullYear(), this.getMonth(), 1).getTime()
           > new Date(date.getFullYear(), date.getMonth(), 1).getTime();
+
+      case 'year':
+      case 'years':
+        return this.getFullYear() > date.getFullYear();
     }
 
     throw new Error('isAfter: Invalid unit!');
