@@ -163,7 +163,7 @@ export class Calendar {
         option.text = optionMonth.toLocaleString(this.options.lang, { month: 'long' });
         option.disabled = (this.options.minDate
           && optionMonth.isBefore(new DateTime(this.options.minDate), 'month'))
-          || (this.options.maxDate && optionMonth.isBefore(new DateTime(this.options.maxDate), 'month'));
+          || (this.options.maxDate && optionMonth.isAfter(new DateTime(this.options.maxDate), 'month'));
         option.selected = optionMonth.getMonth() === date.getMonth();
 
         selectMonths.appendChild(option);
@@ -220,8 +220,8 @@ export class Calendar {
         option.value = x;
         option.text = x;
         option.disabled = (this.options.minDate
-          && optionYear.isBefore(new DateTime(this.options.minDate), 'month'))
-          || (this.options.maxDate && optionYear.isBefore(new DateTime(this.options.maxDate), 'month'));
+          && optionYear.isBefore(new DateTime(this.options.minDate), 'year'))
+          || (this.options.maxDate && optionYear.isAfter(new DateTime(this.options.maxDate), 'year'));
         option.selected = date.getFullYear() === x;
 
         selectYears.appendChild(option);
