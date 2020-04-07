@@ -1,10 +1,13 @@
 import { Calendar } from './calendar';
 import { DateTime } from './datetime';
+import { findNestedMonthItem } from './utils';
 import * as style from './scss/main.scss';
 
 export class Litepicker extends Calendar {
   protected triggerElement;
   protected backdrop;
+
+  private readonly pluralSelector: (arg: number) => string;
 
   constructor(options) {
     super();
@@ -62,39 +65,51 @@ export class Litepicker extends Calendar {
       );
     }
 
-    if (startValue instanceof Date && !isNaN(startValue.getTime())) {
-      this.options.startDate = new DateTime(
-        startValue,
-        this.options.format,
-        this.options.lang,
-      );
+    if (startValue instanceof DateTime && !isNaN(startValue.getTime())) {
+      this.options.startDate = startValue;
     }
 
-    if (this.options.startDate && endValue instanceof Date && !isNaN(endValue.getTime())) {
-      this.options.endDate = new DateTime(
-        endValue,
-        this.options.format,
-        this.options.lang,
-      );
+    if (this.options.startDate && endValue instanceof DateTime && !isNaN(endValue.getTime())) {
+      this.options.endDate = endValue;
     }
 
-    if (this.options.singleMode && !(this.options.startDate instanceof Date)) {
+    if (this.options.singleMode && !(this.options.startDate instanceof DateTime)) {
       this.options.startDate = null;
     }
     if (!this.options.singleMode
-      && (!(this.options.startDate instanceof Date) || !(this.options.endDate instanceof Date))) {
+      && (!(this.options.startDate instanceof DateTime)
+          || !(this.options.endDate instanceof DateTime))) {
       this.options.startDate = null;
       this.options.endDate = null;
     }
 
     for (let idx = 0; idx < this.options.numberOfMonths; idx += 1) {
-      const date = this.options.startDate instanceof Date
+      const date = this.options.startDate instanceof DateTime
         ? this.options.startDate.clone()
         : new DateTime();
       date.setDate(1);
       date.setMonth(date.getMonth() + idx);
       this.calendars[idx] = date;
     }
+
+    if (this.options.showTooltip) {
+      if (this.options.tooltipPluralSelector) {
+        this.pluralSelector = this.options.tooltipPluralSelector;
+      } else {
+        try {
+          const pluralRules = new Intl.PluralRules(this.options.lang);
+          this.pluralSelector = pluralRules.select.bind(pluralRules);
+        } catch {
+          // fallback
+          this.pluralSelector = (arg0: number) => {
+            if (Math.abs(arg0) === 0) return 'one';
+            return 'other';
+          };
+        }
+      }
+    }
+
+    this.loadPolyfillsForIE11();
 
     this.onInit();
   }
@@ -349,7 +364,7 @@ export class Litepicker extends Calendar {
           .filter((d) => {
             if (d instanceof Array) {
               return d[0].isBetween(this.datePicked[0], this.datePicked[1], inclusivity)
-              || d[1].isBetween(this.datePicked[0], this.datePicked[1], inclusivity);
+                || d[1].isBetween(this.datePicked[0], this.datePicked[1], inclusivity);
             }
 
             return d.isBetween(this.datePicked[0], this.datePicked[1]);
@@ -394,7 +409,7 @@ export class Litepicker extends Calendar {
 
       if (this.options.splitView) {
         const monthItem = target.closest(`.${style.monthItem}`);
-        idx = [...monthItem.parentNode.childNodes].findIndex(el => el === monthItem);
+        idx = findNestedMonthItem(monthItem);
         numberOfMonths = 1;
       }
 
@@ -420,7 +435,7 @@ export class Litepicker extends Calendar {
 
       if (this.options.splitView) {
         const monthItem = target.closest(`.${style.monthItem}`);
-        idx = [...monthItem.parentNode.childNodes].findIndex(el => el === monthItem);
+        idx = findNestedMonthItem(monthItem);
         numberOfMonths = 1;
       }
 
@@ -540,8 +555,13 @@ export class Litepicker extends Calendar {
         date2 = tempDate.clone();
         isFlipped = true;
       }
-
-      [...this.picker.querySelectorAll(`.${style.dayItem}`)].forEach((d: HTMLElement) => {
+      const allDayItems = this.picker.querySelectorAll(`.${style.dayItem}`);
+      const tmpArray: Element[] = new Array(allDayItems.length);
+      for (let i = 0; i < allDayItems.length; i = i + 1) {
+        const curElem = allDayItems.item(i);
+        tmpArray[i] = curElem;
+      }
+      tmpArray.forEach((d: HTMLElement) => {
         const date = new DateTime(d.dataset.time);
         const day = this.renderDay(date);
 
@@ -568,7 +588,6 @@ export class Litepicker extends Calendar {
       }
 
       if (this.options.showTooltip) {
-        const pr = new Intl.PluralRules(this.options.lang);
         let days = date2.diff(date1, 'day');
 
         if (!this.options.hotelMode) {
@@ -576,7 +595,7 @@ export class Litepicker extends Calendar {
         }
 
         if (days > 0) {
-          const pluralName = pr.select(days);
+          const pluralName = this.pluralSelector(days);
           const pluralText = this.options.tooltipText[pluralName]
             ? this.options.tooltipText[pluralName]
             : `[${pluralName}]`;
@@ -680,5 +699,41 @@ export class Litepicker extends Calendar {
 
   private isShowning() {
     return this.picker && this.picker.style.display !== 'none';
+  }
+
+  private loadPolyfillsForIE11(): void {
+    // Support for Object.entries(...)
+    // copied from
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
+    if (!Object.entries) {
+      Object.entries = (obj) => {
+        const ownProps = Object.keys(obj);
+        let i = ownProps.length;
+        const  resArray = new Array(i); // preallocate the Array
+        while (i) {
+          i = i - 1;
+          resArray[i] = [ownProps[i], obj[ownProps[i]]];
+        }
+        return resArray;
+      };
+    }
+    // Support for Element.closest(...)
+    // copied from
+    // https://developer.mozilla.org/en-US/docs/Web/API/Element/closest#Polyfill
+    if (!Element.prototype.matches) {
+      Element.prototype.matches = Element.prototype['msMatchesSelector'] ||
+                                    Element.prototype.webkitMatchesSelector;
+    }
+    if (!Element.prototype.closest) {
+      Element.prototype.closest = function (s) {
+        let el = this;
+
+        do {
+          if (el.matches(s)) return el;
+          el = el.parentElement || el.parentNode;
+        } while (el !== null && el.nodeType === 1);
+        return null;
+      };
+    }
   }
 }

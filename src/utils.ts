@@ -10,3 +10,14 @@ export function getOrientation() {
 
   return 'landscape';
 }
+
+export function findNestedMonthItem(monthItem: Element): number {
+  const children = monthItem.parentNode.childNodes;
+  for (let i = 0; i < children.length; i++) {
+    const curNode = children.item(i);
+    if (curNode === monthItem) {
+      return i;
+    }
+  }
+  return 0;
+}

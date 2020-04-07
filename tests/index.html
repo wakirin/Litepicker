@@ -9,9 +9,11 @@
 
 <body>
   <input id="datepicker">
+  <!-- Polyfill needed for CSS properties support in IE11 -->
+  <script>window.MSInputMethodContext && document.documentMode && document.write('<script src="./ie11CustomProperties.js"><\x2fscript>');</script>
   <script src="../dist/js/main.js"></script>
   <script>
-    let picker = new Litepicker({
+    var picker = new Litepicker({
       element: document.getElementById('datepicker'),
     });
   </script>

@@ -1,5 +1,6 @@
 import { DateTime } from './datetime';
 import * as style from './scss/main.scss';
+import { findNestedMonthItem } from './utils';
 
 export class Calendar {
   protected options: any = {
@@ -66,6 +67,7 @@ export class Calendar {
       one: 'day',
       other: 'days',
     },
+    tooltipPluralSelector: null,
 
     // Events
     onShow: null,
@@ -174,7 +176,7 @@ export class Calendar {
 
         if (this.options.splitView) {
           const monthItem = target.closest(`.${style.monthItem}`);
-          idx = [...monthItem.parentNode.childNodes].findIndex(el => el === monthItem);
+          idx = findNestedMonthItem(monthItem);
         }
 
         this.calendars[idx].setMonth(Number(target.value));
@@ -232,7 +234,7 @@ export class Calendar {
 
         if (this.options.splitView) {
           const monthItem = target.closest(`.${style.monthItem}`);
-          idx = [...monthItem.parentNode.childNodes].findIndex(el => el === monthItem);
+          idx = findNestedMonthItem(monthItem);
         }
 
         this.calendars[idx].setFullYear(Number(target.value));

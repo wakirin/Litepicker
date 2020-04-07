@@ -2,7 +2,7 @@
   "compilerOptions": {
     "outDir": "./dist/js",
     "module": "commonjs",
-    "target": "es6",
+    "target": "ES5",
     "declaration": true,
     "plugins": [{ "name": "typescript-plugin-css-modules" }]
   },

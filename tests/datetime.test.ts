@@ -5,20 +5,20 @@ const date = new Date(2019, 10, 23, 0, 0, 0, 0);
 
 test('new DateTime', () => {
   const dt1 = new DateTime();
-  expect(dt1 instanceof Date && !isNaN(dt1.getTime())).toBe(true);
+  expect(dt1 instanceof DateTime && !isNaN(dt1.getTime())).toBe(true);
 
   const dt2 = new DateTime(date);
-  expect(dt2 instanceof Date && date.getTime() === dt2.getTime()).toBe(true);
+  expect(dt2 instanceof DateTime && date.getTime() === dt2.getTime()).toBe(true);
 
   const day = date.getDate();
   const month = `0${date.getMonth() + 1}`.slice(-2);
   const year = date.getFullYear();
 
   const dt3 = new DateTime(`${day}/${month}/${year}`);
-  expect(dt3 instanceof Date && date.getTime() === dt3.getTime()).toBe(false);
+  expect(dt3 instanceof DateTime && date.getTime() === dt3.getTime()).toBe(false);
 
   const dt4 = new DateTime(`${day}/${month}/${year}`, 'DD/MM/YYYY');
-  expect(dt4 instanceof Date && date.getTime() === dt4.getTime()).toBe(true);
+  expect(dt4 instanceof DateTime && date.getTime() === dt4.getTime()).toBe(true);
 });
 
 test('DateTime.convertArray - lockDays/bookedDays', () => {
