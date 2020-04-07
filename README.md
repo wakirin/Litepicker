@@ -20,6 +20,7 @@ See more details in docs.
 ## [Demo & Docs](https://wakirin.github.io/Litepicker)
 
 ## Compatibility
+* IE 11 (polyfill required, [docs](https://wakirin.github.io/Litepicker/#anchor-IE11))
 * Edge 17+
 * Chrome 60+
 * Firefox 52+
@@ -27,7 +28,6 @@ See more details in docs.
 * Opera 48+
 
 ## Roadmap
-* Improve compatibility
 * Time picker
 * ...
 

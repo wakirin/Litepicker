@@ -695,6 +695,22 @@
       <hr>
 
       <div class="lead">
+        <a id="anchor-IE11" href="#anchor-IE11">#</a> IE11
+      </div>
+      <div>
+        <p>To support IE11 you need to include polyfill  <a href="https://github.com/nuxodin/ie11CustomProperties" target="_blank">ie11CustomProperties</a>.</p>
+        <p>Example:</p>
+        <div class="code">
+          <span class="text-gray">&lt;--- include polyfill first ---&gt;</span>
+          &lt;script&gt;window.MSInputMethodContext && document.documentMode && document.write('&lt;script src="https://cdn.jsdelivr.net/npm/ie11-custom-properties@latest/ie11CustomProperties.js"&gt;&lt;\x2fscript&gt;');&lt;/script&gt;
+          <span class="text-gray">&lt;--- then include the Litepicker library ---&gt;</span>
+          &lt;script src="https://cdn.jsdelivr.net/npm/litepicker/dist/js/main.js"&gt;&lt;/script&gt;
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="lead">
         <a id="anchor-Customize" href="#anchor-Customize">#</a> Customize colors
       </div>
       <div>
@@ -749,7 +765,8 @@
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/litepicker@1.0.35/dist/js/main.js"></script>
+  <script>window.MSInputMethodContext && document.documentMode && document.write('<script src="https://cdn.jsdelivr.net/npm/ie11-custom-properties@latest/ie11CustomProperties.js"><\x2fscript>');</script>
+  <script src="https://cdn.jsdelivr.net/npm/litepicker@1.1.0/dist/js/main.js"></script>
   <script src="./js/demo.js"></script>
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <script>
