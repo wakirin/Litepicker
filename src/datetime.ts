@@ -129,6 +129,10 @@ export class DateTime {
     this.lang = lang;
   }
 
+  public toISOString() {
+    return this.dateInstance.toISOString();
+  }
+
   public toLocaleString(arg0, arg1) {
     return this.dateInstance.toLocaleString(arg0, arg1);
   }

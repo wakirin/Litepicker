@@ -206,3 +206,9 @@ test('DateTime format', () => {
   expect(dt.format('YYYY-MM-DD') === '2019-11-23').toBe(true);
   expect(dt.format('DD MMM, YYYY') === '23 Nov, 2019').toBe(true);
 });
+
+test('DateTime toISOString', () => {
+  const dt = new DateTime(date);
+
+  expect(dt.toISOString().substr(0, 10)).toBe('2019-11-23');
+});
