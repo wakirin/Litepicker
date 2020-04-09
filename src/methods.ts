@@ -178,21 +178,23 @@ Litepicker.prototype.hide = function () {
   }
 };
 
-Litepicker.prototype.getDate = function () {
+Litepicker.prototype.getDate = function (): Date {
   return this.getStartDate();
 };
 
-Litepicker.prototype.getStartDate = function () {
+Litepicker.prototype.getStartDate = function (): Date {
   if (this.options.startDate) {
-    return this.options.startDate.clone();
+    const castedObj = this.options.startDate.clone() as DateTime;
+    return castedObj.getDateInstance();
   }
 
   return null;
 };
 
-Litepicker.prototype.getEndDate = function () {
+Litepicker.prototype.getEndDate = function (): Date {
   if (this.options.endDate) {
-    return this.options.endDate.clone();
+    const castedObj = this.options.endDate.clone() as DateTime;
+    return castedObj.getDateInstance();
   }
 
   return null;
