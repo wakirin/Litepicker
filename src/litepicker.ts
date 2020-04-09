@@ -14,8 +14,7 @@ export class Litepicker extends Calendar {
 
     this.options = { ...this.options, ...options };
 
-    if ((this.options.allowRepick && this.options.inlineMode)
-      || !this.options.elementEnd) {
+    if (!this.options.elementEnd) {
       this.options.allowRepick = false;
     }
 
@@ -534,7 +533,7 @@ export class Litepicker extends Calendar {
       if (this.shouldAllowRepick()) {
         if (this.triggerElement === this.options.element) {
           this.datePicked[0] = this.options.endDate.clone();
-        } else {
+        } else if (this.triggerElement === this.options.elementEnd) {
           this.datePicked[0] = this.options.startDate.clone();
         }
       }
