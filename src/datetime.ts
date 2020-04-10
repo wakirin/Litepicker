@@ -1,10 +1,10 @@
 export class DateTime {
 
-  public static parseDateTime(date, format = 'YYYY-MM-DD', lang = 'en-US') {
+  public static parseDateTime(date, format = 'YYYY-MM-DD', lang = 'en-US'): Date {
     if (!date) return new Date(NaN);
 
     if (date instanceof Date) return DateTime.getDateZeroTime(new Date(date));
-    if (date instanceof DateTime) return date.clone();
+    if (date instanceof DateTime) return date.clone().getDateInstance();
 
     if (/^\d{10,}$/.test(date)) return DateTime.getDateZeroTime(new Date(Number(date)));
 
@@ -107,7 +107,7 @@ export class DateTime {
       });
   }
 
-  public static getDateZeroTime(date) {
+  public static getDateZeroTime(date): Date {
     return new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0);
   }
 
@@ -115,7 +115,7 @@ export class DateTime {
 
   protected lang;
 
-  private dateInstance;
+  private dateInstance: Date;
 
   constructor(date = null, format: string = null, lang = 'en-US') {
     if (format) {
@@ -127,6 +127,10 @@ export class DateTime {
     }
 
     this.lang = lang;
+  }
+
+  public getDateInstance(): Date {
+    return this.dateInstance;
   }
 
   public toLocaleString(arg0, arg1) {
@@ -189,7 +193,7 @@ export class DateTime {
     return 1 + Math.ceil((startWeekday - target.getTime()) / 604800000);
   }
 
-  public clone() {
+  public clone(): DateTime {
     return new DateTime(this.getTime());
   }
 
