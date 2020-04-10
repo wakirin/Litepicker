@@ -31,6 +31,9 @@ declare module './litepicker' {
 }
 
 Litepicker.prototype.show = function (el = null) {
+  const element = el ? el : this.options.element;
+  this.triggerElement = element;
+
   if (this.options.inlineMode) {
     this.picker.style.position = 'static';
     this.picker.style.display = 'inline-block';
@@ -40,9 +43,6 @@ Litepicker.prototype.show = function (el = null) {
     this.picker.style.right = null;
     return;
   }
-
-  const element = el ? el : this.options.element;
-  this.triggerElement = element;
 
   if (this.options.scrollToDate) {
     if (this.options.startDate && (!el || el === this.options.element)) {
@@ -242,6 +242,9 @@ Litepicker.prototype.setEndDate = function (date) {
 };
 
 Litepicker.prototype.setDateRange = function (date1, date2) {
+  // stop repicking by resetting the trigger element
+  this.triggerElement = undefined;
+
   this.setStartDate(date1);
   this.setEndDate(date2);
 

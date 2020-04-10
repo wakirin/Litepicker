@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0">
+  <title>Litepicker - Date range picker - lightweight, no dependencies</title>
+</head>
+
+<body>
+  <input id="datepicker">
+  <input id="datepickerend">
+  <button id="repick1">Change arrival</button>
+  <button id="repick2">Change departure</button>
+  <!-- Polyfill needed for CSS properties support in IE11 -->
+  <script>window.MSInputMethodContext && document.documentMode && document.write('<script src="./ie11CustomProperties.js"><\x2fscript>');</script>
+  <script src="../dist/js/main.js"></script>
+  <script>
+    var picker = new Litepicker({
+      element: document.getElementById('datepicker'),
+      elementEnd: document.getElementById('datepickerend'),
+      onSelect: function(a,b) {
+        console.log(a,b);
+      },
+      inlineMode:true,
+      allowRepick:true,
+      singleMode:false,
+      numberOfMonths: 2,
+    numberOfColumns: 2
+    });
+    document.getElementById("repick1").
+    addEventListener("click", function() {
+      picker.show(document.getElementById('datepicker'));
+    });
+    document.getElementById("repick2").
+    addEventListener("click", function() {
+      picker.show(document.getElementById('datepickerend'));
+    });
+  </script>
+</body>
+
+</html>
