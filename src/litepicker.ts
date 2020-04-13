@@ -512,9 +512,8 @@ export class Litepicker extends Calendar {
     tooltip.style.visibility = 'hidden';
   }
 
-  private shouldAllowMouseEnter(el) {
+  private shouldAllowMouseEnter(el: HTMLElement) {
     return !this.options.singleMode
-      && el.classList.contains(style.dayItem)
       && !el.classList.contains(style.isLocked)
       && !el.classList.contains(style.isBooked);
   }
@@ -526,8 +525,20 @@ export class Litepicker extends Calendar {
       && this.options.endDate;
   }
 
+  private isDayItem(el: HTMLElement) {
+    return el.classList.contains(style.dayItem);
+  }
+
   private onMouseEnter(event) {
     const target = event.target as HTMLElement;
+    if (!this.isDayItem(target)) {
+      return;
+    }
+
+    if (typeof this.options.onDayHover === 'function') {
+      this.options.onDayHover.call(this, DateTime.parseDateTime(target.dataset.time),
+                                   target.classList.value?.split(/\s/));
+    }
 
     if (this.shouldAllowMouseEnter(target)) {
       if (this.shouldAllowRepick()) {

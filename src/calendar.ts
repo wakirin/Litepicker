@@ -77,6 +77,7 @@ export class Calendar {
     onRender: null,
     onChangeMonth: null,
     onChangeYear: null,
+    onDayHover: null,
 
     resetBtnCallback: null,
   };

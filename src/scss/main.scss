@@ -213,7 +213,6 @@
 
         &.is-locked {
           color: var(--litepickerDayIsLockedColor);
-          pointer-events: none;
 
           &:hover {
             color: var(--litepickerDayIsLockedColor);
@@ -224,7 +223,6 @@
 
         &.is-booked {
           color: var(--litepickerDayIsBookedColor);
-          pointer-events: none;
 
           &:hover {
             color: var(--litepickerDayIsBookedColor);
