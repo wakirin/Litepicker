@@ -6,7 +6,7 @@ export class DateTime {
     if (date instanceof Date) return DateTime.getDateZeroTime(new Date(date));
     if (date instanceof DateTime) return date.clone().getDateInstance();
 
-    if (/^\d{10,}$/.test(date)) return DateTime.getDateZeroTime(new Date(Number(date)));
+    if (/^-?\d{10,}$/.test(date)) return DateTime.getDateZeroTime(new Date(Number(date)));
 
     if (typeof date === 'string') {
       const match = format.match(/\[([^\]]+)]|Y{2,4}|M{1,4}|D{1,2}|d{1,4}/g);
