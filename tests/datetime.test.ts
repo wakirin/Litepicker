@@ -1,7 +1,7 @@
 import { DateTime } from '../src/datetime';
 
 // 23 Nov, 2019 - repository creation date
-const date = new Date(2019, 10, 23, 0, 0, 0, 0);
+const date = new DateTime(new Date(2019, 10, 23, 0, 0, 0, 0));
 
 test('new DateTime', () => {
   const dt1 = new DateTime();
@@ -29,6 +29,20 @@ test('DateTime.convertArray - lockDays/bookedDays', () => {
   ];
   const convertedArray = DateTime.convertArray(array, 'YYYY-MM-DD');
   convertedArray.forEach((dt) => {
+    if (dt instanceof Array) {
+      expect(dt[0] instanceof DateTime && !isNaN(dt[0].getTime())
+        && dt[1] instanceof DateTime && !isNaN(dt[1].getTime())).toBe(true);
+    } else {
+      expect(dt instanceof DateTime && !isNaN(dt.getTime())).toBe(true);
+    }
+  });
+  const array2 = [
+    new Date('2019-11-23'),
+    [new Date('2019-01-01'), new Date('2019-01-15')],
+    [new Date('2019-11-01'), new Date('2019-11-11')],
+  ];
+  const convertedArray2 = DateTime.convertArray(array2, 'YYYY-MM-DD');
+  convertedArray2.forEach((dt) => {
     if (dt instanceof Array) {
       expect(dt[0] instanceof DateTime && !isNaN(dt[0].getTime())
         && dt[1] instanceof DateTime && !isNaN(dt[1].getTime())).toBe(true);
