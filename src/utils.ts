@@ -13,7 +13,7 @@ export function getOrientation() {
 
 export function findNestedMonthItem(monthItem: Element): number {
   const children = monthItem.parentNode.childNodes;
-  for (let i = 0; i < children.length; i++) {
+  for (let i = 0; i < children.length; i = i + 1) {
     const curNode = children.item(i);
     if (curNode === monthItem) {
       return i;

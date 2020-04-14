@@ -1,7 +1,7 @@
 import { Calendar } from './calendar';
 import { DateTime } from './datetime';
-import { findNestedMonthItem } from './utils';
 import * as style from './scss/main.scss';
+import { findNestedMonthItem } from './utils';
 
 export class Litepicker extends Calendar {
   protected triggerElement;
@@ -712,9 +712,9 @@ export class Litepicker extends Calendar {
   }
 
   private loadPolyfillsForIE11(): void {
-    // Support for Object.entries(...)
-    // copied from
-    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
+  // Support for Object.entries(...)
+  // copied from
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
     if (!Object.entries) {
       Object.entries = (obj) => {
         const ownProps = Object.keys(obj);
@@ -731,11 +731,13 @@ export class Litepicker extends Calendar {
     // copied from
     // https://developer.mozilla.org/en-US/docs/Web/API/Element/closest#Polyfill
     if (!Element.prototype.matches) {
+      // tslint:disable-next-line: no-string-literal
       Element.prototype.matches = Element.prototype['msMatchesSelector'] ||
                                     Element.prototype.webkitMatchesSelector;
     }
     if (!Element.prototype.closest) {
       Element.prototype.closest = function (s) {
+        // tslint:disable-next-line: no-this-assignment
         let el = this;
 
         do {

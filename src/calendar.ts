@@ -7,6 +7,7 @@ export class Calendar {
     element: null,
     elementEnd: null,
     parentEl: null,
+    // tslint:disable-next-line: object-literal-sort-keys
     firstDay: 1,
     format: 'YYYY-MM-DD',
     lang: 'en-US',
@@ -48,6 +49,7 @@ export class Calendar {
 
     dropdowns: {
       minYear: 1990,
+      // tslint:disable-next-line: object-literal-sort-keys
       maxYear: null,
       months: false,
       years: false,
@@ -222,7 +224,8 @@ export class Calendar {
         option.text = x;
         option.disabled = (this.options.minDate
           && optionYear.isBefore(new DateTime(this.options.minDate), 'year'))
-          || (this.options.maxDate && optionYear.isAfter(new DateTime(this.options.maxDate), 'year'));
+          || (this.options.maxDate
+              && optionYear.isAfter(new DateTime(this.options.maxDate), 'year'));
         option.selected = date.getFullYear() === x;
 
         selectYears.appendChild(option);
