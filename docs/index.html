@@ -588,6 +588,17 @@
             <p>idx is showing which calendar has change when option <strong>splitView</strong> is enabled.</p>
             <p>idx starts from 0.</p>
           </div>
+
+          <div>onDayHover</div>
+          <div class="option-default">null</div>
+          <div class="option-description">
+            <p>Trigger when user hovers or clicks a day item.</p>
+            <p>Example: 
+              <code>onDayHover: function(date, attributes) { console.log(date, attributes); }</code>
+            </p>
+            <p><code>date</code> is the date object of the currently hovered day item.</p>
+            <p><code>attributes</code> is a string array with the day item's css classes (e.g. <strong>is-start-date</strong>, <strong>is-locked</strong>, <strong>is-booked</strong>, etc.).</p>
+          </div>
         </div>
 
         <hr>

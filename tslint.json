@@ -6,7 +6,8 @@
     ],
     "jsRules": {},
     "rules": {
-        "no-console": false
+        "no-console": false,
+        "prefer-array-literal": false
     },
     "rulesDirectory": []
 }

@@ -26,7 +26,12 @@
       allowRepick:true,
       singleMode:false,
       numberOfMonths: 2,
-    numberOfColumns: 2
+      numberOfColumns: 2,
+      maxDays:28,
+      minDays:1,
+      onDayHover: function(a,b) {
+        console.log(a,b);
+      }
     });
     document.getElementById("repick1").
     addEventListener("click", function() {
