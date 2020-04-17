@@ -32,6 +32,13 @@ export class Litepicker extends Calendar {
       );
     }
 
+    if (this.options.highlightedDays.length) {
+      this.options.highlightedDays = DateTime.convertArray(
+        this.options.highlightedDays,
+        this.options.highlightedDaysFormat,
+      );
+    }
+
     if (this.options.hotelMode && !('bookedDaysInclusivity' in options)) {
       this.options.bookedDaysInclusivity = '[)';
     }

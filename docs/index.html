@@ -458,6 +458,22 @@
             <p>Allow to select any booked days as check-out.</p>
           </div>
 
+          <div id="option-highlightedDaysFormat">highlightedDaysFormat</div>
+          <div class="option-type">String</div>
+          <div class="option-default">YYYY-MM-DD</div>
+          <div class="option-description">Date format for option <strong>highlightedDays</strong>.</div>
+
+          <div id="option-highlightedDays">highlightedDays</div>
+          <div class="option-type">Array</div>
+          <div class="option-default">[]</div>
+          <div class="option-description">
+            <p>Highlight days. Can contains array with range:</p>
+            <p>Eg: [ ['2019-01-01', '2019-01-10'], '2019-01-31' ].</p>
+            <p>Can contains Date Object or Unix Timestamp (with milliseconds) or String (must be equal to option
+              <strong>highlightedDaysFormat</strong>).</p>
+          </div>
+
+
           <div id="option-dropdowns">
             dropdowns
 
@@ -673,6 +689,13 @@
             <p>See options <strong>bookedDays</strong> for format information.</p>
           </div>
 
+          <div>setHighlightedDays</div>
+          <div class="option-default">array</div>
+          <div class="option-description">
+            <p>Set highlighted days.</p>
+            <p>See options <strong>highlightedDays</strong> for format information.</p>
+          </div>
+
           <div>gotoDate</div>
           <div class="option-default">date, idx?</div>
           <div class="option-description">
@@ -777,7 +800,7 @@
   </div>
 
   <script>window.MSInputMethodContext && document.documentMode && document.write('<script src="https://cdn.jsdelivr.net/npm/ie11-custom-properties@latest/ie11CustomProperties.js"><\x2fscript>');</script>
-  <script src="https://cdn.jsdelivr.net/npm/litepicker@1.1.3/dist/js/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/litepicker@1.1.4/dist/js/main.js"></script>
   <script src="./js/demo.js"></script>
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <script>

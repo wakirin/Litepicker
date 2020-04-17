@@ -25,7 +25,10 @@
   --litepickerButtonApplyBg: #2196f3;
   
   --litepickerButtonResetBtn: #909090;
-  --litepickerButtonResetBtnHover: #2196f3
+  --litepickerButtonResetBtnHover: #2196f3;
+
+  --litepickerHighlightedDayColor: #333;
+  --litepickerHighlightedDayBg: #ffeb3b;
 }
 .show-week-numbers {
   --litepickerMonthWidth: calc(var(--litepickerDayWidth) * 8);
@@ -273,6 +276,11 @@
           border-bottom-left-radius: 5px;
           border-top-right-radius: 5px;
           border-bottom-right-radius: 5px;
+        }
+
+        &.is-highlighted {
+          color: var(--litepickerHighlightedDayColor);
+          background-color: var(--litepickerHighlightedDayBg);
         }
       }
 

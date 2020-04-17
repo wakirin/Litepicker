@@ -47,6 +47,9 @@ export class Calendar {
     bookedDaysInclusivity: '[]',
     anyBookedDaysAsCheckout: false,
 
+    highlightedDaysFormat: 'YYYY-MM-DD',
+    highlightedDays: [],
+
     dropdowns: {
       minYear: 1990,
       // tslint:disable-next-line: object-literal-sort-keys
@@ -448,6 +451,21 @@ export class Calendar {
 
       if (locked) {
         day.classList.add(style.isLocked);
+      }
+    }
+
+    if (this.options.highlightedDays.length) {
+      const isHighlighted = this.options.highlightedDays
+        .filter((d) => {
+          if (d instanceof Array) {
+            return date.isBetween(d[0], d[1], '[]');
+          }
+
+          return d.isSame(date, 'day');
+        }).length;
+
+      if (isHighlighted) {
+        day.classList.add(style.isHighlighted);
       }
     }
 

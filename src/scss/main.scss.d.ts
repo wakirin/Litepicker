@@ -24,6 +24,7 @@ export const isInRange: string;
 export const isStartDate: string;
 export const isFlipped: string;
 export const isEndDate: string;
+export const isHighlighted: string;
 export const weekNumber: string;
 export const containerFooter: string;
 export const previewDateRange: string;

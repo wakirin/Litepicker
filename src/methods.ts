@@ -20,6 +20,7 @@ declare module './litepicker' {
 
     setLockDays(array);
     setBookedDays(array);
+    setHighlightedDays(array);
 
     gotoDate(date, idx);
 
@@ -279,6 +280,14 @@ Litepicker.prototype.setBookedDays = function (array) {
   this.render();
 };
 
+Litepicker.prototype.setHighlightedDays = function (array) {
+  this.options.highlightedDays = DateTime.convertArray(
+    array,
+    this.options.highlightedDaysFormat,
+  );
+  this.render();
+};
+
 Litepicker.prototype.setOptions = function (options) {
   delete options.element;
   delete options.elementEnd;
@@ -332,6 +341,13 @@ Litepicker.prototype.setOptions = function (options) {
     this.options.bookedDays = DateTime.convertArray(
       this.options.bookedDays,
       this.options.bookedDaysFormat,
+    );
+  }
+
+  if (this.options.highlightedDays.length) {
+    this.options.highlightedDays = DateTime.convertArray(
+      this.options.highlightedDays,
+      this.options.highlightedDaysFormat,
     );
   }
 
