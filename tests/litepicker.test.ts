@@ -1,4 +1,4 @@
-import { Litepicker } from '../src/index';
+import Litepicker from '../src/index';
 
 window.matchMedia = jest.fn().mockImplementation((query) => {
   return {
