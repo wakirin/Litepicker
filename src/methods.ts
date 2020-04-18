@@ -3,35 +3,6 @@ import { Litepicker } from './litepicker';
 import * as style from './scss/main.scss';
 import { getOrientation, isMobile } from './utils';
 
-declare module './litepicker' {
-  // tslint:disable-next-line: interface-name
-  interface Litepicker {
-    show(element?);
-    hide();
-
-    getDate();
-    getStartDate();
-    getEndDate();
-
-    setDate(date);
-    setStartDate(date);
-    setEndDate(date);
-    setDateRange(date1, date2);
-
-    setLockDays(array);
-    setBookedDays(array);
-    setHighlightedDays(array);
-
-    gotoDate(date, idx);
-
-    setOptions(options);
-
-    clearSelection();
-
-    destroy();
-  }
-}
-
 Litepicker.prototype.show = function (el = null) {
   const element = el ? el : this.options.element;
   this.triggerElement = element;

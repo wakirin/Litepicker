@@ -4,6 +4,7 @@
     "module": "commonjs",
     "target": "ES5",
     "declaration": true,
+    "allowSyntheticDefaultImports": true,
     "plugins": [{ "name": "typescript-plugin-css-modules" }]
   },
   "include": [

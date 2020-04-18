@@ -120,6 +120,31 @@ export class Litepicker extends Calendar {
     this.onInit();
   }
 
+  public show(element?) {}
+
+  public hide() {}
+
+  public getDate() {}
+  public getStartDate() {}
+  public getEndDate() {}
+
+  public setDate(date) {}
+  public setStartDate(date) {}
+  public setEndDate(date) {}
+  public setDateRange(date1, date2) {}
+
+  public setLockDays(array) {}
+  public setBookedDays(array) {}
+  public setHighlightedDays(array) {}
+
+  public gotoDate(date, idx) {}
+
+  public setOptions(options) {}
+
+  public clearSelection() {}
+
+  public destroy() {}
+
   private onInit() {
     document.addEventListener('click', e => this.onClick(e), true);
 
