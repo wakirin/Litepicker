@@ -419,7 +419,8 @@
               </ul>
             </p>
             <p>
-              Eg: you have <code>bookedDays: [['2020-01-10', '2020-01-20']]</code>, <code>'2020-01-10'</code> is allowing to select as check-out, <code>'2020-01-20'</code> is allow to select as check-in.
+              Eg: you have <code>bookedDays: [['2020-01-10', '2020-01-20']]</code>, <code>'2020-01-10'</code> is
+              allowing to select as check-out, <code>'2020-01-20'</code> is allow to select as check-in.
             </p>
           </div>
 
@@ -458,12 +459,20 @@
             <p>Allow to select any booked days as check-out.</p>
           </div>
 
-          <div id="option-highlightedDaysFormat">highlightedDaysFormat</div>
+          <div id="option-highlightedDaysFormat">
+            highlightedDaysFormat
+
+            <p class="text-gray"><small>from <strong>v1.1.4</strong></small></p>
+          </div>
           <div class="option-type">String</div>
           <div class="option-default">YYYY-MM-DD</div>
           <div class="option-description">Date format for option <strong>highlightedDays</strong>.</div>
 
-          <div id="option-highlightedDays">highlightedDays</div>
+          <div id="option-highlightedDays">
+            highlightedDays
+
+            <p class="text-gray"><small>from <strong>v1.1.4</strong></small></p>
+          </div>
           <div class="option-type">Array</div>
           <div class="option-default">[]</div>
           <div class="option-description">
@@ -609,11 +618,12 @@
           <div class="option-default">null</div>
           <div class="option-description">
             <p>Trigger when user hovers or clicks a day item.</p>
-            <p>Example: 
+            <p>Example:
               <code>onDayHover: function(date, attributes) { console.log(date, attributes); }</code>
             </p>
             <p><code>date</code> is the date object of the currently hovered day item.</p>
-            <p><code>attributes</code> is a string array with the day item's css classes (e.g. <strong>is-start-date</strong>, <strong>is-locked</strong>, <strong>is-booked</strong>, etc.).</p>
+            <p><code>attributes</code> is a string array with the day item's css classes (e.g.
+              <strong>is-start-date</strong>, <strong>is-locked</strong>, <strong>is-booked</strong>, etc.).</p>
           </div>
         </div>
 
@@ -717,7 +727,7 @@
           <div class="option-description">
             <p>Clear selection.</p>
           </div>
-          
+
           <div>destroy</div>
           <div class="option-default">-</div>
           <div class="option-description">
@@ -732,11 +742,13 @@
         <a id="anchor-IE11" href="#anchor-IE11">#</a> IE11
       </div>
       <div>
-        <p>To support IE11 you need to include polyfill  <a href="https://github.com/nuxodin/ie11CustomProperties" target="_blank">ie11CustomProperties</a>.</p>
+        <p>To support IE11 you need to include polyfill <a href="https://github.com/nuxodin/ie11CustomProperties"
+            target="_blank">ie11CustomProperties</a>.</p>
         <p>Example:</p>
         <div class="code">
           <span class="text-gray">&lt;--- include polyfill first ---&gt;</span>
-          &lt;script&gt;window.MSInputMethodContext && document.documentMode && document.write('&lt;script src="https://cdn.jsdelivr.net/npm/ie11-custom-properties@latest/ie11CustomProperties.js"&gt;&lt;\x2fscript&gt;');&lt;/script&gt;
+          &lt;script&gt;window.MSInputMethodContext && document.documentMode && document.write('&lt;script
+          src="https://cdn.jsdelivr.net/npm/ie11-custom-properties@latest/ie11CustomProperties.js"&gt;&lt;\x2fscript&gt;');&lt;/script&gt;
           <span class="text-gray">&lt;--- then include the Litepicker library ---&gt;</span>
           &lt;script src="https://cdn.jsdelivr.net/npm/litepicker/dist/js/main.js"&gt;&lt;/script&gt;
         </div>
