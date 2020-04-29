@@ -22,7 +22,7 @@ declare module './litepicker' {
     setBookedDays(array);
     setHighlightedDays(array);
 
-    gotoDate(date, idx);
+    gotoDate(date, idx?);
 
     setOptions(options);
 

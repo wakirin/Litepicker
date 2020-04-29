@@ -35,6 +35,7 @@ export class Calendar {
     scrollToDate: true,
     mobileFriendly: true,
     useResetBtn: false,
+    autoRefresh: false,
 
     lockDaysFormat: 'YYYY-MM-DD',
     lockDays: [],
@@ -91,6 +92,8 @@ export class Calendar {
   protected datePicked: DateTime[] = [];
 
   protected render() {
+    const mainBlock = document.createElement('div');
+    mainBlock.className = style.containerMain;
     const months = document.createElement('div');
     months.className = style.containerMonths;
 
@@ -129,7 +132,9 @@ export class Calendar {
     }
 
     this.picker.innerHTML = '';
-    this.picker.appendChild(months);
+
+    mainBlock.appendChild(months);
+    this.picker.appendChild(mainBlock);
 
     if (!this.options.autoApply || this.options.footerHTML) {
       this.picker.appendChild(this.renderFooter());
@@ -140,7 +145,7 @@ export class Calendar {
     }
 
     if (typeof this.options.onRender === 'function') {
-      this.options.onRender.call(this);
+      this.options.onRender.call(this, this.picker);
     }
   }
 

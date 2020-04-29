@@ -1,5 +1,6 @@
 export const showWeekNumbers: string;
 export const litepicker: string;
+export const containerMain: string;
 export const containerMonths: string;
 export const columns2: string;
 export const columns3: string;

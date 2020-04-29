@@ -40,6 +40,9 @@
   display: none;
 
   .container {
+    &__main {
+      display: flex;
+    }
     &__months {
       display: flex;
       flex-wrap: wrap;

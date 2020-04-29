@@ -84,7 +84,7 @@ export class Litepicker extends Calendar {
     }
     if (!this.options.singleMode
       && (!(this.options.startDate instanceof DateTime)
-          || !(this.options.endDate instanceof DateTime))) {
+        || !(this.options.endDate instanceof DateTime))) {
       this.options.startDate = null;
       this.options.endDate = null;
     }
@@ -134,6 +134,15 @@ export class Litepicker extends Calendar {
     }
     if (this.options.elementEnd instanceof HTMLElement) {
       this.options.elementEnd.addEventListener('change', e => this.onInput(e), true);
+    }
+
+    if (this.options.autoRefresh) {
+      if (this.options.element instanceof HTMLElement) {
+        this.options.element.addEventListener('keyup', e => this.onInput(e), true);
+      }
+      if (this.options.elementEnd instanceof HTMLElement) {
+        this.options.elementEnd.addEventListener('keyup', e => this.onInput(e), true);
+      }
     }
 
     this.render();
@@ -544,7 +553,7 @@ export class Litepicker extends Calendar {
 
     if (typeof this.options.onDayHover === 'function') {
       this.options.onDayHover.call(this, DateTime.parseDateTime(target.dataset.time),
-                                   target.classList.value?.split(/\s/));
+        target.classList.value?.split(/\s/));
     }
 
     if (this.shouldAllowMouseEnter(target)) {
@@ -685,11 +694,26 @@ export class Litepicker extends Calendar {
 
   private onInput(event) {
     let [startValue, endValue] = this.parseInput();
+    let isValid = false;
+    const dateFormat = this.options.format;
 
-    if (startValue instanceof Date && !isNaN(startValue.getTime())
-      && endValue instanceof Date && !isNaN(endValue.getTime())) {
+    if (this.options.elementEnd) {
+      isValid = startValue instanceof DateTime
+        && endValue instanceof DateTime
+        && startValue.format(dateFormat) === this.options.element.value
+        && endValue.format(dateFormat) === this.options.elementEnd.value;
+    } else if (this.options.singleMode) {
+      isValid = startValue instanceof DateTime
+        && startValue.format(dateFormat) === this.options.element.value;
+    } else {
+      isValid = startValue instanceof DateTime
+        && endValue instanceof DateTime
+        // tslint:disable-next-line: max-line-length
+        && `${startValue.format(dateFormat)} - ${endValue.format(dateFormat)}` === this.options.element.value;
+    }
 
-      if (startValue.getTime() > endValue.getTime()) {
+    if (isValid) {
+      if (endValue && startValue.getTime() > endValue.getTime()) {
         const tempDate = startValue.clone();
         startValue = endValue.clone();
         endValue = tempDate.clone();
@@ -701,7 +725,7 @@ export class Litepicker extends Calendar {
         this.options.lang,
       );
 
-      if (this.options.startDate) {
+      if (endValue) {
         this.options.endDate = new DateTime(
           endValue,
           this.options.format,
@@ -711,6 +735,23 @@ export class Litepicker extends Calendar {
 
       this.updateInput();
       this.render();
+
+      let dateGo = startValue.clone();
+      let monthIdx = 0;
+      let isStart = true;
+
+      if (this.options.elementEnd) {
+        isStart = startValue.format(dateFormat) === event.target.value;
+      } else {
+        isStart = event.target.value.startWith(startValue.format(dateFormat));
+      }
+
+      if (!isStart) {
+        dateGo = endValue.clone();
+        monthIdx = this.options.numberOfMonths - 1;
+      }
+
+      this.gotoDate(dateGo, monthIdx);
     }
   }
 
@@ -719,14 +760,14 @@ export class Litepicker extends Calendar {
   }
 
   private loadPolyfillsForIE11(): void {
-  // Support for Object.entries(...)
-  // copied from
-  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
+    // Support for Object.entries(...)
+    // copied from
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
     if (!Object.entries) {
       Object.entries = (obj) => {
         const ownProps = Object.keys(obj);
         let i = ownProps.length;
-        const  resArray = new Array(i); // preallocate the Array
+        const resArray = new Array(i); // preallocate the Array
         while (i) {
           i = i - 1;
           resArray[i] = [ownProps[i], obj[ownProps[i]]];
@@ -740,7 +781,7 @@ export class Litepicker extends Calendar {
     if (!Element.prototype.matches) {
       // tslint:disable-next-line: no-string-literal
       Element.prototype.matches = Element.prototype['msMatchesSelector'] ||
-                                    Element.prototype.webkitMatchesSelector;
+        Element.prototype.webkitMatchesSelector;
     }
     if (!Element.prototype.closest) {
       Element.prototype.closest = function (s) {
