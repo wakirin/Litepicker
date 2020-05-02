@@ -36,6 +36,7 @@ export class Calendar {
     mobileFriendly: true,
     useResetBtn: false,
     autoRefresh: false,
+    moveByOneMonth: false,
 
     lockDaysFormat: 'YYYY-MM-DD',
     lockDays: [],
@@ -84,8 +85,9 @@ export class Calendar {
     onChangeMonth: null,
     onChangeYear: null,
     onDayHover: null,
-
     resetBtnCallback: null,
+
+    moduleRanges: null,
   };
   protected calendars: DateTime[] = [];
   protected picker: HTMLElement;
@@ -142,6 +144,13 @@ export class Calendar {
 
     if (this.options.showTooltip) {
       this.picker.appendChild(this.renderTooltip());
+    }
+
+    if (this.options.moduleRanges
+      // tslint:disable-next-line: no-string-literal
+      && typeof this['enableModuleRanges'] === 'function') {
+      // tslint:disable-next-line: no-string-literal
+      this['enableModuleRanges'].call(this, this);
     }
 
     if (typeof this.options.onRender === 'function') {
@@ -233,7 +242,7 @@ export class Calendar {
         option.disabled = (this.options.minDate
           && optionYear.isBefore(new DateTime(this.options.minDate), 'year'))
           || (this.options.maxDate
-              && optionYear.isAfter(new DateTime(this.options.maxDate), 'year'));
+            && optionYear.isAfter(new DateTime(this.options.maxDate), 'year'));
         option.selected = date.getFullYear() === x;
 
         selectYears.appendChild(option);
