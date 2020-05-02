@@ -361,7 +361,20 @@
           <div class="option-type">Boolean</div>
           <div class="option-default">false</div>
           <div class="option-description">
-            <p>Indicates whether the date range picker should automatically update the value of the &lt;input&gt; element it's attached to at initialization and when the selected dates change.</p>
+            <p>Indicates whether the date range picker should automatically update the value of the &lt;input&gt;
+              element it's attached to at initialization and when the selected dates change.</p>
+          </div>
+
+          <div id="option-moveByOneMonth">
+            moveByOneMonth
+
+            <p class="text-gray"><small>from <strong>v1.3.0</strong></small></p>
+          </div>
+          <div class="option-type">Boolean</div>
+          <div class="option-default">false</div>
+          <div class="option-description">
+            <p>Indicates whether the date range picker should switch month one by one, instead of value of
+              <code>numberOfMonths</code>.</p>
           </div>
 
           <div id="option-lockDaysFormat">lockDaysFormat</div>
@@ -544,6 +557,26 @@
             <p><code>useResetBtn</code> must be at <b>true</b>.</p>
             <p>This function is call when the reset button is click.</p>
             <p>By default it will call the <code>clearSelection</code> method.</p>
+          </div>
+
+          <div id="option-moduleRanges">
+            moduleRanges
+
+            <p class="text-gray"><small>from <strong>v1.3.0</strong></small></p>
+          </div>
+          <div class="option-type">Boolean|Object</div>
+          <div class="option-default">
+            null
+          </div>
+          <div class="option-description">
+            <p><strong>Works with <a href="https://github.com/wakirin/litepicker-module-ranges"
+                  target="_blank">litepicker-module-ranges</a></strong></p>
+            </p>Set predefined date ranges the user can select from. Each key is the label for the range, and its value
+            an array with two dates representing the bounds of the range.</p>
+            <p>When is <code>true</code> will use default ranges (Today, Yesterday, Last 7 Days, Last 30 Days, This
+              Month, Last Month).</p>
+            <p>You can provide your ranges and position, eg:</p>
+            <p><code>{ position: 'left', ranges: { your_ranges } }</code></p>
           </div>
         </div>
 
@@ -815,7 +848,7 @@
   </div>
 
   <script>window.MSInputMethodContext && document.documentMode && document.write('<script src="https://cdn.jsdelivr.net/npm/ie11-custom-properties@latest/ie11CustomProperties.js"><\x2fscript>');</script>
-  <script src="https://cdn.jsdelivr.net/npm/litepicker@1.2.1/dist/js/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/litepicker@1.3.0/dist/js/main.js"></script>
   <script src="./js/demo.js"></script>
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <script>

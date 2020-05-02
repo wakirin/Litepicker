@@ -420,7 +420,9 @@ export class Litepicker extends Calendar {
       }
 
       let idx = 0;
-      let numberOfMonths = this.options.numberOfMonths;
+      let numberOfMonths = !this.options.moveByOneMonth
+        ? this.options.numberOfMonths
+        : 1;
 
       if (this.options.splitView) {
         const monthItem = target.closest(`.${style.monthItem}`);
@@ -446,7 +448,9 @@ export class Litepicker extends Calendar {
       }
 
       let idx = 0;
-      let numberOfMonths = this.options.numberOfMonths;
+      let numberOfMonths = !this.options.moveByOneMonth
+        ? this.options.numberOfMonths
+        : 1;
 
       if (this.options.splitView) {
         const monthItem = target.closest(`.${style.monthItem}`);
@@ -474,7 +478,7 @@ export class Litepicker extends Calendar {
       this.hide();
     }
 
-    // Click on button apple
+    // Click on button apply
     if (target.classList.contains(style.buttonApply)) {
       e.preventDefault();
 
@@ -581,13 +585,8 @@ export class Litepicker extends Calendar {
         date2 = tempDate.clone();
         isFlipped = true;
       }
-      const allDayItems = this.picker.querySelectorAll(`.${style.dayItem}`);
-      const tmpArray: Element[] = new Array(allDayItems.length);
-      for (let i = 0; i < allDayItems.length; i = i + 1) {
-        const curElem = allDayItems.item(i);
-        tmpArray[i] = curElem;
-      }
-      tmpArray.forEach((d: HTMLElement) => {
+      const allDayItems = Array.prototype.slice.call(this.picker.querySelectorAll(`.${style.dayItem}`));
+      allDayItems.forEach((d: HTMLElement) => {
         const date = new DateTime(d.dataset.time);
         const day = this.renderDay(date);
 
@@ -638,7 +637,8 @@ export class Litepicker extends Calendar {
   private onMouseLeave(event) {
     const target = event.target as any;
 
-    if (!this.options.allowRepick) {
+    if (!this.options.allowRepick
+      || (this.options.allowRepick && !this.options.startDate && !this.options.endDate)) {
       return;
     }
 
