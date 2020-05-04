@@ -82,6 +82,7 @@ export class Calendar {
     onSelect: null,
     onError: null,
     onRender: null,
+    onRenderDay: null,
     onChangeMonth: null,
     onChangeYear: null,
     onDayHover: null,
@@ -517,6 +518,10 @@ export class Calendar {
     if (this.options.disableWeekends
       && (date.getDay() === 6 || date.getDay() === 0)) {
       day.classList.add(style.isLocked);
+    }
+
+    if (typeof this.options.onRenderDay === 'function') {
+      this.options.onRenderDay.call(this, day);
     }
 
     return day;

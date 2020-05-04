@@ -627,7 +627,14 @@
           <div class="option-default">null</div>
           <div class="option-description">
             <p>Trigger after the render of the picker.</p>
-            <p>Example: <code>onRender: function(element) { console.log('rendered', element); }</code></p>
+            <p>Example: <code>onRender: function(element) { console.log('picker element', element); }</code></p>
+          </div>
+
+          <div>onRenderDay</div>
+          <div class="option-default">null</div>
+          <div class="option-description">
+            <p>Trigger after rendering a day item.</p>
+            <p>Example: <code>onRenderDay: function(element) { console.log('day element', element); }</code></p>
           </div>
 
           <div>onChangeMonth</div>
@@ -848,7 +855,7 @@
   </div>
 
   <script>window.MSInputMethodContext && document.documentMode && document.write('<script src="https://cdn.jsdelivr.net/npm/ie11-custom-properties@latest/ie11CustomProperties.js"><\x2fscript>');</script>
-  <script src="https://cdn.jsdelivr.net/npm/litepicker@1.3.0/dist/js/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/litepicker@1.3.1/dist/js/main.js"></script>
   <script src="./js/demo.js"></script>
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <script>
