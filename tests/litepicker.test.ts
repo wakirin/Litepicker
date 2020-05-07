@@ -164,3 +164,35 @@ test('Litepicker date range - setDateRange (Date/UnixTimestamp/String)', () => {
     && input.value === `${startDateFormat} - ${endDateFormat}`).toBe(true);
   picker.destroy();
 });
+
+test('Litepicker date range - setOptions', () => {
+  const monthStart = `0${startDate.getMonth() + 1}`.slice(-2);
+  const monthEnd = `0${endDate.getMonth() + 1}`.slice(-2);
+  const dayStart = `0${startDate.getDate()}`.slice(-2);
+  const dayEnd = `0${endDate.getDate()}`.slice(-2);
+  const startDateFormat = `${startDate.getFullYear()}-${monthStart}-${dayStart}`;
+  const endDateFormat = `${endDate.getFullYear()}-${monthEnd}-${dayEnd}`;
+
+  // Date object
+  let picker = new Litepicker({
+    element: document.getElementById('datepicker'),
+    singleMode: false,
+  });
+  picker.setOptions({
+    numberOfMonths: 2,
+    numberOfColumns: 2,
+    startDate,
+    endDate,
+    inlineMode: true,
+  });
+
+  expect(picker.getStartDate().toDateString() === startDate.toDateString()
+    && picker.getEndDate().toDateString() === endDate.toDateString()
+    && input.value === `${startDateFormat} - ${endDateFormat}`).toBe(true);
+
+  expect((picker as any).options.numberOfMonths === 2).toBe(true);
+  expect((picker as any).options.numberOfColumns === 2).toBe(true);
+  expect((picker as any).options.inlineMode === true).toBe(true);
+
+  picker.destroy();
+});

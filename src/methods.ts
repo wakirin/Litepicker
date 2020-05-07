@@ -311,12 +311,13 @@ Litepicker.prototype.setOptions = function (options) {
 
   this.options = { ...this.options, ...options };
 
-  if (this.options.singleMode && !(this.options.startDate instanceof Date)) {
+  if (this.options.singleMode && !(this.options.startDate instanceof DateTime)) {
     this.options.startDate = null;
     this.options.endDate = null;
   }
   if (!this.options.singleMode
-    && (!(this.options.startDate instanceof Date) || !(this.options.endDate instanceof Date))) {
+    && (!(this.options.startDate instanceof DateTime)
+      || !(this.options.endDate instanceof DateTime))) {
     this.options.startDate = null;
     this.options.endDate = null;
   }
