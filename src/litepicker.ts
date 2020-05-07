@@ -557,7 +557,7 @@ export class Litepicker extends Calendar {
 
     if (typeof this.options.onDayHover === 'function') {
       this.options.onDayHover.call(this, DateTime.parseDateTime(target.dataset.time),
-        target.classList.value?.split(/\s/));
+                                   target.classList.toString().split(/\s/));
     }
 
     if (this.shouldAllowMouseEnter(target)) {
