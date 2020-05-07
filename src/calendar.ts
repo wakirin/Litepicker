@@ -249,6 +249,16 @@ export class Calendar {
         selectYears.appendChild(option);
       }
 
+      if (date.getFullYear() < minYear) {
+        const option = document.createElement('option');
+        option.value = String(date.getFullYear());
+        option.text = String(date.getFullYear());
+        option.selected = true;
+        option.disabled = true;
+
+        selectYears.appendChild(option);
+      }
+
       selectYears.addEventListener('change', (e) => {
         const target = e.target as HTMLSelectElement;
 
