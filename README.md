@@ -31,6 +31,10 @@ See more details in docs.
 * Time picker
 * ...
 
+## Additional modules
+* [litepicker-module-ranges](https://github.com/wakirin/litepicker-module-ranges) - adds predefined ranges. [demo](https://jsfiddle.net/6x58y92e/1/)
+* [litepicker-module-navkeyboard](https://github.com/wakirin/litepicker-module-navkeyboard) - adds keyboard navigation. [demo](https://jsfiddle.net/894Lsw21/1/)
+
 ## See also:
 * [Drupal module](https://www.drupal.org/project/date_range_picker) by [kviolka](https://github.com/kviolka)
 * [Wordpress Ninja forms](https://github.com/soderlind/date-range-ninja-forms) by [soderlind](https://github.com/soderlind)
