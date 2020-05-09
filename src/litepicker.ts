@@ -126,7 +126,6 @@ export class Litepicker extends Calendar {
     this.picker = document.createElement('div');
     this.picker.className = style.litepicker;
     this.picker.style.display = 'none';
-    this.picker.addEventListener('keydown', e => this.onKeyDown(e), true);
     this.picker.addEventListener('mouseenter', e => this.onMouseEnter(e), true);
     this.picker.addEventListener('mouseleave', e => this.onMouseLeave(e), false);
     if (this.options.element instanceof HTMLElement) {
@@ -143,6 +142,13 @@ export class Litepicker extends Calendar {
       if (this.options.elementEnd instanceof HTMLElement) {
         this.options.elementEnd.addEventListener('keyup', e => this.onInput(e), true);
       }
+    }
+
+    if (this.options.moduleNavKeyboard
+      // tslint:disable-next-line: no-string-literal
+      && typeof this['enableModuleNavKeyboard'] === 'function') {
+      // tslint:disable-next-line: no-string-literal
+      this['enableModuleNavKeyboard'].call(this, this);
     }
 
     this.render();
@@ -557,7 +563,7 @@ export class Litepicker extends Calendar {
 
     if (typeof this.options.onDayHover === 'function') {
       this.options.onDayHover.call(this, DateTime.parseDateTime(target.dataset.time),
-                                   target.classList.toString().split(/\s/));
+        target.classList.toString().split(/\s/));
     }
 
     if (this.shouldAllowMouseEnter(target)) {
@@ -645,53 +651,6 @@ export class Litepicker extends Calendar {
     this.datePicked.length = 0;
     this.render();
   }
-
-  private onKeyDown(event) {
-    const target = event.target as any;
-
-    switch (event.code) {
-      case 'ArrowUp':
-        if (target.classList.contains(style.dayItem)) {
-          event.preventDefault();
-
-          const idx = [...target.parentNode.childNodes].findIndex(el => el === target) - 7;
-
-          if (idx > 0 && target.parentNode.childNodes[idx]) {
-            target.parentNode.childNodes[idx].focus();
-          }
-        }
-        break;
-
-      case 'ArrowLeft':
-        if (target.classList.contains(style.dayItem) && target.previousSibling) {
-          event.preventDefault();
-
-          target.previousSibling.focus();
-        }
-        break;
-
-      case 'ArrowRight':
-        if (target.classList.contains(style.dayItem) && target.nextSibling) {
-          event.preventDefault();
-
-          target.nextSibling.focus();
-        }
-        break;
-
-      case 'ArrowDown':
-        if (target.classList.contains(style.dayItem)) {
-          event.preventDefault();
-
-          const idx = [...target.parentNode.childNodes].findIndex(el => el === target) + 7;
-
-          if (idx > 0 && target.parentNode.childNodes[idx]) {
-            target.parentNode.childNodes[idx].focus();
-          }
-        }
-        break;
-    }
-  }
-
   private onInput(event) {
     let [startValue, endValue] = this.parseInput();
     let isValid = false;

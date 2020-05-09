@@ -89,10 +89,12 @@ export class Calendar {
     resetBtnCallback: null,
 
     moduleRanges: null,
+    moduleNavKeyboard: null,
   };
   protected calendars: DateTime[] = [];
   protected picker: HTMLElement;
   protected datePicked: DateTime[] = [];
+  protected nextFocus: HTMLElement;
 
   protected render() {
     const mainBlock = document.createElement('div');
