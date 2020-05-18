@@ -23,7 +23,7 @@
   --litepickerButtonCancelBg: #9e9e9e;
   --litepickerButtonApplyColor: #fff;
   --litepickerButtonApplyBg: #2196f3;
-  
+
   --litepickerButtonResetBtn: #909090;
   --litepickerButtonResetBtnHover: #2196f3;
 
@@ -90,6 +90,8 @@
           color: var(--litepickerMonthHeaderTextColor);
 
           div {
+            flex: 1;
+
             > .month-item-name {
               margin-right: 5px;
             }
@@ -100,19 +102,17 @@
           }
 
           .reset-button {
-            position: absolute;
-            left: 20px;
             color: var(--litepickerButtonResetBtn);
-          
+
             > svg,
             > img {
               fill: var(--litepickerButtonResetBtn);
               pointer-events: none;
             }
-          
+
             &:hover {
               color: var(--litepickerButtonResetBtnHover);
-          
+
               > svg {
                 fill: var(--litepickerButtonResetBtnHover);
               }

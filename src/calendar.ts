@@ -139,6 +139,28 @@ export class Calendar {
     this.picker.innerHTML = '';
 
     mainBlock.appendChild(months);
+
+    if (this.options.useResetBtn) {
+      const resetButton = document.createElement('a');
+      resetButton.href = '#';
+      resetButton.className = style.resetButton;
+      resetButton.innerHTML = this.options.buttonText.reset;
+      resetButton.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        // tslint:disable-next-line: no-string-literal
+        this['clearSelection']();
+
+        if (typeof this.options.resetBtnCallback === 'function') {
+          this.options.resetBtnCallback.call(this);
+        }
+      });
+      mainBlock
+        .querySelector(`.${style.monthItem}:last-child`)
+        .querySelector(`.${style.monthItemHeader}`)
+        .appendChild(resetButton);
+    }
+
     this.picker.appendChild(mainBlock);
 
     if (!this.options.autoApply || this.options.footerHTML) {
@@ -297,18 +319,9 @@ export class Calendar {
     nextMonthButton.className = style.buttonNextMonth;
     nextMonthButton.innerHTML = this.options.buttonText.nextMonth;
 
-    const resetButton = document.createElement('span');
-    resetButton.className = style.resetButton;
-    resetButton.innerHTML = this.options.buttonText.reset;
-
     monthHeader.appendChild(previousMonthButton);
     monthHeader.appendChild(monthAndYear);
     monthHeader.appendChild(nextMonthButton);
-
-    if (this.options.useResetBtn) {
-      resetButton.addEventListener('click', this.options.resetBtnCallback);
-      monthHeader.appendChild(resetButton);
-    }
 
     if (this.options.minDate
       && startDate.isSameOrBefore(new DateTime(this.options.minDate), 'month')) {
