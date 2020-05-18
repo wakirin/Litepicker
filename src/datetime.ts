@@ -172,6 +172,10 @@ export class DateTime {
     return this.dateInstance.setMonth(arg);
   }
 
+  public setHours(hours: number = 0, minutes: number = 0, seconds: number = 0, ms: number = 0) {
+    this.dateInstance.setHours(hours, minutes, seconds, ms);
+  }
+
   public setSeconds(arg: number): number {
     return this.dateInstance.setSeconds(arg);
   }

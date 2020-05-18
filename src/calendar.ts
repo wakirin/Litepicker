@@ -382,6 +382,8 @@ export class Calendar {
   }
 
   protected renderDay(date: DateTime) {
+    date.setHours();
+
     const day = document.createElement('a');
     day.href = '#';
     day.className = style.dayItem;
@@ -441,8 +443,9 @@ export class Calendar {
 
     if (this.options.minDays
       && this.datePicked.length === 1) {
-      const left = this.datePicked[0].clone().subtract(this.options.minDays, 'day');
-      const right = this.datePicked[0].clone().add(this.options.minDays, 'day');
+      const hotelMode = Number(!this.options.hotelMode);
+      const left = this.datePicked[0].clone().subtract(this.options.minDays - hotelMode, 'day');
+      const right = this.datePicked[0].clone().add(this.options.minDays - hotelMode, 'day');
 
       if (date.isBetween(left, this.datePicked[0], '(]')) {
         day.classList.add(style.isLocked);
@@ -455,14 +458,15 @@ export class Calendar {
 
     if (this.options.maxDays
       && this.datePicked.length === 1) {
-      const left = this.datePicked[0].clone().subtract(this.options.maxDays, 'day');
-      const right = this.datePicked[0].clone().add(this.options.maxDays, 'day');
+      const hotelMode = Number(this.options.hotelMode);
+      const left = this.datePicked[0].clone().subtract(this.options.maxDays + hotelMode, 'day');
+      const right = this.datePicked[0].clone().add(this.options.maxDays + hotelMode, 'day');
 
-      if (date.isBefore(left)) {
+      if (date.isSameOrBefore(left)) {
         day.classList.add(style.isLocked);
       }
 
-      if (date.isAfter(right)) {
+      if (date.isSameOrAfter(right)) {
         day.classList.add(style.isLocked);
       }
     }
