@@ -12,6 +12,12 @@ export class Litepicker extends Calendar {
   constructor(options) {
     super();
 
+    this.options = { ...this.options, ...options.element.dataset };
+    Object.keys(this.options).forEach((opt) => {
+      if (this.options[opt] === 'true' || this.options[opt] === 'false') {
+        this.options[opt] = this.options[opt] === 'true';
+      }
+    });
     this.options = { ...this.options, ...options };
 
     if (!this.options.elementEnd) {
