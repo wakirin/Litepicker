@@ -562,8 +562,11 @@ export class Litepicker extends Calendar {
     }
 
     if (typeof this.options.onDayHover === 'function') {
-      this.options.onDayHover.call(this, DateTime.parseDateTime(target.dataset.time),
-        target.classList.toString().split(/\s/));
+      this.options.onDayHover.call(
+        this,
+        DateTime.parseDateTime(target.dataset.time),
+        target.classList.toString().split(/\s/),
+      );
     }
 
     if (this.shouldAllowMouseEnter(target)) {

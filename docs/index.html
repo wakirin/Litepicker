@@ -98,6 +98,29 @@
           var picker = new Litepicker({ element: document.getElementById('litepicker') });
           &lt;/script&gt;
         </div>
+
+        <hr>
+
+        <div class="lead">
+          <a id="anchor-no-css" href="#anchor-no-css">#</a> No CSS version
+        </div>
+        <p>To prevent the inclusion of the CSS styles tag in the head, you can define a global variable before initializing Litepicker:</p>
+        <div class="code">
+          window.disableLitepickerStyles = true;
+          let picker = new Litepicker({ ... });
+        </div>
+        <br>
+
+        <p>Another way you can use version which does not include CSS styles.</p>
+        <p>
+          <code>import Litepicker from 'litepicker/dist/js/main.nocss';</code>
+        </p>
+
+        <p><strong>Non-module environments</strong></p>
+        <code>&lt;script src="https://cdn.jsdelivr.net/npm/litepicker/dist/js/main.nocss.js"&gt;&lt;/script&gt;</code>
+
+        <p><strong>CSS basic styles</strong></p>
+        <code>&lt;script src="https://cdn.jsdelivr.net/npm/litepicker/dist/css/style.css"&gt;&lt;/script&gt;</code>
       </div>
 
       <hr>

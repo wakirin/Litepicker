@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const getPackageJson = require('./getPackageJson');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const {
   version,
@@ -19,8 +20,9 @@ const banner = `
     `;
 
 module.exports = {
+  mode: 'production',
   entry: {
-    'js/main.js': path.join(__dirname, '../src/index.ts'),
+    'js/main.nocss.js': path.join(__dirname, '../src/index.ts'),
   },
   output: {
     path: path.join(__dirname, '../dist'),
@@ -40,35 +42,7 @@ module.exports = {
       {
         test: /\.scss$/,
         use: [
-          {
-            loader: 'style-loader',
-            options: {
-              insert: function insertAtTop(element) {
-                var parent = document.querySelector('head');
-                // eslint-disable-next-line no-underscore-dangle
-                var lastInsertedElement = window._lastElementInsertedByStyleLoader;
-
-                if (!window.disableLitepickerStyles) {
-                  if (!lastInsertedElement) {
-                    parent.insertBefore(element, parent.firstChild);
-                  } else if (lastInsertedElement.nextSibling) {
-                    parent.insertBefore(element, lastInsertedElement.nextSibling);
-                  } else {
-                    parent.appendChild(element);
-                  }
-
-                  // eslint-disable-next-line no-underscore-dangle
-                  window._lastElementInsertedByStyleLoader = element;
-                }
-              },
-            },
-          },
-          {
-            loader: 'dts-css-modules-loader',
-            options: {
-              namedExport: true
-            }
-          },
+          MiniCssExtractPlugin.loader,
           {
             loader: 'css-loader',
             options: {
@@ -97,5 +71,8 @@ module.exports = {
   },
   plugins: [
     new webpack.BannerPlugin(banner),
+    new MiniCssExtractPlugin({
+      filename: "css/style.css",
+    }),
   ],
 }

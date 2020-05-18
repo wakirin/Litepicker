@@ -5,7 +5,7 @@
   "main": "./dist/js/main.js",
   "types": "./dist/js/index.d.ts",
   "scripts": {
-    "prod": "webpack --config config/webpack.prod.js",
+    "prod": "webpack --config config/webpack.prod.js && webpack --config config/webpack.nocss.js",
     "dev": "webpack --config config/webpack.dev.js",
     "docs": "webpack --config config/webpack.docs.js",
     "watch": "webpack -w --config config/webpack.dev.js",
@@ -44,7 +44,7 @@
     "dts-css-modules-loader": "^1.0.1",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.9.0",
-    "mini-css-extract-plugin": "^0.8.0",
+    "mini-css-extract-plugin": "^0.8.2",
     "node-sass": "^4.13.1",
     "postcss-loader": "^3.0.0",
     "proxy-polyfill": "^0.3.0",
