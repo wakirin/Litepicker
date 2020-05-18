@@ -39,6 +39,11 @@ See more details in docs.
 * [Drupal module](https://www.drupal.org/project/date_range_picker) by [kviolka](https://github.com/kviolka)
 * [Wordpress Ninja forms](https://github.com/soderlind/date-range-ninja-forms) by [soderlind](https://github.com/soderlind)
 
+## Supporting Litepicker
+If you enjoyed working with this library or if its made your life easier, you can buy me a cup of coffee :)
+
+[![](docs/images/oc.png)](https://opencollective.com/litepicker)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[![](docs/images/coffee.png)](https://ko-fi.com/wakirin)
+
 ## Tested on real browsers
 Tested on real browsers via BrowserStack.  
 Thanks to the BrowserStack for supporting the open-source projects.  
