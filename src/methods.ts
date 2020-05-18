@@ -309,7 +309,14 @@ Litepicker.prototype.setOptions = function (options) {
     );
   }
 
+  const dropdowns = { ...this.options.dropdowns, ...options.dropdowns };
+  const buttonText = { ...this.options.buttonText, ...options.buttonText };
+  const tooltipText = { ...this.options.tooltipText, ...options.tooltipText };
+
   this.options = { ...this.options, ...options };
+  this.options.dropdowns = { ...dropdowns };
+  this.options.buttonText = { ...buttonText };
+  this.options.tooltipText = { ...tooltipText };
 
   if (this.options.singleMode && !(this.options.startDate instanceof DateTime)) {
     this.options.startDate = null;
