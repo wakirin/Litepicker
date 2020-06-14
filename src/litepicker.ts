@@ -715,7 +715,7 @@ export class Litepicker extends Calendar {
       if (this.options.elementEnd) {
         isStart = startValue.format(dateFormat) === event.target.value;
       } else {
-        isStart = event.target.value.startWith(startValue.format(dateFormat));
+        isStart = event.target.value.startsWith(startValue.format(dateFormat));
       }
 
       if (!isStart) {
