@@ -1,4 +1,4 @@
-[![npm version](https://badge.fury.io/js/litepicker.svg)](https://www.npmjs.com/package/litepicker) [![Build Status](https://travis-ci.org/wakirin/Litepicker.svg?branch=master)](https://travis-ci.org/wakirin/Litepicker) [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/wakirin/Litepicker/blob/master/README.md)
+[![Financial Contributors on Open Collective](https://opencollective.com/Litepicker/all/badge.svg?label=financial+contributors)](https://opencollective.com/Litepicker) [![npm version](https://badge.fury.io/js/litepicker.svg)](https://www.npmjs.com/package/litepicker) [![Build Status](https://travis-ci.org/wakirin/Litepicker.svg?branch=master)](https://travis-ci.org/wakirin/Litepicker) [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/wakirin/Litepicker/blob/master/README.md)
 
 Litepicker
 =========
@@ -49,3 +49,32 @@ Tested on real browsers via BrowserStack.
 Thanks to the BrowserStack for supporting the open-source projects.  
 
 [![](docs/images/Browserstack-logo.png)](https://www.browserstack.com/)
+## Contributors
+
+### Code Contributors
+
+This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
+<a href="https://github.com/wakirin/Litepicker/graphs/contributors"><img src="https://opencollective.com/Litepicker/contributors.svg?width=890&button=false" /></a>
+
+### Financial Contributors
+
+Become a financial contributor and help us sustain our community. [[Contribute](https://opencollective.com/Litepicker/contribute)]
+
+#### Individuals
+
+<a href="https://opencollective.com/Litepicker"><img src="https://opencollective.com/Litepicker/individuals.svg?width=890"></a>
+
+#### Organizations
+
+Support this project with your organization. Your logo will show up here with a link to your website. [[Contribute](https://opencollective.com/Litepicker/contribute)]
+
+<a href="https://opencollective.com/Litepicker/organization/0/website"><img src="https://opencollective.com/Litepicker/organization/0/avatar.svg"></a>
+<a href="https://opencollective.com/Litepicker/organization/1/website"><img src="https://opencollective.com/Litepicker/organization/1/avatar.svg"></a>
+<a href="https://opencollective.com/Litepicker/organization/2/website"><img src="https://opencollective.com/Litepicker/organization/2/avatar.svg"></a>
+<a href="https://opencollective.com/Litepicker/organization/3/website"><img src="https://opencollective.com/Litepicker/organization/3/avatar.svg"></a>
+<a href="https://opencollective.com/Litepicker/organization/4/website"><img src="https://opencollective.com/Litepicker/organization/4/avatar.svg"></a>
+<a href="https://opencollective.com/Litepicker/organization/5/website"><img src="https://opencollective.com/Litepicker/organization/5/avatar.svg"></a>
+<a href="https://opencollective.com/Litepicker/organization/6/website"><img src="https://opencollective.com/Litepicker/organization/6/avatar.svg"></a>
+<a href="https://opencollective.com/Litepicker/organization/7/website"><img src="https://opencollective.com/Litepicker/organization/7/avatar.svg"></a>
+<a href="https://opencollective.com/Litepicker/organization/8/website"><img src="https://opencollective.com/Litepicker/organization/8/avatar.svg"></a>
+<a href="https://opencollective.com/Litepicker/organization/9/website"><img src="https://opencollective.com/Litepicker/organization/9/avatar.svg"></a>
