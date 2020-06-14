@@ -104,7 +104,8 @@
         <div class="lead">
           <a id="anchor-no-css" href="#anchor-no-css">#</a> No CSS version
         </div>
-        <p>To prevent the inclusion of the CSS styles tag in the head, you can define a global variable before initializing Litepicker:</p>
+        <p>To prevent the inclusion of the CSS styles tag in the head, you can define a global variable before
+          initializing Litepicker:</p>
         <div class="code">
           window.disableLitepickerStyles = true;
           let picker = new Litepicker({ ... });
@@ -458,10 +459,10 @@
               <strong>bookedDaysFormat</strong>).</p>
             <p>
               Unlike the option <strong>lockDays</strong>:
-              <ul>
-                <li>check-in date can be selected as check-out</li>
-                <li>check-out date can be selected as check-in</li>
-              </ul>
+            <ul>
+              <li>check-in date can be selected as check-out</li>
+              <li>check-out date can be selected as check-in</li>
+            </ul>
             </p>
             <p>
               Eg: you have <code>bookedDays: [['2020-01-10', '2020-01-20']]</code>, <code>'2020-01-10'</code> is
@@ -547,6 +548,10 @@
             <br>
             If <code>maxYear</code> is <code>null</code> then <code>maxYear</code> will be equal to
             <code>(new Date()).getFullYear()</code>.
+            <p><small>from <strong>v1.4.7</strong>
+              <br>
+              <code>years</code> can be equal to <code>asc</code>
+                string to change the sort direction.</small></p>
           </div>
 
           <div id="option-buttonText">buttonText</div>

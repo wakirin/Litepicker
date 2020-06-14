@@ -283,6 +283,14 @@ export class Calendar {
         selectYears.appendChild(option);
       }
 
+      if (this.options.dropdowns.years === 'asc') {
+        const options = Array.from(selectYears.childNodes).reverse();
+        selectYears.innerHTML = '';
+        options.forEach((y) => {
+          selectYears.appendChild(y);
+        });
+      }
+
       selectYears.addEventListener('change', (e) => {
         const target = e.target as HTMLSelectElement;
 

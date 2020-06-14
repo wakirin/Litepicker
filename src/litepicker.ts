@@ -142,12 +142,6 @@ export class Litepicker extends Calendar {
     this.picker.style.display = 'none';
     this.picker.addEventListener('mouseenter', e => this.onMouseEnter(e), true);
     this.picker.addEventListener('mouseleave', e => this.onMouseLeave(e), false);
-    if (this.options.element instanceof HTMLElement) {
-      this.options.element.addEventListener('change', e => this.onInput(e), true);
-    }
-    if (this.options.elementEnd instanceof HTMLElement) {
-      this.options.elementEnd.addEventListener('change', e => this.onInput(e), true);
-    }
 
     if (this.options.autoRefresh) {
       if (this.options.element instanceof HTMLElement) {
@@ -155,6 +149,13 @@ export class Litepicker extends Calendar {
       }
       if (this.options.elementEnd instanceof HTMLElement) {
         this.options.elementEnd.addEventListener('keyup', e => this.onInput(e), true);
+      }
+    } else {
+      if (this.options.element instanceof HTMLElement) {
+        this.options.element.addEventListener('change', e => this.onInput(e), true);
+      }
+      if (this.options.elementEnd instanceof HTMLElement) {
+        this.options.elementEnd.addEventListener('change', e => this.onInput(e), true);
       }
     }
 
@@ -231,23 +232,23 @@ export class Litepicker extends Calendar {
         && this.options.elementEnd instanceof HTMLInputElement
         && this.options.elementEnd.value.length) {
         return [
-          new DateTime(this.options.element.value),
-          new DateTime(this.options.elementEnd.value),
+          new DateTime(this.options.element.value, this.options.format),
+          new DateTime(this.options.elementEnd.value, this.options.format),
         ];
       }
     } else if (this.options.singleMode) {
       if (this.options.element instanceof HTMLInputElement
         && this.options.element.value.length) {
         return [
-          new DateTime(this.options.element.value),
+          new DateTime(this.options.element.value, this.options.format),
         ];
       }
     } else if (/\s\-\s/.test(this.options.element.value)) {
       const values = this.options.element.value.split(' - ');
       if (values.length === 2) {
         return [
-          new DateTime(values[0]),
-          new DateTime(values[1]),
+          new DateTime(values[0], this.options.format),
+          new DateTime(values[1], this.options.format),
         ];
       }
     }
@@ -721,6 +722,10 @@ export class Litepicker extends Calendar {
       if (!isStart) {
         dateGo = endValue.clone();
         monthIdx = this.options.numberOfMonths - 1;
+      }
+
+      if (typeof this.options.onSelect === 'function') {
+        this.options.onSelect.call(this, this.getStartDate(), this.getEndDate());
       }
 
       this.gotoDate(dateGo, monthIdx);
