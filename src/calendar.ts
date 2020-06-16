@@ -11,6 +11,7 @@ export class Calendar {
     firstDay: 1,
     format: 'YYYY-MM-DD',
     lang: 'en-US',
+    delimiter: ' - ',
     numberOfMonths: 1,
     numberOfColumns: 1,
     startDate: null,
@@ -593,7 +594,7 @@ export class Calendar {
         const endValue = this.datePicked[1].format(this.options.format, this.options.lang);
 
         footer.querySelector(`.${style.previewDateRange}`)
-          .innerHTML = `${startValue} - ${endValue}`;
+          .innerHTML = `${startValue}${this.options.delimiter}${endValue}`;
       }
     }
 

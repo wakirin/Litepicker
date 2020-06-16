@@ -1,8 +1,8 @@
 export class DateTime {
 
-  public static parseDateTime(date: Date|DateTime|string,
-                              format: string = 'YYYY-MM-DD',
-                              lang: string = 'en-US'): Date {
+  public static parseDateTime(date: Date | DateTime | string,
+    format: string = 'YYYY-MM-DD',
+    lang: string = 'en-US'): Date {
     if (!date) return new Date(NaN);
 
     if (date instanceof Date) return new Date(date);
@@ -99,12 +99,12 @@ export class DateTime {
     return DateTime.getDateZeroTime(new Date(date));
   }
 
-  public static convertArray(array: Array<Date| Date[]|string|string[]>,
-                             format: string): Array<DateTime | DateTime[]> {
+  public static convertArray(array: Array<Date | Date[] | string | string[]>,
+    format: string): Array<DateTime | DateTime[]> {
     return array
       .map((d) => {
         if (d instanceof Array) {
-          return (d as Array<Date|string>).map(d1 => new DateTime(d1, format));
+          return (d as Array<Date | string>).map(d1 => new DateTime(d1, format));
         }
         return new DateTime(d, format);
       });
@@ -120,7 +120,7 @@ export class DateTime {
 
   private dateInstance: Date;
 
-  constructor(date: Date|DateTime|string = null, format: string = null, lang: string = 'en-US') {
+  constructor(date: Date | DateTime | string = null, format: string = null, lang: string = 'en-US') {
     if (format) {
       this.dateInstance = (DateTime.parseDateTime(date, format, lang));
     } else if (date) {
@@ -408,6 +408,10 @@ export class DateTime {
           .map(x => new Date(2019, x).toLocaleString(lang, { month: 'long' }));
       }
 
+      if (format.indexOf(match[0]) > 0) {
+        response += format.substring(0, format.indexOf(match[0]));
+      }
+
       for (const [k, v] of Object.entries(match)) {
         const key = Number(k);
         const value = String(v);
@@ -449,6 +453,10 @@ export class DateTime {
           case 'DD':
             response += `0${this.getDate()}`.slice(-2);
             break;
+        }
+
+        if (key === match.length - 1) {
+          response += format.substring(format.indexOf(value) + value.length);
         }
       }
     }

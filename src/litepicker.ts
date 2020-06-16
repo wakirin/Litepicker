@@ -220,12 +220,21 @@ export class Litepicker extends Calendar {
 
     if (this.options.inlineMode) {
       this.show();
+
+      if (this.options.mobileFriendly) {
+        // force trigger orientationchange
+        window.dispatchEvent(new Event('orientationchange'));
+      }
     }
 
     this.updateInput();
   }
 
   private parseInput() {
+    const delimiter = this.options.delimiter;
+    const delimiterRegex = new RegExp(`${delimiter}`);
+    const splittedValue = this.options.element.value.split(delimiter);
+
     if (this.options.elementEnd) {
       if (this.options.element instanceof HTMLInputElement
         && this.options.element.value.length
@@ -243,14 +252,17 @@ export class Litepicker extends Calendar {
           new DateTime(this.options.element.value, this.options.format),
         ];
       }
-    } else if (/\s\-\s/.test(this.options.element.value)) {
-      const values = this.options.element.value.split(' - ');
-      if (values.length === 2) {
-        return [
-          new DateTime(values[0], this.options.format),
-          new DateTime(values[1], this.options.format),
-        ];
-      }
+    } else if (delimiterRegex.test(this.options.element.value)
+      && splittedValue.length
+      && splittedValue.length % 2 === 0) {
+
+      const d1 = splittedValue.slice(0, splittedValue.length / 2).join(delimiter);
+      const d2 = splittedValue.slice(splittedValue.length / 2).join(delimiter);
+
+      return [
+        new DateTime(d1, this.options.format),
+        new DateTime(d2, this.options.format),
+      ];
     }
 
     return [];
@@ -272,7 +284,7 @@ export class Litepicker extends Calendar {
         this.options.element.value = startValue;
         this.options.elementEnd.value = endValue;
       } else {
-        this.options.element.value = `${startValue} - ${endValue}`;
+        this.options.element.value = `${startValue}${this.options.delimiter}${endValue}`;
       }
     }
 
@@ -682,7 +694,7 @@ export class Litepicker extends Calendar {
       isValid = startValue instanceof DateTime
         && endValue instanceof DateTime
         // tslint:disable-next-line: max-line-length
-        && `${startValue.format(dateFormat)} - ${endValue.format(dateFormat)}` === this.options.element.value;
+        && `${startValue.format(dateFormat)}${this.options.delimiter}${endValue.format(dateFormat)}` === this.options.element.value;
     }
 
     if (isValid) {

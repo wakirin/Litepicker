@@ -215,6 +215,10 @@
                 </tr>
               </tbody>
             </table>
+            <p>You may escape formatting tokens using \.</p>
+            <p>Eg.:</p>
+            <p><code>format: 'YYYY-MM-DD\T00:00:00'</code></p>
+            <p>Result: <strong>2020-01-01T00:00:00</strong></p>
           </div>
 
           <div id="option-lang">lang</div>
@@ -226,6 +230,17 @@
             and also affect to plural rules via <a
               href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/PluralRules"
               target="_blank">Intl.PluralRules</a>.
+          </div>
+
+          <div id="option-delimiter">
+            delimiter
+
+            <p class="text-gray"><small>from <strong>v1.5.0</strong></small></p>
+          </div>
+          <div class="option-type">String</div>
+          <div class="option-default"> - </div>
+          <div class="option-description">
+            <p>Delimiter between dates.</p>
           </div>
 
           <div id="option-numberOfMonths">numberOfMonths</div>
