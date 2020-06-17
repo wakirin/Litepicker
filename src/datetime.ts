@@ -1,6 +1,7 @@
 export class DateTime {
 
-  public static parseDateTime(date: Date | DateTime | string,
+  public static parseDateTime(
+    date: Date | DateTime | string,
     format: string = 'YYYY-MM-DD',
     lang: string = 'en-US'): Date {
     if (!date) return new Date(NaN);
@@ -11,69 +12,37 @@ export class DateTime {
     if (/^-?\d{10,}$/.test(date)) return DateTime.getDateZeroTime(new Date(Number(date)));
 
     if (typeof date === 'string') {
-      const match = format.match(/\[([^\]]+)]|Y{2,4}|M{1,4}|D{1,2}|d{1,4}/g);
-      if (match) {
+      const matches = [];
+      let m = null;
+
+      // tslint:disable-next-line: no-conditional-assignment
+      while ((m = DateTime.regex.exec(format)) != null) {
+        matches.push(m);
+      }
+
+      if (matches.length) {
         const datePattern = {
-          year: 1,
-          month: 2,
-          day: 3,
+          year: null,
+          month: null,
+          shortMonth: null,
+          longMonth: null,
+          day: null,
           value: '',
         };
-        let shortMonths = null;
-        let longMonths = null;
 
-        if (match.indexOf('MMM') !== -1) {
-          shortMonths = this.MONTH_JS.map(x => new Date(2019, x).toLocaleString(lang, { month: 'short' }));
+        if (matches[0].index > 0) {
+          datePattern.value += '.*?';
         }
 
-        if (match.indexOf('MMMM') !== -1) {
-          longMonths = this.MONTH_JS
-            .map(x => new Date(2019, x).toLocaleString(lang, { month: 'long' }));
-        }
-
-        for (const [k, v] of Object.entries(match)) {
+        for (const [k, match] of Object.entries(matches)) {
           const key = Number(k);
-          const value = String(v);
 
-          if (key > 0) datePattern.value += '.*?'; // any delimiter
+          const { group, pattern } = DateTime.formatPatterns(match[0], lang);
 
-          switch (value) {
-            case 'YY':
-            case 'YYYY':
-              datePattern.year = key + 1;
-              datePattern.value += `(\\d{${value.length}})`;
-              break;
+          datePattern[group] = key + 1;
+          datePattern.value += pattern;
 
-            case 'M':
-              datePattern.month = key + 1;
-              datePattern.value += '(\\d{1,2})';
-              break;
-
-            case 'MM':
-              datePattern.month = key + 1;
-              datePattern.value += `(\\d{${value.length}})`;
-              break;
-
-            case 'MMM':
-              datePattern.month = key + 1;
-              datePattern.value += `(${shortMonths.join('|')})`;
-              break;
-
-            case 'MMMM':
-              datePattern.month = key + 1;
-              datePattern.value += `(${longMonths.join('|')})`;
-              break;
-
-            case 'D':
-              datePattern.day = key + 1;
-              datePattern.value += '(\\d{1,2})';
-              break;
-
-            case 'DD':
-              datePattern.day = key + 1;
-              datePattern.value += `(\\d{${value.length}})`;
-              break;
-          }
+          datePattern.value += '.*?'; // any delimiters
         }
 
         const dateRegex = new RegExp(`^${datePattern.value}$`);
@@ -82,13 +51,16 @@ export class DateTime {
           const d = dateRegex.exec(date);
 
           const year = Number(d[datePattern.year]);
-          let month = Number(d[datePattern.month]) - 1;
+          let month = null;
 
-          if (shortMonths) {
-            month = shortMonths.indexOf(d[datePattern.month]);
-          } else if (longMonths) {
-            month = longMonths.indexOf(d[datePattern.month]);
+          if (datePattern.month) {
+            month = Number(d[datePattern.month]) - 1;
+          } else if (datePattern.shortMonth) {
+            month = DateTime.shortMonths(lang).indexOf(d[datePattern.shortMonth]);
+          } else if (datePattern.longMonth) {
+            month = DateTime.longMonths(lang).indexOf(d[datePattern.longMonth]);
           }
+
           const day = Number(d[datePattern.day]) || 1;
 
           return new Date(year, month, day, 0, 0, 0, 0);
@@ -99,7 +71,8 @@ export class DateTime {
     return DateTime.getDateZeroTime(new Date(date));
   }
 
-  public static convertArray(array: Array<Date | Date[] | string | string[]>,
+  public static convertArray(
+    array: Array<Date | Date[] | string | string[]>,
     format: string): Array<DateTime | DateTime[]> {
     return array
       .map((d) => {
@@ -114,13 +87,75 @@ export class DateTime {
     return new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0);
   }
 
+  private static regex: RegExp = /(?<!\\)(Y{2,4}|M{1,4}|D{1,2}|d{1,4}])/g;
+
   private static readonly MONTH_JS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+
+  private static shortMonths(lang): string[] {
+    return DateTime.MONTH_JS
+      .map(x => new Date(2019, x).toLocaleString(lang, { month: 'short' }));
+  }
+
+  private static longMonths(lang): string[] {
+    return DateTime.MONTH_JS
+      .map(x => new Date(2019, x).toLocaleString(lang, { month: 'long' }));
+  }
+
+  private static formatPatterns(token, lang) {
+    switch (token) {
+      case 'YY':
+      case 'YYYY':
+        return {
+          group: 'year',
+          pattern: `(\\d{${token.length}})`,
+        };
+
+      case 'M':
+        return {
+          group: 'month',
+          pattern: '(\\d{1,2})',
+        };
+
+      case 'MM':
+        return {
+          group: 'month',
+          pattern: '(\\d{2})',
+        };
+
+      case 'MMM':
+        return {
+          group: 'shortMonth',
+          pattern: `(${DateTime.shortMonths(lang).join('|')})`,
+        };
+
+      case 'MMMM':
+        return {
+          group: 'longMonth',
+          pattern: `(${DateTime.longMonths(lang).join('|')})`,
+        };
+
+      case 'D':
+        return {
+          group: 'day',
+          pattern: '(\\d{1,2})',
+        };
+
+      case 'DD':
+        return {
+          group: 'day',
+          pattern: '(\\d{2})',
+        };
+    }
+  }
 
   protected lang: string;
 
   private dateInstance: Date;
 
-  constructor(date: Date | DateTime | string = null, format: string = null, lang: string = 'en-US') {
+  constructor(
+    date: Date | DateTime | string = null,
+    format: string = null,
+    lang: string = 'en-US') {
     if (format) {
       this.dateInstance = (DateTime.parseDateTime(date, format, lang));
     } else if (date) {
@@ -393,79 +428,59 @@ export class DateTime {
 
   public format(format: string, lang: string = 'en-US'): string {
     let response = '';
-    const match = format.match(/\[([^\]]+)]|Y{2,4}|M{1,4}|D{1,2}|d{1,4}/g);
 
-    if (match) {
-      let shortMonths = null;
-      let longMonths = null;
-      if (match.indexOf('MMM') !== -1) {
-        shortMonths = DateTime.MONTH_JS
-          .map(x => new Date(2019, x).toLocaleString(lang, { month: 'short' }));
+    const matches = [];
+    let m = null;
+
+    // tslint:disable-next-line: no-conditional-assignment
+    while ((m = DateTime.regex.exec(format)) != null) {
+      matches.push(m);
+    }
+
+    if (matches.length) {
+      // add start line of tokens are not at the beginning
+      if (matches[0].index > 0) {
+        response += format.substring(0, matches[0].index);
       }
 
-      if (match.indexOf('MMMM')) {
-        longMonths = DateTime.MONTH_JS
-          .map(x => new Date(2019, x).toLocaleString(lang, { month: 'long' }));
-      }
-
-      if (format.indexOf(match[0]) > 0) {
-        response += format.substring(0, format.indexOf(match[0]));
-      }
-
-      for (const [k, v] of Object.entries(match)) {
+      for (const [k, match] of Object.entries(matches)) {
         const key = Number(k);
-        const value = String(v);
+        response += this.formatTokens(match[0], lang);
 
-        if (key > 0) {
-          const prev = match[key - 1];
-          response += format.substring(format.indexOf(prev) + prev.length, format.indexOf(value));
+        if (matches[key + 1]) {
+          response += format.substring(match.index + match[0].length, matches[key + 1].index);
         }
 
-        switch (value) {
-          case 'YY':
-            response += String(this.getFullYear()).slice(-2);
-            break;
-
-          case 'YYYY':
-            response += String(this.getFullYear());
-            break;
-
-          case 'M':
-            response += String(this.getMonth() + 1);
-            break;
-
-          case 'MM':
-            response += `0${this.getMonth() + 1}`.slice(-2);
-            break;
-
-          case 'MMM':
-            response += shortMonths[this.getMonth()];
-            break;
-
-          case 'MMMM':
-            response += longMonths[this.getMonth()];
-            break;
-
-          case 'D':
-            response += String(this.getDate());
-            break;
-
-          case 'DD':
-            response += `0${this.getDate()}`.slice(-2);
-            break;
-        }
-
-        if (key === match.length - 1) {
-          response += format.substring(format.indexOf(value) + value.length);
+        // add end line if tokens are not at the ending
+        if (key === matches.length - 1) {
+          response += format.substring(match.index + match[0].length);
         }
       }
     }
 
-    return response;
+    // remove escape characters
+    return response.replace(/\\/g, '');
   }
 
   private timestamp(): number {
     return new Date(this.getFullYear(), this.getMonth(), this.getDate(), 0, 0, 0, 0).getTime();
+  }
+
+  private formatTokens(token, lang) {
+    switch (token) {
+      case 'YY': return String(this.getFullYear()).slice(-2);
+      case 'YYYY': return String(this.getFullYear());
+
+      case 'M': return String(this.getMonth() + 1);
+      case 'MM': return `0${this.getMonth() + 1}`.slice(-2);
+      case 'MMM': return DateTime.shortMonths(lang)[this.getMonth()];
+      case 'MMMM': return DateTime.longMonths(lang)[this.getMonth()];
+
+      case 'D': return String(this.getDate());
+      case 'DD': return `0${this.getDate()}`.slice(-2);
+
+      default: return '';
+    }
   }
 
 }
