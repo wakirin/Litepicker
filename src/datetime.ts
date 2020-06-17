@@ -17,6 +17,8 @@ export class DateTime {
 
       // tslint:disable-next-line: no-conditional-assignment
       while ((m = DateTime.regex.exec(format)) != null) {
+        if (m[1] === '\\') continue; // delete when regexp lookbehind
+
         matches.push(m);
       }
 
@@ -87,7 +89,10 @@ export class DateTime {
     return new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0, 0);
   }
 
-  private static regex: RegExp = /(?<!\\)(Y{2,4}|M{1,4}|D{1,2}|d{1,4}])/g;
+  // replace to regexp lookbehind when most popular browsers will support
+  // https://caniuse.com/#feat=js-regexp-lookbehind
+  // /(?<!\\)(Y{2,4}|M{1,4}|D{1,2}|d{1,4}])/g
+  private static regex: RegExp = /(\\)?(Y{2,4}|M{1,4}|D{1,2}|d{1,4})/g;
 
   private static readonly MONTH_JS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 
@@ -434,6 +439,8 @@ export class DateTime {
 
     // tslint:disable-next-line: no-conditional-assignment
     while ((m = DateTime.regex.exec(format)) != null) {
+      if (m[1] === '\\') continue; // delete when regexp lookbehind
+
       matches.push(m);
     }
 

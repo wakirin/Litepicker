@@ -1,7 +1,7 @@
 import { Calendar } from './calendar';
 import { DateTime } from './datetime';
 import * as style from './scss/main.scss';
-import { findNestedMonthItem } from './utils';
+import { findNestedMonthItem, isMobile, getOrientation } from './utils';
 
 export class Litepicker extends Calendar {
   protected triggerElement;
@@ -194,36 +194,50 @@ export class Litepicker extends Calendar {
         this.options.element.parentNode.appendChild(this.backdrop);
       }
 
-      window.addEventListener('orientationchange', () => {
-        if (this.options.mobileFriendly && this.isShowning()) {
-          switch (screen.orientation.angle) {
-            case -90:
-            case 90:
-              this.options.numberOfMonths = 2;
-              this.options.numberOfColumns = 2;
-              break;
+      window.addEventListener('orientationchange', (evt) => {
+        // replace to screen.orientation.angle when Safari will support
+        // https://caniuse.com/#feat=screen-orientation
 
-            default:
-              this.options.numberOfMonths = 1;
-              this.options.numberOfColumns = 1;
-              break;
+        // get correct viewport after changing orientation
+        // https://stackoverflow.com/a/49383279/2873909
+        const afterOrientationChange = () => {
+          if (isMobile() && this.isShowning()) {
+            switch (getOrientation()) {
+              case 'landscape':
+                this.options.numberOfMonths = 2;
+                this.options.numberOfColumns = 2;
+                break;
+
+              // portrait
+              default:
+                this.options.numberOfMonths = 1;
+                this.options.numberOfColumns = 1;
+                break;
+            }
+
+            this.render();
+
+            if (!this.options.inlineMode) {
+              const pickerBCR = this.picker.getBoundingClientRect();
+              this.picker.style.top = `calc(50% - ${(pickerBCR.height / 2)}px)`;
+              this.picker.style.left = `calc(50% - ${(pickerBCR.width / 2)}px)`;
+            }
           }
 
-          this.render();
+          window.removeEventListener('resize', afterOrientationChange);
+        };
 
-          const pickerBCR = this.picker.getBoundingClientRect();
-          this.picker.style.top = `calc(50% - ${(pickerBCR.height / 2)}px)`;
-          this.picker.style.left = `calc(50% - ${(pickerBCR.width / 2)}px)`;
-        }
+        window.addEventListener('resize', afterOrientationChange);
       });
     }
 
     if (this.options.inlineMode) {
       this.show();
 
-      if (this.options.mobileFriendly) {
+      if (this.options.mobileFriendly && isMobile()) {
         // force trigger orientationchange
         window.dispatchEvent(new Event('orientationchange'));
+        window.dispatchEvent(new Event('resize'));
       }
     }
 
