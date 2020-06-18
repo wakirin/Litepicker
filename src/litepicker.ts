@@ -547,22 +547,24 @@ export class Litepicker extends Calendar {
     tooltip.style.visibility = 'visible';
     tooltip.innerHTML = text;
 
-    const pickerRect = this.picker.getBoundingClientRect();
-    const tooltipRect = tooltip.getBoundingClientRect();
-    const dayRect = element.getBoundingClientRect();
-    let top = dayRect.top;
-    let left = dayRect.left;
+    const pickerBCR = this.picker.getBoundingClientRect();
+    const tooltipBCR = tooltip.getBoundingClientRect();
+    const dayBCR = element.getBoundingClientRect();
+    let top = dayBCR.top;
+    let left = dayBCR.left;
 
-    if (this.options.inlineMode) {
-      top = this.picker.offsetTop + (dayRect.top - pickerRect.top);
+    if (this.options.inlineMode && this.options.parentEl) {
+      const parentBCR = (this.picker.parentNode as HTMLElement).getBoundingClientRect();
+      top -= parentBCR.top;
+      left -= parentBCR.left;
     } else {
-      top -= pickerRect.top;
-      left -= pickerRect.left;
+      top -= pickerBCR.top;
+      left -= pickerBCR.left;
     }
 
-    top -= tooltipRect.height;
-    left -= tooltipRect.width / 2;
-    left += dayRect.width / 2;
+    top -= tooltipBCR.height;
+    left -= tooltipBCR.width / 2;
+    left += dayBCR.width / 2;
 
     tooltip.style.top = `${top}px`;
     tooltip.style.left = `${left}px`;
