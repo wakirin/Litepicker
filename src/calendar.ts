@@ -172,11 +172,14 @@ export class Calendar {
       this.picker.appendChild(this.renderTooltip());
     }
 
-    if (this.options.moduleRanges
+    if (this.options.moduleRanges) {
       // tslint:disable-next-line: no-string-literal
-      && typeof this['enableModuleRanges'] === 'function') {
-      // tslint:disable-next-line: no-string-literal
-      this['enableModuleRanges'].call(this, this);
+      if (typeof this['enableModuleRanges'] === 'function') {
+        // tslint:disable-next-line: no-string-literal
+        this['enableModuleRanges'].call(this, this);
+      } else {
+        throw new Error('moduleRanges is on but library does not included. See https://github.com/wakirin/litepicker-module-ranges.');
+      }
     }
 
     if (typeof this.options.onRender === 'function') {

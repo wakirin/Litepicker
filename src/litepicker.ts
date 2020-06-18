@@ -1,7 +1,7 @@
 import { Calendar } from './calendar';
 import { DateTime } from './datetime';
 import * as style from './scss/main.scss';
-import { findNestedMonthItem, isMobile, getOrientation } from './utils';
+import { findNestedMonthItem, getOrientation, isMobile } from './utils';
 
 export class Litepicker extends Calendar {
   protected triggerElement;
@@ -159,11 +159,14 @@ export class Litepicker extends Calendar {
       }
     }
 
-    if (this.options.moduleNavKeyboard
+    if (this.options.moduleNavKeyboard) {
       // tslint:disable-next-line: no-string-literal
-      && typeof this['enableModuleNavKeyboard'] === 'function') {
-      // tslint:disable-next-line: no-string-literal
-      this['enableModuleNavKeyboard'].call(this, this);
+      if (typeof this['enableModuleNavKeyboard'] === 'function') {
+        // tslint:disable-next-line: no-string-literal
+        this['enableModuleNavKeyboard'].call(this, this);
+      } else {
+        throw new Error('moduleNavKeyboard is on but library does not included. See https://github.com/wakirin/litepicker-module-navkeyboard.');
+      }
     }
 
     this.render();
@@ -544,27 +547,22 @@ export class Litepicker extends Calendar {
     tooltip.style.visibility = 'visible';
     tooltip.innerHTML = text;
 
-    const pickerBCR = this.picker.getBoundingClientRect();
-    const tooltipBCR = tooltip.getBoundingClientRect();
-    const dayBCR = element.getBoundingClientRect();
-    let top = dayBCR.top;
-    let left = dayBCR.left;
+    const pickerRect = this.picker.getBoundingClientRect();
+    const tooltipRect = tooltip.getBoundingClientRect();
+    const dayRect = element.getBoundingClientRect();
+    let top = dayRect.top;
+    let left = dayRect.left;
 
-    if (this.options.inlineMode && this.options.parentEl) {
-      const parentBCR = (this.picker.parentNode as HTMLElement).getBoundingClientRect();
-      top -= parentBCR.top;
-      left -= parentBCR.left;
+    if (this.options.inlineMode) {
+      top = this.picker.offsetTop + (dayRect.top - pickerRect.top);
     } else {
-      top -= pickerBCR.top;
-      left -= pickerBCR.left;
+      top -= pickerRect.top;
+      left -= pickerRect.left;
     }
 
-    // let top = dayR.top - pickerR.top - tooltipR.height;
-    // let left = (dayR.left - pickerR.left) - (tooltipR.width / 2) + (dayR.width / 2);
-
-    top -= tooltipBCR.height;
-    left -= tooltipBCR.width / 2;
-    left += dayBCR.width / 2;
+    top -= tooltipRect.height;
+    left -= tooltipRect.width / 2;
+    left += dayRect.width / 2;
 
     tooltip.style.top = `${top}px`;
     tooltip.style.left = `${left}px`;
@@ -603,6 +601,7 @@ export class Litepicker extends Calendar {
         this,
         DateTime.parseDateTime(target.dataset.time),
         target.classList.toString().split(/\s/),
+        target,
       );
     }
 
