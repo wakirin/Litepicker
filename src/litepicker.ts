@@ -568,6 +568,14 @@ export class Litepicker extends Calendar {
 
     tooltip.style.top = `${top}px`;
     tooltip.style.left = `${left}px`;
+
+    if (typeof this.options.onShowTooltip === 'function') {
+      this.options.onShowTooltip.call(
+        this,
+        tooltip,
+        element,
+      );
+    }
   }
 
   private hideTooltip() {

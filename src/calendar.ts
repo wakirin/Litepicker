@@ -87,6 +87,7 @@ export class Calendar {
     onChangeMonth: null,
     onChangeYear: null,
     onDayHover: null,
+    onShowTooltip: null,
     resetBtnCallback: null,
 
     moduleRanges: null,
