@@ -250,7 +250,9 @@ export class Litepicker extends Calendar {
   private parseInput() {
     const delimiter = this.options.delimiter;
     const delimiterRegex = new RegExp(`${delimiter}`);
-    const splittedValue = this.options.element.value.split(delimiter);
+    const splittedValue = this.options.element instanceof HTMLInputElement
+      ? this.options.element.value.split(delimiter)
+      : [];
 
     if (this.options.elementEnd) {
       if (this.options.element instanceof HTMLInputElement
@@ -269,7 +271,8 @@ export class Litepicker extends Calendar {
           new DateTime(this.options.element.value, this.options.format),
         ];
       }
-    } else if (delimiterRegex.test(this.options.element.value)
+    } else if (this.options.element instanceof HTMLInputElement
+      && delimiterRegex.test(this.options.element.value)
       && splittedValue.length
       && splittedValue.length % 2 === 0) {
 
