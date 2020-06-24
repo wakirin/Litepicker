@@ -293,6 +293,7 @@ export class Calendar {
         const options = childs.reverse();
         selectYears.innerHTML = '';
         options.forEach((y) => {
+          y.innerHTML = y.value;
           selectYears.appendChild(y);
         });
       }
