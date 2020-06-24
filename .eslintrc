@@ -1,0 +1,15 @@
+{
+  "extends": ["plugin:compat/recommended"],
+  "env": {
+    "browser": true
+  },
+  "settings": {
+    "polyfills": [
+      "Symbol.toStringTag",
+      "Object.entries",
+      "Object.assign",
+      "Intl.PluralRules",
+      "window.scrollX"
+    ]
+  }
+}
