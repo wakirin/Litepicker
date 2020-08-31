@@ -40,28 +40,7 @@ See more details in docs.
 * [Wordpress Ninja forms](https://github.com/soderlind/date-range-ninja-forms) by [soderlind](https://github.com/soderlind)
 
 ## Supporting Litepicker
-If you enjoyed working with this library or if its made your life easier, you can buy me a cup of coffee :)
-
-[![](docs/images/oc.png)](https://opencollective.com/litepicker)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[![](docs/images/coffee.png)](https://ko-fi.com/wakirin)
-
-#### Individuals
-
-<a href="https://opencollective.com/Litepicker"><img src="https://opencollective.com/Litepicker/individuals.svg?width=890"></a>
-
-#### Organizations
-
-Support this project with your organization. Your logo will show up here with a link to your website. [[Contribute](https://opencollective.com/Litepicker/contribute)]
-
-<a href="https://opencollective.com/Litepicker/organization/0/website"><img src="https://opencollective.com/Litepicker/organization/0/avatar.svg"></a>
-<a href="https://opencollective.com/Litepicker/organization/1/website"><img src="https://opencollective.com/Litepicker/organization/1/avatar.svg"></a>
-<a href="https://opencollective.com/Litepicker/organization/2/website"><img src="https://opencollective.com/Litepicker/organization/2/avatar.svg"></a>
-<a href="https://opencollective.com/Litepicker/organization/3/website"><img src="https://opencollective.com/Litepicker/organization/3/avatar.svg"></a>
-<a href="https://opencollective.com/Litepicker/organization/4/website"><img src="https://opencollective.com/Litepicker/organization/4/avatar.svg"></a>
-<a href="https://opencollective.com/Litepicker/organization/5/website"><img src="https://opencollective.com/Litepicker/organization/5/avatar.svg"></a>
-<a href="https://opencollective.com/Litepicker/organization/6/website"><img src="https://opencollective.com/Litepicker/organization/6/avatar.svg"></a>
-<a href="https://opencollective.com/Litepicker/organization/7/website"><img src="https://opencollective.com/Litepicker/organization/7/avatar.svg"></a>
-<a href="https://opencollective.com/Litepicker/organization/8/website"><img src="https://opencollective.com/Litepicker/organization/8/avatar.svg"></a>
-<a href="https://opencollective.com/Litepicker/organization/9/website"><img src="https://opencollective.com/Litepicker/organization/9/avatar.svg"></a>
+[![](docs/images/coffee.png)](https://ko-fi.com/wakirin)
 
 ## Tested on real browsers
 Tested on real browsers via BrowserStack.  
