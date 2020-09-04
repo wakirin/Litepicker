@@ -33,6 +33,7 @@ export class Calendar {
     showTooltip: true,
     hotelMode: false,
     disableWeekends: false,
+    disableDays: [],
     scrollToDate: true,
     mobileFriendly: true,
     useResetBtn: false,
@@ -561,6 +562,10 @@ export class Calendar {
 
     if (this.options.disableWeekends
       && (date.getDay() === 6 || date.getDay() === 0)) {
+      day.classList.add(style.isLocked);
+    }
+
+    if (this.options.disableDays.includes(date.getDay()) {
       day.classList.add(style.isLocked);
     }
 
