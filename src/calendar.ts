@@ -565,7 +565,7 @@ export class Calendar {
       day.classList.add(style.isLocked);
     }
 
-    if (this.options.disableDays.includes(date.getDay()) {
+    if (this.options.disableDays.includes(date.getDay())) {
       day.classList.add(style.isLocked);
     }
 
