@@ -141,7 +141,7 @@ export class Litepicker extends Calendar {
     this.picker.className = style.litepicker;
     this.picker.style.display = 'none';
     this.picker.addEventListener('mouseenter', e => this.onMouseEnter(e), true);
-    this.picker.addEventListener('mouseleave', e => this.onMouseLeave(e), false);
+    this.picker.addEventListener('mouseout', e => this.onMouseOut(e), true);
 
     if (this.options.autoRefresh) {
       if (this.options.element instanceof HTMLElement) {
@@ -692,8 +692,11 @@ export class Litepicker extends Calendar {
     }
   }
 
-  private onMouseLeave(event) {
-    const target = event.target as any;
+  private onMouseOut(event) {
+    const target = event.target as HTMLElement;
+    if (target.className !== style.monthItem) {
+      return;
+    }
 
     if (!this.options.allowRepick
       || (this.options.allowRepick && !this.options.startDate && !this.options.endDate)) {
@@ -703,6 +706,7 @@ export class Litepicker extends Calendar {
     this.datePicked.length = 0;
     this.render();
   }
+
   private onInput(event) {
     let [startValue, endValue] = this.parseInput();
     let isValid = false;
