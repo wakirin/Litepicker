@@ -1,6 +1,6 @@
 {
   "name": "litepicker",
-  "version": "1.5.7",
+  "version": "2.0.0",
   "description": "Date range picker - lightweight, no dependencies",
   "main": "./dist/js/main.js",
   "types": "./dist/js/index.d.ts",
@@ -47,7 +47,7 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.9.0",
     "mini-css-extract-plugin": "^0.8.2",
-    "node-sass": "^4.13.1",
+    "node-sass": "^4.14.1",
     "postcss-loader": "^3.0.0",
     "proxy-polyfill": "^0.3.0",
     "sass-loader": "^8.0.0",

@@ -20,7 +20,6 @@ export const containerDays: string;
 export const dayItem: string;
 export const isToday: string;
 export const isLocked: string;
-export const isBooked: string;
 export const isInRange: string;
 export const isStartDate: string;
 export const isFlipped: string;

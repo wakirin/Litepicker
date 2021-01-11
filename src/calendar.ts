@@ -1,6 +1,6 @@
 import { DateTime } from './datetime';
 import * as style from './scss/main.scss';
-import { findNestedMonthItem } from './utils';
+import { dateIsLocked, findNestedMonthItem } from './utils';
 
 export class Calendar {
   protected options: any = {
@@ -22,6 +22,7 @@ export class Calendar {
     maxDate: null,
     minDays: null,
     maxDays: null,
+    switchingMonths: null,
     selectForward: false,
     selectBackward: false,
     splitView: false,
@@ -31,24 +32,15 @@ export class Calendar {
     allowRepick: false,
     showWeekNumbers: false,
     showTooltip: true,
-    hotelMode: false,
-    disableWeekends: false,
     scrollToDate: true,
     mobileFriendly: true,
-    useResetBtn: false,
+    resetButton: false,
     autoRefresh: false,
-    moveByOneMonth: false,
 
     lockDaysFormat: 'YYYY-MM-DD',
     lockDays: [],
     disallowLockDaysInRange: false,
     lockDaysInclusivity: '[]',
-
-    bookedDaysFormat: 'YYYY-MM-DD',
-    bookedDays: [],
-    disallowBookedDaysInRange: false,
-    bookedDaysInclusivity: '[]',
-    anyBookedDaysAsCheckout: false,
 
     highlightedDaysFormat: 'YYYY-MM-DD',
     highlightedDays: [],
@@ -142,21 +134,24 @@ export class Calendar {
 
     mainBlock.appendChild(months);
 
-    if (this.options.useResetBtn) {
-      const resetButton = document.createElement('a');
-      resetButton.href = '#';
-      resetButton.className = style.resetButton;
-      resetButton.innerHTML = this.options.buttonText.reset;
+    if (this.options.resetButton !== false) {
+      let resetButton;
+      if (typeof this.options.resetButton === 'function') {
+        resetButton = this.options.resetButton.call(this);
+      } else {
+        resetButton = document.createElement('a');
+        resetButton.href = '#';
+        resetButton.className = style.resetButton;
+        resetButton.innerHTML = this.options.buttonText.reset;
+      }
+
       resetButton.addEventListener('click', (e) => {
         e.preventDefault();
 
         // tslint:disable-next-line: no-string-literal
         this['clearSelection']();
-
-        if (typeof this.options.resetBtnCallback === 'function') {
-          this.options.resetBtnCallback.call(this);
-        }
       });
+
       mainBlock
         .querySelector(`.${style.monthItem}:last-child`)
         .querySelector(`.${style.monthItemHeader}`)
@@ -458,24 +453,24 @@ export class Calendar {
 
     if (this.options.minDays
       && this.datePicked.length === 1) {
-      const hotelMode = Number(!this.options.hotelMode);
-      const left = this.datePicked[0].clone().subtract(this.options.minDays - hotelMode, 'day');
-      const right = this.datePicked[0].clone().add(this.options.minDays - hotelMode, 'day');
+      const minDays = this.options.minDays - 1;
+      const left = this.datePicked[0].clone().subtract(minDays, 'day');
+      const right = this.datePicked[0].clone().add(minDays, 'day');
 
-      if (date.isBetween(left, this.datePicked[0], '(]')) {
+      if (date.isBetween(left, this.datePicked[0], '[]')) {
         day.classList.add(style.isLocked);
       }
 
-      if (date.isBetween(this.datePicked[0], right, '[)')) {
+      if (date.isBetween(this.datePicked[0], right, '[]')) {
         day.classList.add(style.isLocked);
       }
     }
 
     if (this.options.maxDays
       && this.datePicked.length === 1) {
-      const hotelMode = Number(this.options.hotelMode);
-      const left = this.datePicked[0].clone().subtract(this.options.maxDays + hotelMode, 'day');
-      const right = this.datePicked[0].clone().add(this.options.maxDays + hotelMode, 'day');
+      const maxDays = this.options.minDays + 1;
+      const left = this.datePicked[0].clone().subtract(maxDays, 'day');
+      const right = this.datePicked[0].clone().add(maxDays, 'day');
 
       if (date.isSameOrBefore(left)) {
         day.classList.add(style.isLocked);
@@ -498,19 +493,10 @@ export class Calendar {
       day.classList.add(style.isLocked);
     }
 
-    if (this.options.lockDays.length) {
-      const locked = this.options.lockDays
-        .filter((d) => {
-          if (d instanceof Array) {
-            return date.isBetween(d[0], d[1], this.options.lockDaysInclusivity);
-          }
+    const locked = dateIsLocked(date, this.options, this.datePicked);
 
-          return d.isSame(date, 'day');
-        }).length;
-
-      if (locked) {
-        day.classList.add(style.isLocked);
-      }
+    if (locked) {
+      day.classList.add(style.isLocked);
     }
 
     if (this.options.highlightedDays.length) {
@@ -526,42 +512,6 @@ export class Calendar {
       if (isHighlighted) {
         day.classList.add(style.isHighlighted);
       }
-    }
-
-    if (this.datePicked.length <= 1
-      && this.options.bookedDays.length) {
-      let inclusivity = this.options.bookedDaysInclusivity;
-
-      if (this.options.hotelMode && this.datePicked.length === 1) {
-        inclusivity = '()';
-      }
-
-      const dateBefore = date.clone();
-      dateBefore.subtract(1, 'day');
-
-      const dateAfter = date.clone();
-      dateAfter.add(1, 'day');
-
-      const booked = this.dateIsBooked(date, inclusivity);
-      const isBookedBefore = this.dateIsBooked(dateBefore, '[]');
-      const isCheckInAndCheckOut = this.dateIsBooked(date, '(]');
-      // const isBookedAfter = this.dateIsBooked(dateAfter, '[]');
-
-      const shouldBooked = (this.datePicked.length === 0 && booked)
-        || (this.datePicked.length === 1 && isBookedBefore && booked)
-        || (this.datePicked.length === 1 && isBookedBefore && isCheckInAndCheckOut);
-
-      const anyBookedDaysAsCheckout = this.options.anyBookedDaysAsCheckout
-        && this.datePicked.length === 1;
-
-      if (shouldBooked && !anyBookedDaysAsCheckout) {
-        day.classList.add(style.isBooked);
-      }
-    }
-
-    if (this.options.disableWeekends
-      && (date.getDay() === 6 || date.getDay() === 0)) {
-      day.classList.add(style.isLocked);
     }
 
     if (typeof this.options.onRenderDay === 'function') {
@@ -621,17 +571,6 @@ export class Calendar {
     t.className = style.containerTooltip;
 
     return t;
-  }
-
-  protected dateIsBooked(date, inclusivity) {
-    return this.options.bookedDays
-      .filter((d) => {
-        if (d instanceof Array) {
-          return date.isBetween(d[0], d[1], inclusivity);
-        }
-
-        return d.isSame(date, 'day');
-      }).length;
   }
 
   private weekdayName(day, representation = 'short') {

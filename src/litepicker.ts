@@ -1,7 +1,13 @@
 import { Calendar } from './calendar';
 import { DateTime } from './datetime';
 import * as style from './scss/main.scss';
-import { findNestedMonthItem, getOrientation, isMobile } from './utils';
+import {
+  findNestedMonthItem,
+  getOrientation,
+  isMobile,
+  isNotEmptyArray,
+  rangeIsLocked,
+} from './utils';
 
 export class Litepicker extends Calendar {
   protected triggerElement;
@@ -32,17 +38,10 @@ export class Litepicker extends Calendar {
       this.options.allowRepick = false;
     }
 
-    if (this.options.lockDays.length) {
+    if (isNotEmptyArray(this.options.lockDays)) {
       this.options.lockDays = DateTime.convertArray(
         this.options.lockDays,
         this.options.lockDaysFormat,
-      );
-    }
-
-    if (this.options.bookedDays.length) {
-      this.options.bookedDays = DateTime.convertArray(
-        this.options.bookedDays,
-        this.options.bookedDaysFormat,
       );
     }
 
@@ -51,18 +50,6 @@ export class Litepicker extends Calendar {
         this.options.highlightedDays,
         this.options.highlightedDaysFormat,
       );
-    }
-
-    if (this.options.hotelMode && !('bookedDaysInclusivity' in options)) {
-      this.options.bookedDaysInclusivity = '[)';
-    }
-
-    if (this.options.hotelMode && !('disallowBookedDaysInRange' in options)) {
-      this.options.disallowBookedDaysInRange = true;
-    }
-
-    if (this.options.hotelMode && !('selectForward' in options)) {
-      this.options.selectForward = true;
     }
 
     let [startValue, endValue] = this.parseInput();
@@ -339,13 +326,6 @@ export class Litepicker extends Calendar {
 
   private shouldCheckLockDays() {
     return this.options.disallowLockDaysInRange
-      && this.options.lockDays.length
-      && this.datePicked.length === 2;
-  }
-
-  private shouldCheckBookedDays() {
-    return this.options.disallowBookedDaysInRange
-      && this.options.bookedDays.length
       && this.datePicked.length === 2;
   }
 
@@ -380,10 +360,6 @@ export class Litepicker extends Calendar {
         return;
       }
 
-      if (target.classList.contains(style.isBooked)) {
-        return;
-      }
-
       if (this.shouldResetDatePicked()) {
         this.datePicked.length = 0;
       }
@@ -397,47 +373,9 @@ export class Litepicker extends Calendar {
       }
 
       if (this.shouldCheckLockDays()) {
-        const inclusivity = this.options.lockDaysInclusivity;
-        const locked = this.options.lockDays
-          .filter((d) => {
-            if (d instanceof Array) {
-              return d[0].isBetween(this.datePicked[0], this.datePicked[1], inclusivity)
-                || d[1].isBetween(this.datePicked[0], this.datePicked[1], inclusivity);
-            }
-
-            return d.isBetween(this.datePicked[0], this.datePicked[1], inclusivity);
-          }).length;
+        const locked = rangeIsLocked(this.datePicked, this.options);
 
         if (locked) {
-          this.datePicked.length = 0;
-
-          if (typeof this.options.onError === 'function') {
-            this.options.onError.call(this, 'INVALID_RANGE');
-          }
-        }
-      }
-
-      if (this.shouldCheckBookedDays()) {
-        let inclusivity = this.options.bookedDaysInclusivity;
-
-        if (this.options.hotelMode && this.datePicked.length === 2) {
-          inclusivity = '()';
-        }
-
-        const booked = this.options.bookedDays
-          .filter((d) => {
-            if (d instanceof Array) {
-              return d[0].isBetween(this.datePicked[0], this.datePicked[1], inclusivity)
-                || d[1].isBetween(this.datePicked[0], this.datePicked[1], inclusivity);
-            }
-
-            return d.isBetween(this.datePicked[0], this.datePicked[1]);
-          }).length;
-
-        const anyBookedDaysAsCheckout = this.options.anyBookedDaysAsCheckout
-          && this.datePicked.length === 1;
-
-        if (booked && !anyBookedDaysAsCheckout) {
           this.datePicked.length = 0;
 
           if (typeof this.options.onError === 'function') {
@@ -469,9 +407,7 @@ export class Litepicker extends Calendar {
       }
 
       let idx = 0;
-      let numberOfMonths = !this.options.moveByOneMonth
-        ? this.options.numberOfMonths
-        : 1;
+      let numberOfMonths = this.options.switchingMonths || this.options.numberOfMonths;
 
       if (this.options.splitView) {
         const monthItem = target.closest(`.${style.monthItem}`);
@@ -497,9 +433,7 @@ export class Litepicker extends Calendar {
       }
 
       let idx = 0;
-      let numberOfMonths = !this.options.moveByOneMonth
-        ? this.options.numberOfMonths
-        : 1;
+      let numberOfMonths = this.options.switchingMonths || this.options.numberOfMonths;
 
       if (this.options.splitView) {
         const monthItem = target.closest(`.${style.monthItem}`);
@@ -525,6 +459,10 @@ export class Litepicker extends Calendar {
       }
 
       this.hide();
+
+      if (typeof this.options.onCancelButton === 'function') {
+        this.options.onCancelButton.call(this);
+      }
     }
 
     // Click on button apply
@@ -542,6 +480,10 @@ export class Litepicker extends Calendar {
       }
 
       this.hide();
+
+      if (typeof this.options.onApplyButton === 'function') {
+        this.options.onApplyButton.call(this, this.options.startDate, this.options.endDate);
+      }
     }
   }
 
@@ -588,8 +530,7 @@ export class Litepicker extends Calendar {
 
   private shouldAllowMouseEnter(el: HTMLElement) {
     return !this.options.singleMode
-      && !el.classList.contains(style.isLocked)
-      && !el.classList.contains(style.isBooked);
+      && !el.classList.contains(style.isLocked);
   }
 
   private shouldAllowRepick() {
@@ -673,8 +614,8 @@ export class Litepicker extends Calendar {
       if (this.options.showTooltip) {
         let days = date2.diff(date1, 'day');
 
-        if (!this.options.hotelMode) {
-          days += 1;
+        if (typeof this.options.showTooltip === 'function') {
+          days = this.options.showTooltip.call(this, days);
         }
 
         if (days > 0) {

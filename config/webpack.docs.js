@@ -14,8 +14,8 @@ module.exports = {
   module: {
     rules: [
       {
-        exclude: /node_modules/,
-        test: /docs\/js\/demo\.ts?$/,
+        include: path.join(__dirname, '../docs/js'),
+        test: /\.ts?$/,
         loader: 'ts-loader',
       },
       {

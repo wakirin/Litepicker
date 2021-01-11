@@ -1,13 +1,16 @@
 import { DateTime } from './datetime';
 import { Litepicker } from './litepicker';
 import * as style from './scss/main.scss';
-import { getOrientation, isMobile } from './utils';
+import { getOrientation, isMobile, isNotEmptyArray } from './utils';
 
 declare module './litepicker' {
   // tslint:disable-next-line: interface-name
   interface Litepicker {
     show(element?);
     hide();
+    gotoDate(date, idx?);
+    clearSelection();
+    destroy();
 
     getDate();
     getStartDate();
@@ -19,16 +22,8 @@ declare module './litepicker' {
     setDateRange(date1, date2);
 
     setLockDays(array);
-    setBookedDays(array);
     setHighlightedDays(array);
-
-    gotoDate(date, idx?);
-
     setOptions(options);
-
-    clearSelection();
-
-    destroy();
   }
 }
 
@@ -52,9 +47,10 @@ Litepicker.prototype.show = function (el = null) {
       startDate.setDate(1);
       this.calendars[0] = startDate.clone();
     } else if (el && this.options.endDate && el === this.options.elementEnd) {
+      const startDate = this.options.startDate.clone();
       const endDate = this.options.endDate.clone();
       endDate.setDate(1);
-      if (this.options.numberOfMonths > 1) {
+      if (this.options.numberOfMonths > 1 && endDate.isAfter(startDate)) {
         endDate.setMonth(endDate.getMonth() - (this.options.numberOfMonths - 1));
       }
       this.calendars[0] = endDate.clone();
@@ -272,14 +268,6 @@ Litepicker.prototype.setLockDays = function (array) {
   this.render();
 };
 
-Litepicker.prototype.setBookedDays = function (array) {
-  this.options.bookedDays = DateTime.convertArray(
-    array,
-    this.options.bookedDaysFormat,
-  );
-  this.render();
-};
-
 Litepicker.prototype.setHighlightedDays = function (array) {
   this.options.highlightedDays = DateTime.convertArray(
     array,
@@ -338,17 +326,10 @@ Litepicker.prototype.setOptions = function (options) {
     this.calendars[idx] = date;
   }
 
-  if (this.options.lockDays.length) {
+  if (isNotEmptyArray(this.options.lockDays)) {
     this.options.lockDays = DateTime.convertArray(
       this.options.lockDays,
       this.options.lockDaysFormat,
-    );
-  }
-
-  if (this.options.bookedDays.length) {
-    this.options.bookedDays = DateTime.convertArray(
-      this.options.bookedDays,
-      this.options.bookedDaysFormat,
     );
   }
 

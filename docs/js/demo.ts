@@ -1,4 +1,8 @@
 import proxyPolyfillFunc from 'proxy-polyfill/proxy.min.js';
+import options from './options';
+import events from './events';
+import methods from './methods';
+import { createRowOption, sortArray } from './utils';
 declare var Litepicker: any;
 
 const now = new Date();
@@ -28,7 +32,6 @@ const defaultOptions = {
   allowRepick: false,
   showWeekNumbers: false,
   showTooltip: true,
-  hotelMode: false,
   disableWeekends: false,
   scrollToDate: true,
   mobileFriendly: true,
@@ -341,7 +344,6 @@ Object.keys(proxyOptions).forEach((opt) => {
     // case 'allowRepick':
     case 'showWeekNumbers':
     case 'showTooltip':
-    // case 'hotelMode':
     case 'disableWeekends':
     // case 'scrollToDate':
     // case 'disallowLockDaysInRange':
@@ -398,3 +400,12 @@ Object.keys(proxyOptions).forEach((opt) => {
     pickerOptions.appendChild(option);
   }
 });
+
+const optionsList = document.getElementById('options-list');
+sortArray(options).forEach(entry => optionsList.appendChild(createRowOption(entry)));
+
+const eventsList = document.getElementById('events-list');
+sortArray(events).forEach(entry => eventsList.appendChild(createRowOption(entry)));
+
+const methodsList = document.getElementById('methods-list');
+sortArray(methods).forEach(entry => methodsList.appendChild(createRowOption(entry)));
