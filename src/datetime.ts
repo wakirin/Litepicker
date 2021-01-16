@@ -1,3 +1,8 @@
+interface ICustomFormat {
+  parse: (date) => Date;
+  output: (date) => string;
+}
+
 export class DateTime {
 
   public static parseDateTime(
@@ -159,9 +164,12 @@ export class DateTime {
 
   constructor(
     date: Date | DateTime | string = null,
-    format: string = null,
+    format: ICustomFormat | string = null,
     lang: string = 'en-US') {
-    if (format) {
+
+    if (typeof format === 'object' && format !== null) {
+      this.dateInstance = format.parse(date instanceof DateTime ? date.getDateInstance() : date);
+    } else if (typeof format === 'string') {
       this.dateInstance = (DateTime.parseDateTime(date, format, lang));
     } else if (date) {
       this.dateInstance = (DateTime.parseDateTime(date));
@@ -245,7 +253,6 @@ export class DateTime {
   }
 
   public isBetween(date1: DateTime, date2: DateTime, inclusivity = '()'): boolean {
-
     switch (inclusivity) {
       default:
       case '()':
@@ -431,7 +438,11 @@ export class DateTime {
     }
   }
 
-  public format(format: string, lang: string = 'en-US'): string {
+  public format(format: ICustomFormat | string, lang: string = 'en-US'): string {
+    if (typeof format === 'object') {
+      return format.output(this.getDateInstance());
+    }
+
     let response = '';
 
     const matches = [];

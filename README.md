@@ -13,7 +13,7 @@ Date range picker - lightweight, no dependencies
 * Select forward/backward
 * Inline mode
 * Repick date range
-* Lock/Booked days  
+* Lock days  
   
 See more details in docs.
 

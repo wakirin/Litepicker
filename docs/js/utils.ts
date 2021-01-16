@@ -40,6 +40,7 @@ const getDescription = (entry) => {
 
 export function createRowOption(entry) {
   const el = document.createElement('div');
+  el.id = `opt-${entry.name.toLowerCase()}`;
   el.className = 'options-list-item';
   el.dataset.canUnfold = 'true';
 

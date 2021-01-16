@@ -612,7 +612,7 @@ export class Litepicker extends Calendar {
       }
 
       if (this.options.showTooltip) {
-        let days = date2.diff(date1, 'day');
+        let days = date2.diff(date1, 'day') + 1;
 
         if (typeof this.options.showTooltip === 'function') {
           days = this.options.showTooltip.call(this, days);

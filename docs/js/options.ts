@@ -30,7 +30,7 @@ const options = [
   },
   {
     name: 'format',
-    type: 'String',
+    type: 'String|Object',
     default: 'YYYY-MM-DD',
     description: `
       <p>The default output format.</p>
@@ -90,6 +90,35 @@ const options = [
       <p>Eg.:</p>
       <p><code>format: 'YYYY-MM-DD\\T00:00:00'</code></p>
       <p>Result: <strong>2020-01-01T00:00:00</strong></p>
+      <p>&nbsp;</p>
+      <p>Since v2.0.0 option <code>format</code> support external library for parse/output.</p>
+      <p>Example with <a href="https://moment.github.io/luxon/index.html" target="_blank">luxon</a>:</p>
+      <div class="code">
+      ...
+      format: {
+        &nbsp;&nbsp; // parse function should return Date object
+        &nbsp;&nbsp; // date - Date object or string (perhaps there will be more types, need to check)
+        &nbsp;&nbsp; parse(date) {
+        &nbsp;&nbsp;&nbsp;&nbsp;  if (date instanceof Date) {
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return luxon.DateTime.fromJSDate(date).toJSDate();
+        &nbsp;&nbsp;&nbsp;&nbsp; }
+      
+        &nbsp;&nbsp;&nbsp;&nbsp; if (typeof date === 'string') {
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return luxon.DateTime.fromFormat(date, 'yyyy LLL dd').toJSDate();
+        &nbsp;&nbsp;&nbsp;&nbsp; }
+      
+        &nbsp;&nbsp;&nbsp;&nbsp; return luxon.DateTime.local().toJSDate();
+        &nbsp;&nbsp; },
+      
+        &nbsp;&nbsp; // date - Date object
+        &nbsp;&nbsp; // output function should return string
+        &nbsp;&nbsp; output(date) {
+        &nbsp;&nbsp;&nbsp;&nbsp; return luxon.DateTime.fromJSDate(date)
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; .toFormat('yyyy LLL dd');
+        &nbsp;&nbsp; }
+      }
+      ...
+      </div>
     `
   },
   {
@@ -249,9 +278,12 @@ const options = [
     OR
     <div class="code">
     ...
-    // if you need to show all selected days
+    // days - number of selected days
+    // function should return Number
+    //
+    // shows one day less
     showTooltip: (days) => {
-    &nbsp;&nbsp;  return days + 1;
+    &nbsp;&nbsp;  return days - 1;
     }
     ...
     </div>
@@ -386,6 +418,26 @@ const options = [
     <p>Eg: [ ['2019-01-01', '2019-01-10'], '2019-01-31' ].</p>
     <p>This example will disable range from 01 Jan 2019 to 10 Jan 2019 and 31 Jan 2019.</p>
     <p>Can contains Date Object or Unix Timestamp (with milliseconds) or String (must be equal to option <strong>lockDaysFormat</strong>).</p>
+    <p>Function description:</p>
+    <div class="code">
+    ...
+    lockDays: (date1, date2, pickedDates) => {
+      &nbsp;&nbsp; // define your condition
+      &nbsp;&nbsp; // 
+      &nbsp;&nbsp; // date1 - start date or day of render (<a href="https://github.com/wakirin/Litepicker/blob/master/src/datetime.ts" target="_blank">DateTime</a>)
+      &nbsp;&nbsp; // date2 - end date (DateTime)
+      &nbsp;&nbsp; // pickedDates - number of selected days (Number)
+      &nbsp;&nbsp; //
+      &nbsp;&nbsp; // this function calling on render and after apply
+      &nbsp;&nbsp; // thus, you need to check pickedDates.length, if it is:
+      &nbsp;&nbsp; // 0 - no dates selected
+      &nbsp;&nbsp; // 1 - selected start date
+      &nbsp;&nbsp; // 2 - selected start and end dates
+      &nbsp;&nbsp; //
+      &nbsp;&nbsp; // function should return Boolean, when true - day locked
+    }
+    ...
+    </div>
     `
   },
   {
@@ -663,7 +715,9 @@ const options = [
         OR
         <div class="code">
         ...
-        resetButton: (picker) => {
+        // Do not need call clear selection inside this function.
+        // function should return HTML element
+        resetButton: () => {
           &nbsp;&nbsp; let btn = document.createElement('button');
           &nbsp;&nbsp; btn.innerText = 'Clear';
           &nbsp;&nbsp; btn.addEventListener('click', (evt) => {

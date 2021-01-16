@@ -134,7 +134,7 @@ export class Calendar {
 
     mainBlock.appendChild(months);
 
-    if (this.options.resetButton !== false) {
+    if (this.options.resetButton) {
       let resetButton;
       if (typeof this.options.resetButton === 'function') {
         resetButton = this.options.resetButton.call(this);

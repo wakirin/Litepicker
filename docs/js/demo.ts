@@ -409,3 +409,20 @@ sortArray(events).forEach(entry => eventsList.appendChild(createRowOption(entry)
 
 const methodsList = document.getElementById('methods-list');
 sortArray(methods).forEach(entry => methodsList.appendChild(createRowOption(entry)));
+
+if (window.location.hash) {
+  setTimeout(() => {
+    const h = window.location.hash.toLocaleLowerCase().replace(/^#option/, 'opt');
+    const el = document.getElementById(h);
+
+    if (el) {
+      try {
+        el.scrollIntoView(true);
+      }
+      catch (e) {
+        const b = el.getBoundingClientRect();
+        window.scrollTo(0, b.top);
+      }
+    }
+  }, 300);
+}

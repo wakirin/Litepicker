@@ -33,7 +33,7 @@ export function dateIsLocked(date: DateTime, options, pickedDates: DateTime[]): 
     return options.lockDays
       .filter((d) => {
         if (d instanceof Array) {
-          return date.isBetween(d[0], d[1], this.options.lockDaysInclusivity);
+          return date.isBetween(d[0], d[1], options.lockDaysInclusivity);
         }
 
         return d.isSame(date, 'day');
