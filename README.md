@@ -20,16 +20,12 @@ See more details in docs.
 ## [Demo & Docs](https://wakirin.github.io/Litepicker)
 
 ## Compatibility
-* IE 11 (polyfill required, [docs](https://wakirin.github.io/Litepicker/#anchor-IE11))
+* IE 11 (required [polyfills](https://github.com/wakirin/litepicker-polyfills-ie11))
 * Edge 17+
 * Chrome 60+
 * Firefox 52+
 * Safari 11+
 * Opera 48+
-
-## Roadmap
-* Time picker
-* ...
 
 ## Additional modules
 * [litepicker-module-ranges](https://github.com/wakirin/litepicker-module-ranges) - adds predefined ranges. [demo](https://jsfiddle.net/waki/td0uapeo/)

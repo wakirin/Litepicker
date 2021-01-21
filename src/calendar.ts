@@ -73,6 +73,8 @@ export class Calendar {
     onShow: null,
     onHide: null,
     onSelect: null,
+    onSelectStart: null,
+    onSelectEnd: null,
     onError: null,
     onRender: null,
     onRenderDay: null,

@@ -6,11 +6,18 @@ export function isMobile(): boolean {
 }
 
 export function getOrientation(): string {
-  if (window.matchMedia('(orientation: portrait)').matches) {
-    return 'portrait';
+  let orientation;
+
+    // https://developer.mozilla.org/en-US/docs/Web/API/Screen/orientation
+  if ('orientation' in window.screen && 'type' in window.screen.orientation) {
+    orientation = window.screen.orientation.type.replace(/\-\w+$/, '');
+  } else if (window.matchMedia('(orientation: portrait)').matches) {
+    orientation = 'portrait';
+  } else {
+    orientation = 'landscape';
   }
 
-  return 'landscape';
+  return orientation;
 }
 
 export function findNestedMonthItem(monthItem: Element): number {

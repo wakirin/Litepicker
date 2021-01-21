@@ -2,7 +2,9 @@ import { Litepicker } from './litepicker';
 import './methods';
 import './window';
 
-window.Litepicker = Litepicker;
+if (window instanceof Window) {
+  window.Litepicker = Litepicker;
+}
 
 export { Litepicker };
 export default Litepicker;

@@ -47,6 +47,38 @@ const events = [
     `
   },
   {
+    name: 'onSelectStart',
+    default: 'null',
+    description: `
+    <p>Trigger on select start date of range.</p>
+    <p>Example:</p>
+    <div class="code">
+    ...
+    onSelectStart: function(date) {
+    &nbsp;&nbsp; console.log(date);
+    }
+    ...
+    </div>
+    <p>date Date Object.</p>
+    `
+  },
+  {
+    name: 'onSelectEnd',
+    default: 'null',
+    description: `
+    <p>Trigger on select end date of range.</p>
+    <p>Example:</p>
+    <div class="code">
+    ...
+    onSelectEnd: function(date1, date2) {
+    &nbsp;&nbsp; console.log(date1, date2);
+    }
+    ...
+    </div>
+    <p>date1 and date2 is Date Object.</p>
+    `
+  },
+  {
     name: 'onError',
     default: 'null',
     description: `

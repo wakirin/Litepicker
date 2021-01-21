@@ -116,8 +116,6 @@ export class Litepicker extends Calendar {
       }
     }
 
-    this.loadPolyfillsForIE11();
-
     this.onInit();
   }
 
@@ -385,6 +383,20 @@ export class Litepicker extends Calendar {
       }
 
       this.render();
+
+      if (!this.options.singleMode) {
+        if (typeof this.options.onSelectStart === 'function' && this.datePicked.length === 1) {
+          this.options.onSelectStart.call(this, this.datePicked[0].getDateInstance());
+        }
+
+        if (typeof this.options.onSelectEnd === 'function' && this.datePicked.length === 2) {
+          this.options.onSelectEnd.call(
+            this,
+            this.datePicked[0].getDateInstance(),
+            this.datePicked[1].getDateInstance()
+          );
+        }
+      }
 
       if (this.options.autoApply) {
         if (this.options.singleMode && this.datePicked.length) {
@@ -715,41 +727,4 @@ export class Litepicker extends Calendar {
     return this.picker && this.picker.style.display !== 'none';
   }
 
-  private loadPolyfillsForIE11(): void {
-    // Support for Object.entries(...)
-    // copied from
-    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
-    if (!Object.entries) {
-      Object.entries = (obj) => {
-        const ownProps = Object.keys(obj);
-        let i = ownProps.length;
-        const resArray = new Array(i); // preallocate the Array
-        while (i) {
-          i = i - 1;
-          resArray[i] = [ownProps[i], obj[ownProps[i]]];
-        }
-        return resArray;
-      };
-    }
-    // Support for Element.closest(...)
-    // copied from
-    // https://developer.mozilla.org/en-US/docs/Web/API/Element/closest#Polyfill
-    if (!Element.prototype.matches) {
-      // tslint:disable-next-line: no-string-literal
-      Element.prototype.matches = Element.prototype['msMatchesSelector'] ||
-        Element.prototype.webkitMatchesSelector;
-    }
-    if (!Element.prototype.closest) {
-      Element.prototype.closest = function (s) {
-        // tslint:disable-next-line: no-this-assignment
-        let el = this;
-
-        do {
-          if (el.matches(s)) return el;
-          el = el.parentElement || el.parentNode;
-        } while (el !== null && el.nodeType === 1);
-        return null;
-      };
-    }
-  }
 }

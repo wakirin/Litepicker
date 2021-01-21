@@ -100,14 +100,14 @@ const options = [
         &nbsp;&nbsp; // date - Date object or string (perhaps there will be more types, need to check)
         &nbsp;&nbsp; parse(date) {
         &nbsp;&nbsp;&nbsp;&nbsp;  if (date instanceof Date) {
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return luxon.DateTime.fromJSDate(date).toJSDate();
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return date;
         &nbsp;&nbsp;&nbsp;&nbsp; }
       
         &nbsp;&nbsp;&nbsp;&nbsp; if (typeof date === 'string') {
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return luxon.DateTime.fromFormat(date, 'yyyy LLL dd').toJSDate();
         &nbsp;&nbsp;&nbsp;&nbsp; }
       
-        &nbsp;&nbsp;&nbsp;&nbsp; return luxon.DateTime.local().toJSDate();
+        &nbsp;&nbsp;&nbsp;&nbsp; return new Date();
         &nbsp;&nbsp; },
       
         &nbsp;&nbsp; // date - Date object
