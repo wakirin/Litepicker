@@ -36,6 +36,7 @@ export class Calendar {
     mobileFriendly: true,
     resetButton: false,
     autoRefresh: false,
+    keyboardNav: true,
 
     lockDaysFormat: 'YYYY-MM-DD',
     lockDays: [],
@@ -82,10 +83,8 @@ export class Calendar {
     onChangeYear: null,
     onDayHover: null,
     onShowTooltip: null,
-    resetBtnCallback: null,
 
     moduleRanges: null,
-    moduleNavKeyboard: null,
   };
   protected calendars: DateTime[] = [];
   protected picker: HTMLElement;
@@ -141,8 +140,9 @@ export class Calendar {
       if (typeof this.options.resetButton === 'function') {
         resetButton = this.options.resetButton.call(this);
       } else {
-        resetButton = document.createElement('a');
-        resetButton.href = '#';
+        resetButton = document.createElement('button');
+        resetButton.type = 'button';
+        resetButton.tabIndex = 1;
         resetButton.className = style.resetButton;
         resetButton.innerHTML = this.options.buttonText.reset;
       }
@@ -201,6 +201,7 @@ export class Calendar {
     if (this.options.dropdowns.months) {
       const selectMonths = document.createElement('select');
       selectMonths.className = style.monthItemName;
+      selectMonths.tabIndex = 1;
 
       for (let x = 0; x < 12; x += 1) {
         const option = document.createElement('option');
@@ -245,6 +246,7 @@ export class Calendar {
     if (this.options.dropdowns.years) {
       const selectYears = document.createElement('select');
       selectYears.className = style.monthItemYear;
+      selectYears.tabIndex = 1;
 
       const minYear = this.options.dropdowns.minYear;
       const maxYear = this.options.dropdowns.maxYear
@@ -321,13 +323,15 @@ export class Calendar {
       monthAndYear.appendChild(monthYear);
     }
 
-    const previousMonthButton = document.createElement('a');
-    previousMonthButton.href = '#';
+    const previousMonthButton = document.createElement('button');
+    previousMonthButton.type = 'button';
+    previousMonthButton.tabIndex = 1;
     previousMonthButton.className = style.buttonPreviousMonth;
     previousMonthButton.innerHTML = this.options.buttonText.previousMonth;
 
-    const nextMonthButton = document.createElement('a');
-    nextMonthButton.href = '#';
+    const nextMonthButton = document.createElement('button');
+    nextMonthButton.type = 'button';
+    nextMonthButton.tabIndex = 1;
     nextMonthButton.className = style.buttonNextMonth;
     nextMonthButton.innerHTML = this.options.buttonText.nextMonth;
 
@@ -396,8 +400,7 @@ export class Calendar {
   protected renderDay(date: DateTime) {
     date.setHours();
 
-    const day = document.createElement('a');
-    day.href = '#';
+    const day = document.createElement('div');
     day.className = style.dayItem;
     day.innerHTML = String(date.getDate());
     day.dataset.time = String(date.getTime());
@@ -519,6 +522,8 @@ export class Calendar {
     if (typeof this.options.onRenderDay === 'function') {
       this.options.onRenderDay.call(this, day);
     }
+
+    day.tabIndex = !day.classList.contains('is-locked') ? 2 : -1;
 
     return day;
   }

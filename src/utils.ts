@@ -1,4 +1,5 @@
 import { DateTime } from './datetime';
+import * as style from './scss/main.scss';
 
 export function isMobile(): boolean {
   const isPortrait = getOrientation() === 'portrait';
@@ -48,7 +49,7 @@ export function dateIsLocked(date: DateTime, options, pickedDates: DateTime[]): 
   }
 
   if (typeof options.lockDays === 'function') {
-    return options.lockDays.call(this, date, null, pickedDates);
+    return options.lockDays.call(this, date.clone(), null, pickedDates);
   }
 
   return false;
@@ -68,8 +69,17 @@ export function rangeIsLocked(days: DateTime[], options): boolean {
   }
 
   if (typeof options.lockDays === 'function') {
-    return options.lockDays.call(this, days[0], days[1], days);
+    return options.lockDays.call(this, days[0].clone(), days[1].clone(), days);
   }
 
   return false;
+}
+
+export function findAllowableDaySibling(picker: HTMLElement, target: HTMLElement, isAllow) {
+  const elms = Array.from(picker.querySelectorAll(`.${style.dayItem}[tabindex="2"]`));
+  const targetIdx = elms.indexOf(target);
+
+  return elms.filter((el: HTMLElement, idx: number) => {
+    return isAllow(idx, targetIdx) && el.tabIndex === 2;
+  })[0] as HTMLElement;
 }

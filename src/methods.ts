@@ -86,11 +86,7 @@ Litepicker.prototype.show = function (el = null) {
       this.options.onShow.call(this);
     }
 
-    if (el) {
-      el.blur();
-    } else {
-      this.options.element.blur();
-    }
+    (el || this.options.element).blur();
     return;
   }
 
@@ -166,13 +162,13 @@ Litepicker.prototype.hide = function () {
 
   this.picker.style.display = 'none';
 
-  if (typeof this.options.onHide === 'function') {
-    this.options.onHide.call(this);
-  }
-
   if (this.options.mobileFriendly) {
     document.body.classList.remove(style.litepickerOpen);
     this.backdrop.style.display = 'none';
+  }
+
+  if (typeof this.options.onHide === 'function') {
+    this.options.onHide.call(this);
   }
 };
 
@@ -182,8 +178,7 @@ Litepicker.prototype.getDate = function (): Date {
 
 Litepicker.prototype.getStartDate = function (): Date {
   if (this.options.startDate) {
-    const castedObj = this.options.startDate.clone() as DateTime;
-    return castedObj.getDateInstance();
+    return this.options.startDate.clone();
   }
 
   return null;
@@ -191,8 +186,7 @@ Litepicker.prototype.getStartDate = function (): Date {
 
 Litepicker.prototype.getEndDate = function (): Date {
   if (this.options.endDate) {
-    const castedObj = this.options.endDate.clone() as DateTime;
-    return castedObj.getDateInstance();
+    return this.options.endDate.clone();
   }
 
   return null;

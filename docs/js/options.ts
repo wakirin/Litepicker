@@ -438,6 +438,32 @@ const options = [
     }
     ...
     </div>
+    <p>Example for disabled weekends:</p>
+    <div class="code">
+    ...
+    lockDays: (day) => {
+      &nbsp;&nbsp; const d = day.getDay();
+
+      &nbsp;&nbsp; return [6, 0].includes(d);
+    },
+    ...
+    </div>
+    <p>and with <code>disallowLockDaysInRange</code> option enabled:</p>
+    <div class="code">
+    ...
+    lockDays: (date1, date2, pickedDates) => {
+
+    &nbsp;&nbsp; while (date1.getDateInstance() < date2.getDateInstance()) {
+    &nbsp;&nbsp;&nbsp;&nbsp; const day = date1.getDay();
+    &nbsp;&nbsp;&nbsp;&nbsp; isWeekend = [6, 0].includes(day);
+    &nbsp;&nbsp;&nbsp;&nbsp; if (isWeekend) { return true; }
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; date1.add(1, 'day');
+    &nbsp;&nbsp; }
+    
+    &nbsp;&nbsp; return false;
+    },
+    ...
+    </div>
     `
   },
   {
@@ -691,6 +717,11 @@ const options = [
         link: 'https://github.com/wakirin/litepicker-module-navkeyboard',
       },
     ],
+    deprecated: {
+      replacement: `
+        use <code>keyboardNav</code>
+      `
+    },
   },
   {
     name: 'switchingMonths',
@@ -731,6 +762,13 @@ const options = [
         ...
         </div>
       `,
+    minVersion: '2.0.0',
+  },
+  {
+    name: 'keyboardNav',
+    type: 'Boolean',
+    default: 'true',
+    description: '<p>Enable/Disable keyboard navigation.</p>',
     minVersion: '2.0.0',
   },
 ];

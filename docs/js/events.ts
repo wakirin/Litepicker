@@ -42,7 +42,7 @@ const events = [
     }
     ...
     </div>
-    <p>date1 and date2 is Date Object.</p>
+    <p>date1 and date2 is DateTime Object.</p>
     <p>date2 is available when the option <strong>singleMode</strong> is false</p>
     `
   },
@@ -59,7 +59,7 @@ const events = [
     }
     ...
     </div>
-    <p>date Date Object.</p>
+    <p>date DateTime Object.</p>
     `
   },
   {
@@ -75,14 +75,14 @@ const events = [
     }
     ...
     </div>
-    <p>date1 and date2 is Date Object.</p>
+    <p>date1 and date2 is DateTime Object.</p>
     `
   },
   {
     name: 'onError',
     default: 'null',
     description: `
-    <p>Trigger on error date/date range..</p>
+    <p>Trigger on error date range.</p>
     <p>Example:</p>
     <div class="code">
     ...

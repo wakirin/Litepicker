@@ -38,6 +38,11 @@
   font-size: 0.8em;
   display: none;
 
+  button {
+    border: none;
+    background: none;
+  }
+
   .container {
     &__main {
       display: flex;

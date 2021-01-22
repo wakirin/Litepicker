@@ -168,7 +168,8 @@ export class DateTime {
     lang: string = 'en-US') {
 
     if (typeof format === 'object' && format !== null) {
-      this.dateInstance = format.parse(date instanceof DateTime ? date.getDateInstance() : date);
+      // tslint:disable-next-line: max-line-length
+      this.dateInstance = format.parse(date instanceof DateTime ? date.clone().getDateInstance() : date);
     } else if (typeof format === 'string') {
       this.dateInstance = (DateTime.parseDateTime(date, format, lang));
     } else if (date) {
@@ -440,7 +441,7 @@ export class DateTime {
 
   public format(format: ICustomFormat | string, lang: string = 'en-US'): string {
     if (typeof format === 'object') {
-      return format.output(this.getDateInstance());
+      return format.output(this.clone().getDateInstance());
     }
 
     let response = '';

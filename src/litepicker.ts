@@ -2,6 +2,7 @@ import { Calendar } from './calendar';
 import { DateTime } from './datetime';
 import * as style from './scss/main.scss';
 import {
+  findAllowableDaySibling,
   findNestedMonthItem,
   getOrientation,
   isMobile,
@@ -144,13 +145,21 @@ export class Litepicker extends Calendar {
       }
     }
 
-    if (this.options.moduleNavKeyboard) {
-      // tslint:disable-next-line: no-string-literal
-      if (typeof this['enableModuleNavKeyboard'] === 'function') {
-        // tslint:disable-next-line: no-string-literal
-        this['enableModuleNavKeyboard'].call(this, this);
-      } else {
-        throw new Error('moduleNavKeyboard is on but library does not included. See https://github.com/wakirin/litepicker-module-navkeyboard.');
+    if (this.options.keyboardNav) {
+      this.picker.addEventListener('keydown', e => this.onKeyDown(e), true);
+
+      if (this.options.element instanceof HTMLElement) {
+        this.options.element.addEventListener('focus', e => this.onFocus(e), true);
+      }
+      if (this.options.elementEnd instanceof HTMLElement) {
+        this.options.elementEnd.addEventListener('focus', e => this.onFocus(e), true);
+      }
+
+      if (this.options.element instanceof HTMLElement) {
+        this.options.element.addEventListener('blur', e => this.onBlur(e), true);
+      }
+      if (this.options.elementEnd instanceof HTMLElement) {
+        this.options.elementEnd.addEventListener('blur', e => this.onBlur(e), true);
       }
     }
 
@@ -386,14 +395,14 @@ export class Litepicker extends Calendar {
 
       if (!this.options.singleMode) {
         if (typeof this.options.onSelectStart === 'function' && this.datePicked.length === 1) {
-          this.options.onSelectStart.call(this, this.datePicked[0].getDateInstance());
+          this.options.onSelectStart.call(this, this.datePicked[0].clone());
         }
 
         if (typeof this.options.onSelectEnd === 'function' && this.datePicked.length === 2) {
           this.options.onSelectEnd.call(
             this,
-            this.datePicked[0].getDateInstance(),
-            this.datePicked[1].getDateInstance()
+            this.datePicked[0].clone(),
+            this.datePicked[1].clone(),
           );
         }
       }
@@ -725,6 +734,154 @@ export class Litepicker extends Calendar {
 
   private isShowning() {
     return this.picker && this.picker.style.display !== 'none';
+  }
+
+  private onFocus(evt) {
+    if (this.options.inlineMode) {
+      return;
+    }
+
+    if (this.isShowning()) {
+      return;
+    }
+
+    this.show(evt.target);
+  }
+
+  private onBlur(evt) {
+    if (this.options.inlineMode) {
+      return;
+    }
+
+    // get next focusable element
+    setTimeout(() => {
+      const activeElement = document.activeElement as HTMLElement;
+
+      if (!this.picker.contains(activeElement)) {
+        this.nextFocus = activeElement;
+      }
+
+      const focusEl = this.picker.querySelector('[tabindex="1"]') as HTMLElement;
+      focusEl.focus();
+    });
+  }
+
+  private onKeyDown(evt) {
+    const target = evt.target as any;
+
+    setTimeout(() => {
+      this.onMouseEnter({ target: document.activeElement });
+    });
+
+    switch (evt.code) {
+      case 'ArrowUp':
+      case 'ArrowDown':
+        this.handleArrowUpDown(target, evt);
+        break;
+
+      case 'ArrowLeft':
+      case 'ArrowRight':
+        this.handleArrowLeftRight(target, evt);
+        break;
+
+      case 'Tab':
+        this.handleTab(target, evt);
+        break;
+
+      case 'Enter':
+      case 'Space':
+        this.handleEnter(evt);
+        break;
+    }
+  }
+
+  private handleEnter(evt) {
+    document.activeElement.dispatchEvent(new Event('click'));
+
+    setTimeout(() => {
+      const focusEl = this.picker.querySelector('[tabindex="2"]') as HTMLElement;
+      focusEl.focus();
+    });
+  }
+
+  private handleTab(target, evt) {
+    setTimeout(() => {
+      const currentElement = document.activeElement;
+
+      if (!currentElement.closest(`.${style.litepicker}`)) {
+        let focusEl = this.picker.querySelector('[tabindex="1"]') as HTMLElement;
+
+        if (target === focusEl) {
+          // @TODO bug: not focused to last day by Shift+Tab
+          const elms = this.picker.querySelectorAll('[tabindex="2"]');
+          focusEl = elms[elms.length - 1] as HTMLElement;
+        }
+
+        focusEl.focus();
+      }
+    });
+  }
+
+  private handleArrowUpDown(target: HTMLElement, evt) {
+    if (target.classList.contains(style.dayItem)) {
+      evt.preventDefault();
+
+      const nextElement = findAllowableDaySibling(this.picker, target, (idx, targetIdx) => {
+        // tslint:disable-next-line: no-parameter-reassignment
+        targetIdx = evt.code === 'ArrowUp' ? targetIdx - 7 : targetIdx + 7;
+        return idx === targetIdx;
+      }) as HTMLElement;
+
+      if (nextElement) {
+        nextElement.focus();
+      }
+    }
+  }
+
+  private handleArrowLeftRight(target: HTMLElement, evt) {
+    if (target.classList.contains(style.dayItem)) {
+      evt.preventDefault();
+
+      const nextElement = findAllowableDaySibling(this.picker, target, (idx, targetIdx) => {
+        // tslint:disable-next-line: no-parameter-reassignment
+        targetIdx = evt.code === 'ArrowLeft' ? targetIdx - 1 : targetIdx + 1;
+        return idx === targetIdx;
+      }) as HTMLElement;
+
+      if (nextElement) {
+        nextElement.focus();
+      } else {
+        this.changeMonth(evt);
+      }
+    }
+  }
+
+  private changeMonth(evt) {
+    const buttons = {
+      ArrowLeft: `.${style.buttonPreviousMonth}`,
+      ArrowRight: `.${style.buttonNextMonth}`,
+    };
+
+    const button = this.picker.querySelector(buttons[evt.code]);
+    if (button) {
+      button.dispatchEvent(new Event('click'));
+    }
+
+    setTimeout(() => {
+      let focusEl = null;
+
+      switch (evt.code) {
+        case 'ArrowLeft':
+          const elms = this.picker.querySelectorAll('[tabindex="2"]');
+          focusEl = elms[elms.length - 1] as HTMLElement;
+          break;
+
+        case 'ArrowRight':
+          focusEl = this.picker.querySelector('[tabindex="2"]') as HTMLElement;
+          break;
+      }
+      focusEl.focus();
+    });
   }
 
 }
