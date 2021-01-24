@@ -346,7 +346,12 @@ const options = [
     <p>In portrait orientation, 1 calendar will be displayed at the bottom of the screen.</p>
     <p>In landscape orientation 2 calendar will be displayed.</p>
     <p>See demo above.</p>
-    `
+    `,
+    deprecated: {
+      replacement: `
+        use plugin <code>mobilefriendly</code>.
+      `
+    },
   },
   {
     name: 'useResetBtn',
@@ -460,7 +465,7 @@ const options = [
     ...
     lockDaysFilter: (date1, date2, pickedDates) => {
 
-    &nbsp;&nbsp; while (date1.getDateInstance() < date2.getDateInstance()) {
+    &nbsp;&nbsp; while (date1.toJSDate() < date2.toJSDate()) {
     &nbsp;&nbsp;&nbsp;&nbsp; const day = date1.getDay();
     &nbsp;&nbsp;&nbsp;&nbsp; isWeekend = [6, 0].includes(day);
     &nbsp;&nbsp;&nbsp;&nbsp; if (isWeekend) { return true; }
@@ -709,6 +714,11 @@ const options = [
         link: 'https://github.com/wakirin/litepicker-module-ranges',
       }
     ],
+    deprecated: {
+      replacement: `
+        use plugin <code>ranges</code>.
+      `
+    },
   },
   {
     name: 'moduleNavKeyboard',
@@ -726,7 +736,7 @@ const options = [
     ],
     deprecated: {
       replacement: `
-        use <code>keyboardNav</code>
+        use plugin <code>keyboardnav</code>.
       `
     },
   },

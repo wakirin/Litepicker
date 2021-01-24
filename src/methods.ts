@@ -11,9 +11,9 @@ declare module './litepicker' {
     clearSelection(): void;
     destroy(): void;
 
-    getDate(): void;
-    getStartDate(): void;
-    getEndDate(): void;
+    getDate(): DateTime | null;
+    getStartDate(): DateTime | null;
+    getEndDate(): DateTime | null;
 
     setDate(date): void;
     setStartDate(date): void;
@@ -121,11 +121,11 @@ Litepicker.prototype.hide = function () {
   this.emit('hide');
 };
 
-Litepicker.prototype.getDate = function (): Date {
+Litepicker.prototype.getDate = function (): DateTime {
   return this.getStartDate();
 };
 
-Litepicker.prototype.getStartDate = function (): Date {
+Litepicker.prototype.getStartDate = function (): DateTime {
   if (this.options.startDate) {
     return this.options.startDate.clone();
   }
@@ -133,7 +133,7 @@ Litepicker.prototype.getStartDate = function (): Date {
   return null;
 };
 
-Litepicker.prototype.getEndDate = function (): Date {
+Litepicker.prototype.getEndDate = function (): DateTime {
   if (this.options.endDate) {
     return this.options.endDate.clone();
   }

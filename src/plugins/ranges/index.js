@@ -74,18 +74,7 @@ Litepicker.add('ranges', {
         block.appendChild(item);
       });
 
-      if (['bottom', 'right'].includes(options.position)) {
-        ui.appendChild(block);
-      } else {
-        ui.prepend(block);
-      }
-
-      if (['top', 'bottom'].includes(options.position)) {
-        block.classList.add('flex-row');
-        ui.classList.add('flex-column');
-      } else {
-        ui.classList.remove('flex-column');
-      }
+      ui.prepend(block);
     });
   }
 })

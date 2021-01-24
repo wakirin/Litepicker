@@ -7,7 +7,7 @@ export class DateTime {
     if (!date) return new Date(NaN);
 
     if (date instanceof Date) return new Date(date);
-    if (date instanceof DateTime) return date.clone().getDateInstance();
+    if (date instanceof DateTime) return date.clone().toJSDate();
 
     if (/^-?\d{10,}$/.test(date as string)) return DateTime.getDateZeroTime(new Date(Number(date)));
 
@@ -164,7 +164,7 @@ export class DateTime {
 
     if (typeof format === 'object' && format !== null) {
       // tslint:disable-next-line: max-line-length
-      this.dateInstance = (format as any).parse(date instanceof DateTime ? date.clone().getDateInstance() : date);
+      this.dateInstance = (format as any).parse(date instanceof DateTime ? date.clone().toJSDate() : date);
     } else if (typeof format === 'string') {
       this.dateInstance = (DateTime.parseDateTime(date, format, lang));
     } else if (date) {
@@ -176,7 +176,7 @@ export class DateTime {
     this.lang = lang;
   }
 
-  public getDateInstance(): Date {
+  public toJSDate(): Date {
     return this.dateInstance;
   }
 
@@ -245,7 +245,7 @@ export class DateTime {
   }
 
   public clone(): DateTime {
-    return new DateTime(this.getDateInstance());
+    return new DateTime(this.toJSDate());
   }
 
   public isBetween(date1: DateTime, date2: DateTime, inclusivity = '()'): boolean {
@@ -436,7 +436,7 @@ export class DateTime {
 
   public format(format: object | string, lang: string = 'en-US'): string {
     if (typeof format === 'object') {
-      return (format as any).output(this.clone().getDateInstance());
+      return (format as any).output(this.clone().toJSDate());
     }
 
     let response = '';
