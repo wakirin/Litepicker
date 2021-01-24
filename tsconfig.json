@@ -2,7 +2,7 @@
   "compilerOptions": {
     "outDir": "./dist/js",
     "module": "commonjs",
-    "target": "ES5",
+    "target": "es5",
     "declaration": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
