@@ -1,103 +1,61 @@
 import { DateTime } from './datetime';
 import { Litepicker } from './litepicker';
 import * as style from './scss/main.scss';
-import { getOrientation, isMobile, isNotEmptyArray } from './utils';
 
 declare module './litepicker' {
   // tslint:disable-next-line: interface-name
   interface Litepicker {
-    show(element?);
-    hide();
-    gotoDate(date, idx?);
-    clearSelection();
-    destroy();
+    show(element?): void;
+    hide(): void;
+    gotoDate(date, idx?): void;
+    clearSelection(): void;
+    destroy(): void;
 
-    getDate();
-    getStartDate();
-    getEndDate();
+    getDate(): void;
+    getStartDate(): void;
+    getEndDate(): void;
 
-    setDate(date);
-    setStartDate(date);
-    setEndDate(date);
-    setDateRange(date1, date2);
+    setDate(date): void;
+    setStartDate(date): void;
+    setEndDate(date): void;
+    setDateRange(date1, date2): void;
 
-    setLockDays(array);
-    setHighlightedDays(array);
-    setOptions(options);
+    setLockDays(array): void;
+    setHighlightedDays(array): void;
+    setOptions(options): void;
   }
 }
 
 Litepicker.prototype.show = function (el = null) {
+  this.emit('before:show', el);
+
+  if (this.isShowning()) {
+    return;
+  }
+
   const element = el ? el : this.options.element;
   this.triggerElement = element;
 
   if (this.options.inlineMode) {
-    this.picker.style.position = 'static';
-    this.picker.style.display = 'inline-block';
-    this.picker.style.top = null;
-    this.picker.style.left = null;
-    this.picker.style.bottom = null;
-    this.picker.style.right = null;
+    this.ui.style.position = 'static';
+    this.ui.style.display = 'inline-block';
+    this.ui.style.top = null;
+    this.ui.style.left = null;
+    this.ui.style.bottom = null;
+    this.ui.style.right = null;
     return;
   }
 
-  if (this.options.scrollToDate) {
-    if (this.options.startDate && (!el || el === this.options.element)) {
-      const startDate = this.options.startDate.clone();
-      startDate.setDate(1);
-      this.calendars[0] = startDate.clone();
-    } else if (el && this.options.endDate && el === this.options.elementEnd) {
-      const startDate = this.options.startDate.clone();
-      const endDate = this.options.endDate.clone();
-      endDate.setDate(1);
-      if (this.options.numberOfMonths > 1 && endDate.isAfter(startDate)) {
-        endDate.setMonth(endDate.getMonth() - (this.options.numberOfMonths - 1));
-      }
-      this.calendars[0] = endDate.clone();
-    }
-  }
-
-  if (this.options.mobileFriendly && isMobile()) {
-    this.picker.style.position = 'fixed';
-    this.picker.style.display = 'block';
-
-    if (getOrientation() === 'portrait') {
-      this.options.numberOfMonths = 1;
-      this.options.numberOfColumns = 1;
-    } else {
-      this.options.numberOfMonths = 2;
-      this.options.numberOfColumns = 2;
-    }
-
-    this.render();
-
-    const pickerBCR = this.picker.getBoundingClientRect();
-    this.picker.style.top = `calc(50% - ${(pickerBCR.height / 2)}px)`;
-    this.picker.style.left = `calc(50% - ${(pickerBCR.width / 2)}px)`;
-    this.picker.style.right = null;
-    this.picker.style.bottom = null;
-    this.picker.style.zIndex = this.options.zIndex;
-
-    this.backdrop.style.display = 'block';
-    this.backdrop.style.zIndex = this.options.zIndex - 1;
-    document.body.classList.add(style.litepickerOpen);
-
-    if (typeof this.options.onShow === 'function') {
-      this.options.onShow.call(this);
-    }
-
-    (el || this.options.element).blur();
-    return;
-  }
+  this.scrollToDate(el);
 
   this.render();
 
-  this.picker.style.position = 'absolute';
-  this.picker.style.display = 'block';
-  this.picker.style.zIndex = this.options.zIndex;
+  this.ui.style.position = 'absolute';
+  this.ui.style.display = 'block';
+  this.ui.style.zIndex = this.options.zIndex;
 
   const elBCR = element.getBoundingClientRect();
-  const pickerBCR = this.picker.getBoundingClientRect();
+  const pickerBCR = this.ui.getBoundingClientRect();
 
   let top = elBCR.bottom;
   let left = elBCR.left;
@@ -107,7 +65,7 @@ Litepicker.prototype.show = function (el = null) {
   let leftAlt = 0;
 
   if (this.options.parentEl) {
-    const parentBCR = this.picker.parentNode.getBoundingClientRect();
+    const parentBCR = this.ui.parentNode.getBoundingClientRect();
     top -= parentBCR.bottom;
     top += elBCR.height;
 
@@ -137,14 +95,12 @@ Litepicker.prototype.show = function (el = null) {
     }
   }
 
-  this.picker.style.top = `${(topAlt ? topAlt : top) + scrollY}px`;
-  this.picker.style.left = `${(leftAlt ? leftAlt : left) + scrollX}px`;
-  this.picker.style.right = null;
-  this.picker.style.bottom = null;
+  this.ui.style.top = `${(topAlt ? topAlt : top) + scrollY}px`;
+  this.ui.style.left = `${(leftAlt ? leftAlt : left) + scrollX}px`;
+  this.ui.style.right = null;
+  this.ui.style.bottom = null;
 
-  if (typeof this.options.onShow === 'function') {
-    this.options.onShow.call(this);
-  }
+  this.emit('show', el);
 };
 
 Litepicker.prototype.hide = function () {
@@ -160,16 +116,9 @@ Litepicker.prototype.hide = function () {
     return;
   }
 
-  this.picker.style.display = 'none';
+  this.ui.style.display = 'none';
 
-  if (this.options.mobileFriendly) {
-    document.body.classList.remove(style.litepickerOpen);
-    this.backdrop.style.display = 'none';
-  }
-
-  if (typeof this.options.onHide === 'function') {
-    this.options.onHide.call(this);
-  }
+  this.emit('hide');
 };
 
 Litepicker.prototype.getDate = function (): Date {
@@ -195,9 +144,7 @@ Litepicker.prototype.getEndDate = function (): Date {
 Litepicker.prototype.setDate = function (date) {
   this.setStartDate(date);
 
-  if (typeof this.options.onSelect === 'function') {
-    this.options.onSelect.call(this, this.getDate());
-  }
+  this.emit('selected', this.getDate());
 };
 
 Litepicker.prototype.setStartDate = function (date) {
@@ -242,9 +189,7 @@ Litepicker.prototype.setDateRange = function (date1, date2) {
 
   this.updateInput();
 
-  if (typeof this.options.onSelect === 'function') {
-    this.options.onSelect.call(this, this.getStartDate(), this.getEndDate());
-  }
+  this.emit('selected', this.getStartDate(), this.getEndDate());
 };
 
 Litepicker.prototype.gotoDate = function (date, idx = 0) {
@@ -320,7 +265,7 @@ Litepicker.prototype.setOptions = function (options) {
     this.calendars[idx] = date;
   }
 
-  if (isNotEmptyArray(this.options.lockDays)) {
+  if (this.options.lockDays.length) {
     this.options.lockDays = DateTime.convertArray(
       this.options.lockDays,
       this.options.lockDaysFormat,
@@ -356,12 +301,10 @@ Litepicker.prototype.clearSelection = function () {
 };
 
 Litepicker.prototype.destroy = function () {
-  if (this.picker && this.picker.parentNode) {
-    this.picker.parentNode.removeChild(this.picker);
-    this.picker = null;
+  if (this.ui && this.ui.parentNode) {
+    this.ui.parentNode.removeChild(this.ui);
+    this.ui = null;
   }
 
-  if (this.backdrop && this.backdrop.parentNode) {
-    this.backdrop.parentNode.removeChild(this.backdrop);
-  }
+  this.emit('destroy');
 };

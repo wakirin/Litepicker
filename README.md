@@ -14,6 +14,9 @@ Date range picker - lightweight, no dependencies
 * Inline mode
 * Repick date range
 * Lock days  
+* Keyboard accessibility (with plugin)
+* Mobile friendly (with plugin)
+* Predefined ranges (with plugin)
   
 See more details in docs.
 
@@ -27,9 +30,11 @@ See more details in docs.
 * Safari 11+
 * Opera 48+
 
-## Additional modules
-* [litepicker-module-ranges](https://github.com/wakirin/litepicker-module-ranges) - adds predefined ranges. [demo](https://jsfiddle.net/waki/td0uapeo/)
-* [litepicker-module-navkeyboard](https://github.com/wakirin/litepicker-module-navkeyboard) - adds keyboard navigation. [demo](https://jsfiddle.net/waki/3b5uwj1z/)
+## Plugins
+@TODO description and demo
+* `keyboardnav`
+* `mobilefriendly` 
+* `ranges`
 
 ## See also:
 * [Drupal module](https://www.drupal.org/project/date_range_picker) by [kviolka](https://github.com/kviolka)

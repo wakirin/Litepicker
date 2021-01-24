@@ -142,7 +142,42 @@
           <a id="anchor-Events" href="#anchor-Events">#</a> Events
         </div>
 
-        <div id="events-list" class="js-list"></div>
+        <p>Since v2 all events work with EventEmitter.</p>
+        <p>Example initialize:</p>
+        <div class="code">
+          ...
+          setup: (picker) => {
+          &nbsp;&nbsp; picker.on('show', () => {
+          &nbsp;&nbsp;&nbsp;&nbsp; // some action after show
+          &nbsp;&nbsp; });
+
+          &nbsp;&nbsp; picker.on('render', (ui) => {
+          &nbsp;&nbsp;&nbsp;&nbsp; // some action after render
+          &nbsp;&nbsp;&nbsp;&nbsp; // ui is root element of picker
+          &nbsp;&nbsp; });
+          },
+          ...
+        </div>
+        <h3>Event list:</h3>
+        <ul id="events-list">
+          <li><code>.on('<strong>init</strong>', () => { ... });</code> - Event is called after initialization picker.</li>
+          <li><code>.on('<strong>before:render</strong>', (ui) => { ... });</code> - ui is root element of picker. Event is called before render function.</li>
+          <li><code>.on('<strong>render</strong>', (ui) => { ... });</code> - ui is root element of picker. Event is called after render function.</li>
+          <li><code>.on('<strong>render:month</strong>', (month) => { ... });</code> - month is element of rendered month. Event is called after renderMonth function.</li>
+          <li><code>.on('<strong>render:day</strong>', (day) => { ... });</code> - day is element of rendered day. Event is called after renderDay function.</li>
+          <li><code>.on('<strong>render:footer</strong>', (footer) => { ... });</code> - footer is element of rendered footer. Event is called after renderFooter function.</li>
+          <li><code>.on('<strong>change:month</strong>', (date, calendarIdx) => { ... });</code> - date is DateTime object of month, calendarIdx is index of calendar when splitView is enabled. Event is called after change month.</li>
+          <li><code>.on('<strong>change:year</strong>', (date, calendarIdx) => { ... });</code> - date is DateTime object of year, calendarIdx is index of calendar when splitView is enabled. Event is called after change year.</li>
+          <li><code>.on('<strong>error:range</strong>', () => { ... });</code> - Event is called on wrong selection range (when disallowLockDaysInRange is enabled).</li>
+          <li><code>.on('<strong>preselect</strong>', (date1, date2) => { ... });</code> - date1, date2 is DateTime object. Event is called on select days (before submit selection).</li>
+          <li><code>.on('<strong>selected</strong>', (date1, date2) => { ... });</code> - date1, date2 is DateTime object. Event is called when selection is submitted.</li>
+          <li><code>.on('<strong>button:cancel</strong>', () => { ... });</code> - Event is called after click on button cancel (footer).</li>
+          <li><code>.on('<strong>button:apply</strong>', (date1, date2) => { ... });</code> -  date1, date2 is DateTime object. Event is called after click on button apply (footer).</li>
+          <li><code>.on('<strong>tooltip</strong>', (tooltip, day) => { ... });</code> -  tooltip is element of tooltip, day is element of hovered day. Event is called after showTooltip function.</li>
+          <li><code>.on('<strong>before:show</strong>', (el) => { ... });</code> -  el is triggered element. Event is called before show.</li>
+          <li><code>.on('<strong>show</strong>', (el) => { ... });</code> -  el is triggered element. Event is called after show.</li>
+          <li><code>.on('<strong>destroy</strong>', () => { ... });</code> - Event is called after destroy.</li>
+        </ul>
 
         <hr>
 

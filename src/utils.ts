@@ -1,25 +1,4 @@
 import { DateTime } from './datetime';
-import * as style from './scss/main.scss';
-
-export function isMobile(): boolean {
-  const isPortrait = getOrientation() === 'portrait';
-  return window.matchMedia(`(max-device-${isPortrait ? 'width' : 'height'}: ${480}px)`).matches;
-}
-
-export function getOrientation(): string {
-  let orientation;
-
-    // https://developer.mozilla.org/en-US/docs/Web/API/Screen/orientation
-  if ('orientation' in window.screen && 'type' in window.screen.orientation) {
-    orientation = window.screen.orientation.type.replace(/\-\w+$/, '');
-  } else if (window.matchMedia('(orientation: portrait)').matches) {
-    orientation = 'portrait';
-  } else {
-    orientation = 'landscape';
-  }
-
-  return orientation;
-}
 
 export function findNestedMonthItem(monthItem: Element): number {
   const children = monthItem.parentNode.childNodes;
@@ -32,13 +11,11 @@ export function findNestedMonthItem(monthItem: Element): number {
   return 0;
 }
 
-export function isNotEmptyArray(lockDays): boolean {
-  return lockDays instanceof Array && lockDays.length > 0;
-}
-
 export function dateIsLocked(date: DateTime, options, pickedDates: DateTime[]): boolean {
-  if (isNotEmptyArray(options.lockDays)) {
-    return options.lockDays
+  let isLocked = false;
+
+  if (options.lockDays.length) {
+    isLocked = options.lockDays
       .filter((d) => {
         if (d instanceof Array) {
           return date.isBetween(d[0], d[1], options.lockDaysInclusivity);
@@ -48,16 +25,18 @@ export function dateIsLocked(date: DateTime, options, pickedDates: DateTime[]): 
       }).length;
   }
 
-  if (typeof options.lockDays === 'function') {
-    return options.lockDays.call(this, date.clone(), null, pickedDates);
+  if (!isLocked && typeof options.lockDaysFilter === 'function') {
+    isLocked = options.lockDaysFilter.call(this, date.clone(), null, pickedDates);
   }
 
-  return false;
+  return isLocked;
 }
 
 export function rangeIsLocked(days: DateTime[], options): boolean {
-  if (isNotEmptyArray(options.lockDays)) {
-    return options.lockDays
+  let isLocked = false;
+
+  if (options.lockDays.length) {
+    isLocked = options.lockDays
       .filter((d) => {
         if (d instanceof Array) {
           return d[0].isBetween(days[0], days[1], options.lockDaysInclusivity)
@@ -68,18 +47,9 @@ export function rangeIsLocked(days: DateTime[], options): boolean {
       }).length;
   }
 
-  if (typeof options.lockDays === 'function') {
-    return options.lockDays.call(this, days[0].clone(), days[1].clone(), days);
+  if (!isLocked && typeof options.lockDaysFilter === 'function') {
+    isLocked = options.lockDaysFilter.call(this, days[0].clone(), days[1].clone(), days);
   }
 
-  return false;
-}
-
-export function findAllowableDaySibling(picker: HTMLElement, target: HTMLElement, isAllow) {
-  const elms = Array.from(picker.querySelectorAll(`.${style.dayItem}[tabindex="2"]`));
-  const targetIdx = elms.indexOf(target);
-
-  return elms.filter((el: HTMLElement, idx: number) => {
-    return isAllow(idx, targetIdx) && el.tabIndex === 2;
-  })[0] as HTMLElement;
+  return isLocked;
 }

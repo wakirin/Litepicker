@@ -306,7 +306,7 @@ const options = [
     deprecated: {
       reason: 'The option `hotelMode` is misleading because there many cases for each hotel.',
       replacement: `
-      <p>Use option <code>lockDays</code> as a function and control the behavior you want.</p>
+      <p>Use option <code>lockDaysFilter</code> and control the behavior you want.</p>
       <p>And use option <code>showTooltip</code> as a function (see example of <code>showTooltip</code>).</p>
       `,
     },
@@ -317,11 +317,11 @@ const options = [
     default: 'false',
     description: 'Disable Saturday and Sunday.',
     deprecated: {
-      reason: 'Since v2.0.0 option `lockDays` support function.',
+      reason: 'Since v2.0.0 added option `lockDaysFilter`.',
       replacement: `
         <div class="code">
         ...
-        lockDays: (day) => {
+        lockDaysFilter: (day) => {
         &nbsp;&nbsp; const d = day.getDay();
 
         &nbsp;&nbsp; return [6, 0].includes(d);
@@ -411,17 +411,24 @@ const options = [
   },
   {
     name: 'lockDays',
-    type: 'Array|Function',
+    type: 'Array',
     default: '[]',
     description: `
     <p>Disable days for select. Can contains array with range:</p>
     <p>Eg: [ ['2019-01-01', '2019-01-10'], '2019-01-31' ].</p>
     <p>This example will disable range from 01 Jan 2019 to 10 Jan 2019 and 31 Jan 2019.</p>
     <p>Can contains Date Object or Unix Timestamp (with milliseconds) or String (must be equal to option <strong>lockDaysFormat</strong>).</p>
+    `
+  },
+  {
+    name: 'lockDaysFilter',
+    type: 'Function',
+    default: 'null',
+    description: `
     <p>Function description:</p>
     <div class="code">
     ...
-    lockDays: (date1, date2, pickedDates) => {
+    lockDaysFilter: (date1, date2, pickedDates) => {
       &nbsp;&nbsp; // define your condition
       &nbsp;&nbsp; // 
       &nbsp;&nbsp; // date1 - start date or day of render (<a href="https://github.com/wakirin/Litepicker/blob/master/src/datetime.ts" target="_blank">DateTime</a>)
@@ -441,7 +448,7 @@ const options = [
     <p>Example for disabled weekends:</p>
     <div class="code">
     ...
-    lockDays: (day) => {
+    lockDaysFilter: (day) => {
       &nbsp;&nbsp; const d = day.getDay();
 
       &nbsp;&nbsp; return [6, 0].includes(d);
@@ -451,7 +458,7 @@ const options = [
     <p>and with <code>disallowLockDaysInRange</code> option enabled:</p>
     <div class="code">
     ...
-    lockDays: (date1, date2, pickedDates) => {
+    lockDaysFilter: (date1, date2, pickedDates) => {
 
     &nbsp;&nbsp; while (date1.getDateInstance() < date2.getDateInstance()) {
     &nbsp;&nbsp;&nbsp;&nbsp; const day = date1.getDay();
@@ -552,11 +559,11 @@ const options = [
     description: '<p>Allow to select any booked days as check-out.</p>',
     minVersion: '1.0.22',
     deprecated: {
-      reason: 'Since v2.0.0 option `lockDays` support function.',
+      reason: 'Since v2.0.0 added option `lockDaysFilter`.',
       replacement: `
         <div class="code">
         ...
-        lockDays: (date1, date2, pickedDates) => {
+        lockDaysFilter: (date1, date2, pickedDates) => {
           &nbsp;&nbsp; if (pickedDates.length < 1) {
           &nbsp;&nbsp;&nbsp;&nbsp; // this example will disable weekends
           &nbsp;&nbsp;&nbsp;&nbsp; // define your own condition for indicate locked days
@@ -762,13 +769,6 @@ const options = [
         ...
         </div>
       `,
-    minVersion: '2.0.0',
-  },
-  {
-    name: 'keyboardNav',
-    type: 'Boolean',
-    default: 'true',
-    description: '<p>Enable/Disable keyboard navigation.</p>',
     minVersion: '2.0.0',
   },
 ];

@@ -84,6 +84,13 @@ const methods = [
   {
     name: 'destroy()',
     description: '<p>Destroy the picker.</p>'
+  },
+  {
+    name: 'DateTime(date)',
+    description: `
+    <p>return DateTime object.</p>
+    <p>date is optional, if empty, will used <code>new Date()</code>.</p>
+    `
   }
 ];
 

@@ -1,7 +1,6 @@
 import proxyPolyfillFunc from 'proxy-polyfill/proxy.min.js';
-import options from './options';
-import events from './events';
 import methods from './methods';
+import options from './options';
 import { createRowOption, sortArray } from './utils';
 declare var Litepicker: any;
 
@@ -63,25 +62,25 @@ const defaultOptions = {
     one: 'day',
     other: 'days',
   },
-
-  // Events
-  onShow: function () {
-    console.log('onShow callback');
-  },
-  onHide: function () {
-    console.log('onHide callback');
-  },
-  onSelect: function (date1, date2) {
-    console.log('onSelect callback', date1, date2);
-  },
-  onError: function (error) {
-    console.log('onError callback', error);
-  },
-  onChangeMonth: function (date, idx) {
-    console.log('onChangeMonth callback', date, idx);
-  },
-  onChangeYear: function (date) {
-    console.log('onChangeYear callback', date);
+  setup: (picker) => {
+    picker.on('show', () => {
+      console.log('show event');
+    });
+    picker.on('hide', () => {
+      console.log('hide event');
+    });
+    picker.on('selected', (date1, date2) => {
+      console.log('selected event', date1, date2);
+    });
+    picker.on('error:range', () => {
+      console.log('error range event');
+    });
+    picker.on('change:month', (date, calIdx) => {
+      console.log('change month event', date, calIdx);
+    });
+    picker.on('change:year', (date, calIdx) => {
+      console.log('change year event', date, calIdx);
+    });
   },
 };
 
@@ -404,9 +403,6 @@ Object.keys(proxyOptions).forEach((opt) => {
 const optionsList = document.getElementById('options-list');
 sortArray(options).forEach(entry => optionsList.appendChild(createRowOption(entry)));
 
-const eventsList = document.getElementById('events-list');
-sortArray(events).forEach(entry => eventsList.appendChild(createRowOption(entry)));
-
 const methodsList = document.getElementById('methods-list');
 sortArray(methods).forEach(entry => methodsList.appendChild(createRowOption(entry)));
 
@@ -418,8 +414,7 @@ if (window.location.hash) {
     if (el) {
       try {
         el.scrollIntoView(true);
-      }
-      catch (e) {
+      } catch {
         const b = el.getBoundingClientRect();
         window.scrollTo(0, b.top);
       }

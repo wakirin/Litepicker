@@ -31,5 +31,3 @@ export const previewDateRange: string;
 export const buttonCancel: string;
 export const buttonApply: string;
 export const containerTooltip: string;
-export const litepickerOpen: string;
-export const litepickerBackdrop: string;

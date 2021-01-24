@@ -1,12 +1,7 @@
-interface ICustomFormat {
-  parse: (date) => Date;
-  output: (date) => string;
-}
-
 export class DateTime {
 
   public static parseDateTime(
-    date: Date | DateTime | string,
+    date: Date | DateTime | string | number,
     format: string = 'YYYY-MM-DD',
     lang: string = 'en-US'): Date {
     if (!date) return new Date(NaN);
@@ -14,7 +9,7 @@ export class DateTime {
     if (date instanceof Date) return new Date(date);
     if (date instanceof DateTime) return date.clone().getDateInstance();
 
-    if (/^-?\d{10,}$/.test(date)) return DateTime.getDateZeroTime(new Date(Number(date)));
+    if (/^-?\d{10,}$/.test(date as string)) return DateTime.getDateZeroTime(new Date(Number(date)));
 
     if (typeof date === 'string') {
       const matches = [];
@@ -163,13 +158,13 @@ export class DateTime {
   private dateInstance: Date;
 
   constructor(
-    date: Date | DateTime | string = null,
-    format: ICustomFormat | string = null,
+    date: Date | DateTime | number | string = null,
+    format: object | string = null,
     lang: string = 'en-US') {
 
     if (typeof format === 'object' && format !== null) {
       // tslint:disable-next-line: max-line-length
-      this.dateInstance = format.parse(date instanceof DateTime ? date.clone().getDateInstance() : date);
+      this.dateInstance = (format as any).parse(date instanceof DateTime ? date.clone().getDateInstance() : date);
     } else if (typeof format === 'string') {
       this.dateInstance = (DateTime.parseDateTime(date, format, lang));
     } else if (date) {
@@ -439,9 +434,9 @@ export class DateTime {
     }
   }
 
-  public format(format: ICustomFormat | string, lang: string = 'en-US'): string {
+  public format(format: object | string, lang: string = 'en-US'): string {
     if (typeof format === 'object') {
-      return format.output(this.clone().getDateInstance());
+      return (format as any).output(this.clone().getDateInstance());
     }
 
     let response = '';
