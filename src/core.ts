@@ -1,7 +1,7 @@
 import { EventEmitter } from 'events';
-import Litepicker from '.';
 import { DateTime } from './datetime';
 import { ILPConfiguration } from './interfaces';
+import { Litepicker } from './litepicker';
 
 export class LPCore extends EventEmitter {
 

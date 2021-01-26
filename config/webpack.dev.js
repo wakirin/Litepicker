@@ -1,7 +1,8 @@
-const merge = require('webpack-merge');
-const common = require('./webpack.common.js');
+const multiconfig = require('./webpack.common.js');
 
-module.exports = merge(common, {
-  mode: 'development',
-  devtool: 'inline-source-map'
+multiconfig.forEach(config => {
+  config.mode = 'development';
+  config.devtool = 'inline-source-map';
 });
+
+module.exports = multiconfig;

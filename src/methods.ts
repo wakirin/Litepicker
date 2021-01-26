@@ -1,6 +1,5 @@
 import { DateTime } from './datetime';
 import { Litepicker } from './litepicker';
-import * as style from './scss/main.scss';
 
 declare module './litepicker' {
   // tslint:disable-next-line: interface-name

@@ -305,7 +305,7 @@ export class Calendar extends LPCore {
     month.appendChild(weekdaysRow);
     month.appendChild(days);
 
-    this.emit('render:month', month);
+    this.emit('render:month', month, date);
 
     return month;
   }
@@ -437,7 +437,7 @@ export class Calendar extends LPCore {
 
     day.tabIndex = !day.classList.contains('is-locked') ? 2 : -1;
 
-    this.emit('render:day', day);
+    this.emit('render:day', day, date);
 
     return day;
   }

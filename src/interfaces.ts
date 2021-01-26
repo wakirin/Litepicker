@@ -1,5 +1,6 @@
-import Litepicker from '.';
 import { DateTime } from './datetime';
+import { Litepicker } from './litepicker';
+
 interface ILPOptionDropdowns {
   minYear: number;
   maxYear: number | null;

@@ -8,7 +8,7 @@ module.exports = {
     'plugins/ranges.js': path.join(__dirname, '../src/plugins/ranges/index.js'),
   },
   output: {
-    path: path.join(__dirname, '../dist/js'),
+    path: path.join(__dirname, '../dist'),
     filename: '[name]'
   },
 

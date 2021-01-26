@@ -1,6 +1,7 @@
-const merge = require('webpack-merge');
-const common = require('./webpack.common.js');
+const multiconfig = require('./webpack.common.js');
 
-module.exports = merge(common, {
-  mode: 'production'
+multiconfig.forEach(config => {
+  config.mode = 'production';
 });
+
+module.exports = multiconfig;

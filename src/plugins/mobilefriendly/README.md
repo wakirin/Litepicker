@@ -3,11 +3,11 @@ Mobile friendly plugin
 
 Usage:
 ```
-<script src="https://cdn.jsdelivr.net/npm/litepicker/dist/js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/litepicker/dist/litepicker.js"></script>
 
 // include plugin after Litepicker
 
-<script src="https://cdn.jsdelivr.net/npm/litepicker/dist/js/plugins/mobilefriendly.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/litepicker/dist/plugins/mobilefriendly.js"></script>
 ```
 
 If you’re using a bundler, e.g. webpack, you’ll need to import Litepicker first.
