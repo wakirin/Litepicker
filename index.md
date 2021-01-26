@@ -44,6 +44,8 @@ npm install litepicker
 <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/litepicker.js"></script>
 ```
 
+You can get a specific version, see [jsdelivr docs](https://www.jsdelivr.com/features#npm).
+
 ### Usage
 
 If you’re using a bundler, e.g. webpack, you’ll need to import Litepicker.
