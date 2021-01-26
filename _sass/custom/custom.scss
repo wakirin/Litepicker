@@ -1,0 +1,20 @@
+#bg {
+  display: inline-block;
+  z-index: -20;
+  line-height: 0;
+  opacity: 1;
+  background-color: #fdfbfa;
+  background-image: url(../images/bg.png);
+  background-size: cover;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  background-position: center top;
+  background-attachment: fixed;
+}
+
+.site-footer {
+  color: #333;
+}

@@ -1,5 +1,10 @@
+*.gem
+.bundle
+.ruby-version
+.jekyll-cache
+.sass-cache
 .idea
 .DS_Store
+_site
+Gemfile.lock
 /node_modules
-/dist
-/publish.sh
