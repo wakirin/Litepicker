@@ -27,7 +27,6 @@ Litepicker.add('mobilefriendly', {
     function getOrientation() {
       let orientation;
 
-      // https://developer.mozilla.org/en-US/docs/Web/API/Screen/orientation
       if ('orientation' in window.screen && 'type' in window.screen.orientation) {
         orientation = window.screen.orientation.type.replace(/\-\w+$/, '');
       } else if (window.matchMedia('(orientation: portrait)').matches) {
@@ -46,10 +45,6 @@ Litepicker.add('mobilefriendly', {
         picker.yTouchDown = firstTouch.clientY;
       },
       onTouchMove: (evt) => {
-        if (picker.ui.style.position !== 'fixed') {
-          return;
-        }
-
         if (!picker.xTouchDown || !picker.yTouchDown) {
           return;
         }
@@ -62,15 +57,15 @@ Litepicker.add('mobilefriendly', {
         const isHorizontal = Math.abs(xDiff) > Math.abs(yDiff);
         const threshold = 100;
 
-        const monthItem = picker.ui.querySelector('.month-item');
+        const monthItems = Array.from(picker.ui.querySelectorAll('.month-item'));
         if (isHorizontal) {
-          monthItem.style.opacity = Number(`${1 - (Math.abs(xDiff) / threshold)}`);
-          const scaleValue = Math.max(0.5, monthItem.style.opacity);
+          const opacityValue = Number(`${1 - (Math.abs(xDiff) / threshold)}`);
+          monthItems.map(x => x.style.opacity = opacityValue);        
 
           if (xDiff > 0) {
-            monthItem.style.transform = `translateX(${-Math.abs(xDiff)}px) scale(${scaleValue})`;
+            monthItems.map(x => x.style.transform = `translateX(${-Math.abs(xDiff)}px)`);
           } else {
-            monthItem.style.transform = `translateX(${Math.abs(xDiff)}px) scale(${scaleValue})`;
+            monthItems.map(x => x.style.transform = `translateX(${Math.abs(xDiff)}px)`);
           }
         }
 
@@ -97,9 +92,11 @@ Litepicker.add('mobilefriendly', {
       },
       onTouchEnd: (evt) => {
         if (!picker.touchTargetMonth) {
-          const monthItem = picker.ui.querySelector('.month-item');
-          monthItem.style.opacity = 1;
-          monthItem.style.transform = 'translateX(0px) scale(1)';
+          const monthItems = Array.from(picker.ui.querySelectorAll('.month-item'));
+          monthItems.map(x => {
+            x.style.transform = `translateX(0px)`
+            x.style.opacity = 1;
+          });
         }
 
         /* reset values */
@@ -160,7 +157,7 @@ Litepicker.add('mobilefriendly', {
     picker.on('before:show', (el) => {
       picker.triggerElement = el;
 
-      if (isMobile()) {
+      if (!picker.options.inlineMode && isMobile()) {
         picker.emit('mobilefriendly.before:show', el);
 
         picker.ui.style.position = 'fixed';
@@ -197,8 +194,8 @@ Litepicker.add('mobilefriendly', {
 
     picker.on('render', (ui) => {
       if (picker.touchTargetMonth) {
-        const monthItem = ui.querySelector('.month-item');
-        monthItem.classList.add(`touch-target-${picker.touchTargetMonth}`);
+        const monthItems = Array.from(picker.ui.querySelectorAll('.month-item'));
+        monthItems.map(x => x.classList.add(`touch-target-${picker.touchTargetMonth}`));
       }
 
       picker.touchTargetMonth = null;
