@@ -8,9 +8,15 @@ permalink: /docs/plugins
 # Plugins
 {: .no_toc }
 
+## Table of contents
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
+
 ---
 
-## Keyboard navigation plugin
+# Keyboard navigation plugin
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/litepicker.js"></script>
@@ -36,7 +42,7 @@ const picker = new Litepicker({
 </script>
 ```
 
-## Mobile friendly plugin
+# Mobile friendly plugin
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/litepicker.js"></script>
@@ -62,7 +68,48 @@ const picker = new Litepicker({
 </script>
 ```
 
-## Predefined ranges plugin
+## Plugin has events:
+{: .no_toc }
+
+### mobilefriendly.before:show <sup>2.0.0+</sup>
+{: .no_toc }
+
+Arguments: `(el)`
+
+`el` is triggered element. 
+
+Event is called before show in mobile view.
+
+```js
+...
+setup: (picker) => {
+  picker.on('mobilefriendly.before:show', (el) => {
+    // some action
+  });
+},
+...
+```
+
+### mobilefriendly.show <sup>2.0.0+</sup>
+{: .no_toc }
+
+Arguments: `(el)`
+
+`el` is triggered element. 
+
+Event is called after show in mobile view.
+
+```js
+...
+setup: (picker) => {
+  picker.on('mobilefriendly.show', (el) => {
+    // some action
+  });
+},
+...
+```
+
+# Predefined ranges plugin
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/litepicker.js"></script>

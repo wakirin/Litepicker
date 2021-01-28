@@ -445,39 +445,6 @@ function searchLoaded(index, docs) {
 }
 {%- endif %}
 
-var collapse = {
-  hide: function (element) {
-    var sectionHeight = element.scrollHeight;
-    var elementTransition = element.style.transition;
-    element.style.transition = '';
-
-    requestAnimationFrame(function () {
-      element.style.height = sectionHeight + 'px';
-      element.style.transition = elementTransition;
-
-      requestAnimationFrame(function () {
-        element.style.height = 0 + 'px';
-      });
-    });
-
-    element.setAttribute('data-collapsed', 'false');
-  },
-
-  show: function (element) {
-    var sectionHeight = element.scrollHeight;
-
-    element.style.height = sectionHeight + 'px';
-
-    element.addEventListener('transitionend', function (e) {
-      element.removeEventListener('transitionend', arguments.callee);
-
-      //element.style.height = null;
-    });
-
-    element.setAttribute('data-collapsed', 'true');
-  }
-}
-
 // Switch theme
 
 jtd.getTheme = function() {
@@ -501,146 +468,6 @@ jtd.restoreTheme = function() {
   }
 }
 
-jtd.updateFavicon = function() {
-  var date = (new Date()).getDate();
-  var favicon = document.querySelector('link[rel="shortcut icon"]');
-
-  favicon.setAttribute('href', '{{ "assets/favicon/" | relative_url }}' + date + '.png');
-}
-
-function toggleDarkMode() {
-  var toggleDarkMode = document.querySelector('.js-promo-color-modes-toggle');
-    
-  jtd.addEvent(toggleDarkMode, 'click', function(){
-    if (jtd.getTheme() === 'dark') {
-      jtd.setTheme('light');
-    } else {
-      jtd.setTheme('dark');
-    }
-  });
-}
-
-function findLatestTag(json) {
-  var version = json.map(x => x.name = /^v/.test(x.name) ? x.name : 'v' + x.name)
-                  .reduce((a, b) =>
-                    0 < a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' })
-                    ? a
-                    : b
-                  );
-  if (version) {
-    localStorage.setItem('version', JSON.stringify({ d: (new Date()).getDate(), v: version }));
-
-    return version;
-  }
-
-  return null;
-}
-
-function getTag() {
-  var stored = JSON.parse(localStorage.getItem('version'));
-  if (stored && stored.d === (new Date).getDate()) {
-    return new Promise(function(resolve, reject) {
-      resolve(stored.v);
-    });
-  }
-
-  return fetch('https://api.github.com/repos/wakirin/litepicker/tags')
-          .then(r => r.json())
-          .then(json => findLatestTag(json));
-}
-
-function initializeLitepicker() {
-  var elems = Array.from(document.querySelectorAll('.demo-wrapper'));
-
-  var now = new Date();
-  var configurations = {
-    base: {
-      numberOfColumns: 2,
-      numberOfMonths: 2,
-    },
-    index: {
-      singleMode: false,
-      inlineMode: true,
-      plugins: ['mobilefriendly'],
-      setup: function(picker) {
-        picker.on('selected', function(date1, date2) {
-          document.getElementById('index-demo-selection').innerHTML = date1.format('D MMMM YYYY') + ' - ' + date2.format('D MMMM YYYY');
-        })
-      }
-    },
-    allowRepick: {
-      element: document.getElementById('input-start-allow-repick'),
-      elementEnd: document.getElementById('input-end-allow-repick'),
-      singleMode: false,
-      startDate: now,
-      allowRepick: true,
-      endDate: (new Date()).setDate(now.getDate() + 7),
-    },
-    autoApply: {
-      element: document.getElementById('input-auto-apply'),
-      numberOfColumns: 1,
-      numberOfMonths: 1,
-      autoApply: false,
-    }
-  }
-
-  elems.forEach(function(wrapper) {
-    var cfg = { ...configurations.base, ...configurations[wrapper.dataset.cfg] };
-
-    if (wrapper.dataset.el) {
-      var el = document.createElement(wrapper.dataset.el);
-      wrapper.appendChild(el);
-
-      cfg = { ...cfg, ...{ element: el } };   
-    }     
-
-    new Litepicker(cfg);
-  });
-}
-
-function addLitepicker(version) {
-  var script = document.createElement('script');
-  script.src = 'https://cdn.jsdelivr.net/npm/litepicker@' + version.replace(/^v/, '') + '/dist/litepicker.js';
-  script.type = 'text/javascript';
-  script.async = true;
-  script.onload = function(){
-    if (document.readyState === 'complete') {
-      initializeLitepicker();
-    }
-    else {
-      document.addEventListener('readystatechange',function () {
-        if (document.readyState === 'complete') {
-          initializeLitepicker();
-        }
-      });
-    }
-  };
-  document.head.appendChild(script);
-}
-
-function initializeCollapse() {
-  var btns = document.querySelectorAll('.collapse button[type="button"]');
-  btns.forEach(function(btn) {
-    btn.addEventListener('click', function(evt) {
-      evt.preventDefault();
-
-      var content = btn.closest('.collapse').querySelector('.collapse__content');
-      var isCollapsed = content.getAttribute('data-collapsed') === 'true';
-      btn.blur();
-      
-      if(isCollapsed) {
-        collapse.hide(content)
-      } else {
-        collapse.show(content)
-      }
-    })
-  })
-}
-
-jtd.updateFavicon();
-
-getTag().then(ver => addLitepicker(ver));
-
 // Document ready
 
 jtd.onReady(function(){
@@ -650,10 +477,6 @@ jtd.onReady(function(){
   {%- endif %}
   
   jtd.restoreTheme();
-
-  toggleDarkMode();
-
-  initializeCollapse();
 });
 
 })(window.jtd = window.jtd || {});

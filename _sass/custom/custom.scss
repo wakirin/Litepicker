@@ -14,9 +14,7 @@
 }
 
 .profile-color-modes-toggle {
-  position: absolute;
-  top: 12px;
-  right: 5px;
+  position: relative;
   outline: none;
 }
 
@@ -83,4 +81,16 @@ div#index-demo-selection {
   border: 1px solid #ced4da;
   border-radius: .25rem;
   transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.aux-nav {
+  width: 100%;
+
+  .aux-nav-list {
+    align-items: center;
+
+    .flex-nav-item:last-child {
+      margin-left: auto;
+    }
+  }
 }

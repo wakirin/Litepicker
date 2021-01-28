@@ -10,7 +10,7 @@ Event is called after show.
 ```js
 ...
 setup: (picker) => {
-  picker.on('show', (tooltip, day) => {
+  picker.on('show', (el) => {
     // some action
   });
 },

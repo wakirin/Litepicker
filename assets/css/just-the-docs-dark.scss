@@ -13,22 +13,16 @@
   --color-profile-color-modes-toggle-thumb-bg: #2f363d;
   --color-profile-color-modes-toggle-track-border: #607d8b;
 
-  --litepickerBgColor: #27262b;
-  --litepickerMonthHeaderTextColor: #e6e1e8;
-  --litepickerDayColor: #e6e1e8;
-  --litepickerDayIsInRange: #37474f;
-  --litepickerDayIsStartBg: #e6e1e8;
-  --litepickerDayIsEndBg: #e6e1e8;
-  --litepickerDayIsStartColor: #333;
-  --litepickerDayIsEndColor: #333;
-  --litepickerDayColorHover: #fff;
-}
-
-.litepicker .container__tooltip {
-  background-color: #333;
-}
-.litepicker .container__tooltip:after {
-  border-top: 4px solid #333;
+  --litepicker-container-months-color-bg: #27262b;
+  --litepicker-month-header-color: #e6e1e8;
+  --litepicker-day-color: #e6e1e8;
+  --litepicker-is-in-range-color: #37474f;
+  --litepicker-is-start-color-bg: #e6e1e8;
+  --litepicker-is-end-color-bg: #e6e1e8;
+  --litepicker-is-start-color: #333;
+  --litepicker-is-end-color: #333;
+  --litepicker-day-color-hover: #fff;
+  --litepicker-tooltip-color-bg: #333;
 }
 
 .main-content-wrap {

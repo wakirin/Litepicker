@@ -7,17 +7,20 @@ permalink: /
 ---
 
 # Litepicker
-{: .fs-9 }
+{: .no_toc .fs-9 }
 
 Date range picker - lightweight, no dependencies.
 {: .fs-6 .fw-300 }
 
 <div id="index-demo">
   <div id="index-demo-selection">&nbsp;</div>
-  <div class="demo-wrapper" data-el="div" data-cfg="index"></div>
+  <div class="demo-wrapper" data-cfg="index">
+    <div id="index-demo-lp"></div>
+  </div>
 </div>
 
 ## Features
+{: .no_toc }
 - No dependencies
 - Single date or date range
 - Show multiple months
@@ -35,16 +38,25 @@ Date range picker - lightweight, no dependencies.
 
 ---
 
+## Table of contents
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
+
 ## Getting started
 
 ### Installation
+{: .no_toc }
 
 #### npm
+{: .no_toc }
 ```bash
 npm install litepicker
 ```
 
 #### CDN
+{: .no_toc }
 ```html
 <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/litepicker.js"></script>
 ```
@@ -88,17 +100,20 @@ import Litepicker from 'litepicker/dist/nocss/litepicker.umd.js';
 ```
 
 #### Non-module environments
+{: .no_toc }
 ```html
 <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/nocss/litepicker.js"></script>
 ```
 
 #### CSS basic styles
+{: .no_toc }
 ```html
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/style.css"/>
 ```
 
 ## Bundle version (all plugins included)
 #### Non-module environments
+{: .no_toc }
 ```html
 <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/bundle.js"></script>
 ```
@@ -131,7 +146,7 @@ import Litepicker from 'litepicker';
 
 Litepicker is &copy; 2019-{{ "now" | date: "%Y" }} by [Rinat G.](https://github.com/wakirin)
 
-### License
+## License
 
 Litepicker is distributed by an [MIT license](https://github.com/wakirin/Litepicker/blob/master/README.md).
 

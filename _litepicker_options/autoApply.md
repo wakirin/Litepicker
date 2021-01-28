@@ -7,7 +7,7 @@ Hide the apply and cancel buttons, and automatically apply a new date range as s
 
 {% capture collapse_content %}
 <div style="display:flex">
-  <input id="input-auto-apply" class="form-control" style="width: 150px;">
+  <input id="input-auto-apply" class="form-control" style="width: 150px;" readonly/>
 </div>
 <div class="demo-wrapper" data-cfg="autoApply"></div>
 

@@ -7,8 +7,8 @@ If date range is already selected, then user can change only one of start date o
 
 {% capture collapse_content %}
 <div style="display:flex">
-  <input id="input-start-allow-repick" class="form-control" style="width: 150px;margin-right: 15px;">
-  <input id="input-end-allow-repick" class="form-control" style="width: 150px">
+  <input id="input-start-allow-repick" class="form-control" style="width: 150px;margin-right: 15px;" readonly/>
+  <input id="input-end-allow-repick" class="form-control" style="width: 150px" readonly/>
 </div>
 <div class="demo-wrapper" data-cfg="allowRepick"></div>
 
