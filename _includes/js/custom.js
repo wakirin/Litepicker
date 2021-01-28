@@ -9,8 +9,8 @@ const demoCfg = {
     singleMode: false,
     inlineMode: true,
     plugins: ['mobilefriendly'],
-    setup: (picker) => {
-      picker.on('selected', (date1, date2) => {
+    setup: function (picker) {
+      picker.on('selected', function (date1, date2) {
         document.getElementById('index-demo-selection').innerHTML = date1.format('D MMMM YYYY') + ' - ' + date2.format('D MMMM YYYY');
       })
     }
@@ -37,15 +37,15 @@ const demoCfg = {
       one: 'night',
       other: 'nights'
     },
-    tooltipNumber: (totalDays) => {
+    tooltipNumber: function (totalDays) {
       return totalDays - 1;
     }
   },
   egShowPrevious: {
     element: '#input-eg-show-previous-month',
     startDate: new Date(),
-    setup: (picker) => {
-      picker.on('show', () => {
+    setup: function (picker) {
+      picker.on('show', function () {
         let date = picker.getDate();
         if (date) {
           date.setMonth(date.getMonth() - 1);
@@ -57,16 +57,16 @@ const demoCfg = {
 }
 
 const collapse = {
-  hide: (element) => {
+  hide: function (element) {
     const sectionHeight = element.scrollHeight;
     const elementTransition = element.style.transition;
     element.style.transition = '';
 
-    requestAnimationFrame(() => {
+    requestAnimationFrame(function () {
       element.style.height = sectionHeight + 'px';
       element.style.transition = elementTransition;
 
-      requestAnimationFrame(() => {
+      requestAnimationFrame(function () {
         element.style.height = 0 + 'px';
       });
     });
@@ -74,7 +74,7 @@ const collapse = {
     element.setAttribute('data-collapsed', 'false');
   },
 
-  show: (element) => {
+  show: function (element) {
     const sectionHeight = element.scrollHeight;
 
     element.style.height = sectionHeight + 'px';
@@ -88,10 +88,10 @@ const collapse = {
     element.setAttribute('data-collapsed', 'true');
   },
 
-  initialize: () => {
-    const btns = document.querySelectorAll('.collapse button[type="button"]');
-    btns.forEach((btn) => {
-      btn.addEventListener('click', (evt) => {
+  initialize: function () {
+    const btns = Array.from(document.querySelectorAll('.collapse button[type="button"]'));
+    btns.forEach(function (btn) {
+      btn.addEventListener('click', function (evt) {
         evt.preventDefault();
 
         const content = btn.closest('.collapse').querySelector('.collapse__content');
@@ -109,25 +109,26 @@ const collapse = {
 }
 
 const lp = {
-  tags: () => {
+  tags: function () {
     const stored = JSON.parse(localStorage.getItem('version'));
     if (stored && stored.d === (new Date).getDate()) {
-      return new Promise((resolve, reject) => {
+      return new Promise(function (resolve, reject) {
         resolve(stored.v);
       });
     }
 
     return fetch('https://api.github.com/repos/wakirin/litepicker/tags')
-      .then(r => r.json())
-      .then(json => lp.latestTag(json));
+      .then(function (r) { return r.json() })
+      .then(function (json) { return lp.latestTag(json) });
   },
-  latestTag: (json) => {
-    const version = json.map(x => x.name = /^v/.test(x.name) ? x.name : 'v' + x.name)
-      .reduce((a, b) =>
-        0 < a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' })
+  latestTag: function (json) {
+    const version = json.filter(function (x) { return !x.name.includes('beta') })
+      .map(function (x) { return x.name = /^v/.test(x.name) ? x.name : 'v' + x.name })
+      .reduce(function (a, b) {
+        return 0 < a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' })
           ? a
           : b
-      );
+      });
     if (version) {
       localStorage.setItem('version', JSON.stringify({ d: (new Date()).getDate(), v: version }));
 
@@ -136,17 +137,17 @@ const lp = {
 
     return null;
   },
-  addScript: (version) => {
+  addScript: function (version) {
     const script = document.createElement('script');
     script.src = 'https://cdn.jsdelivr.net/npm/litepicker@' + version.replace(/^v/, '') + '/dist/bundle.js';
     script.type = 'text/javascript';
     script.async = true;
-    script.onload = () => {
+    script.onload = function () {
       if (document.readyState === 'complete') {
         lp.initialize();
       }
       else {
-        document.addEventListener('readystatechange', () => {
+        document.addEventListener('readystatechange', function () {
           if (document.readyState === 'complete') {
             lp.initialize();
           }
@@ -155,11 +156,11 @@ const lp = {
     };
     document.head.appendChild(script);
   },
-  initialize: () => {
+  initialize: function () {
     const elems = Array.from(document.querySelectorAll('.demo-wrapper'));
 
-    elems.forEach((wrapper) => {
-      const cfg = { ...demoCfg.base, ...demoCfg[wrapper.dataset.cfg] };
+    elems.forEach(function (wrapper) {
+      const cfg = Object.assign({}, demoCfg.base, demoCfg[wrapper.dataset.cfg]);
 
       cfg.element = document.querySelector(cfg.element);
 
@@ -170,16 +171,16 @@ const lp = {
       new Litepicker(cfg);
     });
   },
-  favicon: () => {
+  favicon: function () {
     const date = (new Date()).getDate();
     const favicon = document.querySelector('link[rel="shortcut icon"]');
 
     favicon.setAttribute('href', '{{ "assets/favicon/" | relative_url }}' + date + '.png');
   },
-  toggableDarkMode: () => {
+  toggableDarkMode: function () {
     const toggleDarkMode = document.querySelector('.js-promo-color-modes-toggle');
 
-    jtd.addEvent(toggleDarkMode, 'click', () => {
+    jtd.addEvent(toggleDarkMode, 'click', function () {
       if (jtd.getTheme() === 'dark') {
         jtd.setTheme('light');
       } else {
@@ -191,9 +192,9 @@ const lp = {
 
 lp.favicon();
 
-lp.tags().then(ver => lp.addScript(ver));
+lp.tags().then(function (ver) { return lp.addScript(ver) });
 
-document.addEventListener('DOMContentLoaded', (evt) => {
+document.addEventListener('DOMContentLoaded', function (evt) {
   lp.toggableDarkMode();
 
   collapse.initialize();

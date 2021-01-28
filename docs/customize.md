@@ -18,7 +18,7 @@ Example:
 <style>
 :root {
   /* change background color for .container__months */
-  --litepicker-container-months-bg: #333 !important; 
+  --litepicker-container-months-color-bg: #333 !important; 
 }
 </style>
 ```
