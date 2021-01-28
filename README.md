@@ -31,19 +31,19 @@ See more details in docs.
 * Opera 48+
 
 ## Plugins
-* `keyboardnav`
-* `mobilefriendly` 
-* `ranges`
+* [keyboardnav](https://wakirin.github.io/Litepicker/docs/plugins#keyboard-navigation-plugin) - adds keyboard navigation.
+* [mobilefriendly](https://wakirin.github.io/Litepicker/docs/plugins#mobile-friendly-plugin) - adds swipes (left/right) to switch months.
+* [ranges](https://wakirin.github.io/Litepicker/docs/plugins#predefined-ranges-plugin) - adds predefined ranges.
 
 ## See also:
 * [Drupal module](https://www.drupal.org/project/date_range_picker) by [kviolka](https://github.com/kviolka)
 * [Wordpress Ninja forms](https://github.com/soderlind/date-range-ninja-forms) by [soderlind](https://github.com/soderlind)
 
 ## Supporting Litepicker
-[![](docs/images/coffee.png)](https://ko-fi.com/wakirin)
+[![](https://github.com/wakirin/Litepicker/blob/gh-pages/assets/images/coffee.png?raw=true)](https://ko-fi.com/wakirin)
 
 ## Tested on real browsers
 Tested on real browsers via BrowserStack.  
 Thanks to the BrowserStack for supporting the open-source projects.  
 
-[![](docs/images/Browserstack-logo.png)](https://www.browserstack.com/)
+[![](https://github.com/wakirin/Litepicker/blob/gh-pages/assets/images/Browserstack-logo.png?raw=true)](https://www.browserstack.com/)

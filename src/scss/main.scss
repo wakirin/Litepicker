@@ -1,10 +1,10 @@
 :root {
-  --litepicker-container-months-bg: #fff;
+  --litepicker-container-months-color-bg: #fff;
   --litepicker-container-months-box-shadow-color: #ddd;
   --litepicker-footer-color-bg: #fafafa;
   --litepicker-footer-box-shadow-color: #ddd;
   --litepicker-tooltip-color-bg: #fff;
-  --litepicker-month-header-color: 333;
+  --litepicker-month-header-color: #333;
   --litepicker-button-prev-month-color: #9e9e9e;
   --litepicker-button-next-month-color: #9e9e9e;
   --litepicker-button-prev-month-color-hover: #2196f3;
@@ -52,7 +52,7 @@
     &__months {
       display: flex;
       flex-wrap: wrap;
-      background-color: var(--litepicker-container-months-bg);
+      background-color: var(--litepicker-container-months-color-bg);
       border-radius: 5px;
       box-shadow: 0 0 5px var(--litepicker-container-months-box-shadow-color);
       width: calc(var(--litepicker-month-width) + 10px); // 10px is padding (left 5px, right: 5px)

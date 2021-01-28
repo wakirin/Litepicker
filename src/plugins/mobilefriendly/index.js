@@ -4,6 +4,21 @@ Litepicker.add('mobilefriendly', {
   init: function (picker) {
     const options = picker.options;
 
+    Object.defineProperties(picker, {
+      xTouchDown: {
+        value: null,
+        writable: true
+      },
+      yTouchDown: {
+        value: null,
+        writable: true
+      },
+      touchTargetMonth: {
+        value: null,
+        writable: true
+      },
+    });
+
     function isMobile() {
       const isPortrait = getOrientation() === 'portrait';
       return window.matchMedia(`(max-device-${isPortrait ? 'width' : 'height'}: ${480}px)`).matches;
@@ -22,6 +37,75 @@ Litepicker.add('mobilefriendly', {
       }
 
       return orientation;
+    }
+
+    const swipe = {
+      onTouchStart: (evt) => {
+        const firstTouch = evt.touches[0];
+        picker.xTouchDown = firstTouch.clientX;
+        picker.yTouchDown = firstTouch.clientY;
+      },
+      onTouchMove: (evt) => {
+        if (picker.ui.style.position !== 'fixed') {
+          return;
+        }
+
+        if (!picker.xTouchDown || !picker.yTouchDown) {
+          return;
+        }
+
+        const xUp = evt.touches[0].clientX;
+        const yUp = evt.touches[0].clientY;
+
+        const xDiff = picker.xTouchDown - xUp;
+        const yDiff = picker.yTouchDown - yUp;
+        const isHorizontal = Math.abs(xDiff) > Math.abs(yDiff);
+        const threshold = 100;
+
+        const monthItem = picker.ui.querySelector('.month-item');
+        if (isHorizontal) {
+          monthItem.style.opacity = Number(`${1 - (Math.abs(xDiff) / threshold)}`);
+          const scaleValue = Math.max(0.5, monthItem.style.opacity);
+
+          if (xDiff > 0) {
+            monthItem.style.transform = `translateX(${-Math.abs(xDiff)}px) scale(${scaleValue})`;
+          } else {
+            monthItem.style.transform = `translateX(${Math.abs(xDiff)}px) scale(${scaleValue})`;
+          }
+        }
+
+        if (Math.abs(xDiff) + Math.abs(yDiff) > threshold) {
+          if (isHorizontal) {
+            const date = picker.DateTime(picker.ui.querySelector('.day-item').dataset.time);
+
+            if (xDiff > 0) {
+              picker.touchTargetMonth = 'next';
+              picker.gotoDate(date.add(1, 'month').clone());
+            } else {
+              picker.touchTargetMonth = 'prev';
+              picker.gotoDate(date.subtract(1, 'month').clone());
+            }
+          } else {
+            if (yDiff > 0) {
+              /* up swipe */
+            } else {
+              /* down swipe */
+            }
+          }
+
+        }
+      },
+      onTouchEnd: (evt) => {
+        if (!picker.touchTargetMonth) {
+          const monthItem = picker.ui.querySelector('.month-item');
+          monthItem.style.opacity = 1;
+          monthItem.style.transform = 'translateX(0px) scale(1)';
+        }
+
+        /* reset values */
+        picker.xTouchDown = null;
+        picker.yTouchDown = null;
+      }
     }
 
     picker.backdrop = document.createElement('div');
@@ -74,10 +158,11 @@ Litepicker.add('mobilefriendly', {
     }
 
     picker.on('before:show', (el) => {
-      console.log('before:show');
       picker.triggerElement = el;
 
       if (isMobile()) {
+        picker.emit('mobilefriendly.before:show', el);
+
         picker.ui.style.position = 'fixed';
         picker.ui.style.display = 'block';
 
@@ -105,7 +190,18 @@ Litepicker.add('mobilefriendly', {
         document.body.classList.add('litepicker-open');
 
         (el || picker.options.element).blur();
+
+        picker.emit('mobilefriendly.show', el);
       }
+    });
+
+    picker.on('render', (ui) => {
+      if (picker.touchTargetMonth) {
+        const monthItem = ui.querySelector('.month-item');
+        monthItem.classList.add(`touch-target-${picker.touchTargetMonth}`);
+      }
+
+      picker.touchTargetMonth = null;
     });
 
     picker.on('hide', () => {
@@ -118,5 +214,9 @@ Litepicker.add('mobilefriendly', {
         picker.backdrop.parentNode.removeChild(picker.backdrop);
       }
     });
+
+    picker.ui.addEventListener('touchstart', swipe.onTouchStart, false);
+    picker.ui.addEventListener('touchmove', swipe.onTouchMove, false);
+    picker.ui.addEventListener('touchend', swipe.onTouchEnd, false);
   }
 });

@@ -3,8 +3,8 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  background: #fff;
-  box-shadow: -2px 0px 5px #ddd;
+  background: var(--litepicker-container-months-color-bg);
+  box-shadow: -2px 0px 5px var(--litepicker-footer-box-shadow-color);
   border-radius: 3px;
 }
 .litepicker .container__predefined-ranges[data-pos="left"] {
@@ -13,18 +13,18 @@
 .litepicker .container__predefined-ranges[data-pos="right"] {
   transform: translateX(100%);
   right: 0;
-  box-shadow: 2px 0px 2px #ddd;
+  box-shadow: 2px 0px 2px var(--litepicker-footer-box-shadow-color);
 }
 .litepicker .container__predefined-ranges[data-pos="top"] {
   top: 0;
   flex-direction: row;
   transform: translateY(-100%);
-  box-shadow: 2px 0px 2px #ddd;
+  box-shadow: 2px 0px 2px var(--litepicker-footer-box-shadow-color);
 }
 .litepicker .container__predefined-ranges[data-pos="bottom"] {
   flex-direction: row;
   transform: translateY(100%);
-  box-shadow: 2px 0px 2px #ddd;
+  box-shadow: 2px 0px 2px var(--litepicker-footer-box-shadow-color);
   bottom: 0
 }
 .litepicker .container__predefined-ranges button {
