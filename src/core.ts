@@ -206,8 +206,6 @@ export class LPCore extends EventEmitter {
         }
       });
     }
-
-    this.emit('init');
   }
 
   protected parseInput() {

@@ -158,11 +158,6 @@ export class Litepicker extends Calendar {
     // Click on element
     if (this.shouldShown(target)) {
       this.show(target);
-
-      const focusedEl = document.activeElement as HTMLElement;
-      if (focusedEl.closest(`.${style.litepicker}`)) {
-        focusedEl.blur();
-      }
       return;
     }
 

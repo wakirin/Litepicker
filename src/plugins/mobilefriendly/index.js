@@ -67,13 +67,11 @@ Litepicker.add('mobilefriendly', {
       window.addEventListener('resize', afterOrientationChange);
     });
 
-    picker.on('init', () => {
-      if (options.inlineMode && isMobile()) {
-        // force trigger orientationchange
-        window.dispatchEvent(new Event('orientationchange'));
-        window.dispatchEvent(new Event('resize'));
-      }
-    });
+    if (options.inlineMode && isMobile()) {
+      // force trigger orientationchange
+      window.dispatchEvent(new Event('orientationchange'));
+      window.dispatchEvent(new Event('resize'));
+    }
 
     picker.on('before:show', (el) => {
       console.log('before:show');

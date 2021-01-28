@@ -1,24 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
-const getPackageJson = require('./getPackageJson');
+const banner = require('./banner');
 const createVariants = require('parallel-webpack').createVariants;
-
-const {
-  version,
-  name,
-  license,
-} = getPackageJson('version', 'name', 'license');
-
-const banner = `
-Litepicker v${version} (https://github.com/wakirin/Litepicker)
-Package: ${name} (https://www.npmjs.com/package/litepicker)
-License: ${license} (https://github.com/wakirin/Litepicker/blob/master/LICENCE.md)
-Copyright 2019-${new Date().getFullYear()} Rinat G.
-    
-Hash: [hash]
-Generated on: ${Date.now()}
-
-`;
 
 const createConfig = (options) => {
   const fileName = !['var'].includes(options.target) ? `.${options.target}.js` : '.js';

@@ -28,12 +28,12 @@ declare module './litepicker' {
 Litepicker.prototype.show = function (el = null) {
   this.emit('before:show', el);
 
+  const element = el ? el : this.options.element;
+  this.triggerElement = element;
+
   if (this.isShowning()) {
     return;
   }
-
-  const element = el ? el : this.options.element;
-  this.triggerElement = element;
 
   if (this.options.inlineMode) {
     this.ui.style.position = 'static';

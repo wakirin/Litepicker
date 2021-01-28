@@ -31,7 +31,6 @@ See more details in docs.
 * Opera 48+
 
 ## Plugins
-@TODO description and demo
 * `keyboardnav`
 * `mobilefriendly` 
 * `ranges`

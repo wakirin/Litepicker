@@ -1,4 +1,6 @@
+const webpack = require('webpack');
 const path = require('path');
+const banner = require('./banner');
 
 module.exports = {
   mode: 'production',
@@ -26,5 +28,9 @@ module.exports = {
         ]
       }
     ]
-  }
+  },
+
+  plugins: [
+    new webpack.BannerPlugin(banner),
+  ]
 };

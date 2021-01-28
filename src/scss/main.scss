@@ -1,36 +1,38 @@
 :root {
-  --litepickerBgColor: #fff;
-
-  --litepickerMonthHeaderTextColor: #333;
-  --litepickerMonthButton: #9e9e9e;
-  --litepickerMonthButtonHover: #2196f3;
-  --litepickerMonthWidth: calc(var(--litepickerDayWidth) * 7); // 7 days
-  --litepickerMonthWeekdayColor: #9e9e9e;
-
-  --litepickerDayColor: #333;
-  --litepickerDayColorHover: #2196f3;
-  --litepickerDayIsTodayColor: #f44336;
-  --litepickerDayIsInRange: #bbdefb;
-  --litepickerDayIsLockedColor: #9e9e9e;
-  --litepickerDayIsStartColor: #fff;
-  --litepickerDayIsStartBg: #2196f3;
-  --litepickerDayIsEndColor: #fff;
-  --litepickerDayIsEndBg: #2196f3;
-  --litepickerDayWidth: 38px;
-
-  --litepickerButtonCancelColor: #fff;
-  --litepickerButtonCancelBg: #9e9e9e;
-  --litepickerButtonApplyColor: #fff;
-  --litepickerButtonApplyBg: #2196f3;
-
-  --litepickerButtonResetBtn: #909090;
-  --litepickerButtonResetBtnHover: #2196f3;
-
-  --litepickerHighlightedDayColor: #333;
-  --litepickerHighlightedDayBg: #ffeb3b;
+  --litepicker-container-months-bg: #fff;
+  --litepicker-container-months-box-shadow-color: #ddd;
+  --litepicker-footer-color-bg: #fafafa;
+  --litepicker-footer-box-shadow-color: #ddd;
+  --litepicker-tooltip-color-bg: #fff;
+  --litepicker-month-header-color: 333;
+  --litepicker-button-prev-month-color: #9e9e9e;
+  --litepicker-button-next-month-color: #9e9e9e;
+  --litepicker-button-prev-month-color-hover: #2196f3;
+  --litepicker-button-next-month-color-hover: #2196f3; 
+  --litepicker-month-width: calc(var(--litepicker-day-width) * 7); // 7 days
+  --litepicker-month-weekday-color: #9e9e9e;
+  --litepicker-month-week-number-color: #9e9e9e;
+  --litepicker-day-width: 38px;
+  --litepicker-day-color: #333;
+  --litepicker-day-color-hover: #2196f3;
+  --litepicker-is-today-color: #f44336;
+  --litepicker-is-in-range-color: #bbdefb;
+  --litepicker-is-locked-color: #9e9e9e;
+  --litepicker-is-start-color: #fff;
+  --litepicker-is-start-color-bg: #2196f3;
+  --litepicker-is-end-color: #fff;
+  --litepicker-is-end-color-bg: #2196f3;
+  --litepicker-button-cancel-color: #fff;
+  --litepicker-button-cancel-color-bg: #9e9e9e;
+  --litepicker-button-apply-color: #fff;
+  --litepicker-button-apply-color-bg: #2196f3;
+  --litepicker-button-reset-color: #909090;
+  --litepicker-button-reset-color-hover: #2196f3;
+  --litepicker-highlighted-day-color: #333;
+  --litepicker-highlighted-day-color-bg: #ffeb3b;
 }
 .show-week-numbers {
-  --litepickerMonthWidth: calc(var(--litepickerDayWidth) * 8);
+  --litepicker-month-width: calc(var(--litepicker-day-width) * 8);
 }
 
 .litepicker {
@@ -50,22 +52,22 @@
     &__months {
       display: flex;
       flex-wrap: wrap;
-      background-color: var(--litepickerBgColor);
+      background-color: var(--litepicker-container-months-bg);
       border-radius: 5px;
-      box-shadow: 0 0 5px #ddd;
-      width: calc(var(--litepickerMonthWidth) + 10px); // 10px is padding (left 5px, right: 5px)
+      box-shadow: 0 0 5px var(--litepicker-container-months-box-shadow-color);
+      width: calc(var(--litepicker-month-width) + 10px); // 10px is padding (left 5px, right: 5px)
       box-sizing: content-box;
 
       &.columns-2 {
-        width: calc((var(--litepickerMonthWidth) * 2) + 20px);
+        width: calc((var(--litepicker-month-width) * 2) + 20px);
       }
 
       &.columns-3 {
-        width: calc((var(--litepickerMonthWidth) * 3) + 30px);
+        width: calc((var(--litepicker-month-width) * 3) + 30px);
       }
 
       &.columns-4 {
-        width: calc((var(--litepickerMonthWidth) * 4) + 40px);
+        width: calc((var(--litepicker-month-width) * 4) + 40px);
       }
 
       &.split-view {
@@ -81,7 +83,7 @@
 
       .month-item {
         padding: 5px;
-        width: var(--litepickerMonthWidth);
+        width: var(--litepicker-month-width);
         box-sizing: content-box;
 
         &-header {
@@ -91,7 +93,7 @@
           padding: 10px 5px;
           text-align: center;
           align-items: center;
-          color: var(--litepickerMonthHeaderTextColor);
+          color: var(--litepicker-month-header-color);
 
           div {
             flex: 1;
@@ -106,19 +108,19 @@
           }
 
           .reset-button {
-            color: var(--litepickerButtonResetBtn);
+            color: var(--litepicker-button-reset-color);
 
             > svg,
             > img {
-              fill: var(--litepickerButtonResetBtn);
+              fill: var(--litepicker-button-reset-color);
               pointer-events: none;
             }
 
             &:hover {
-              color: var(--litepickerButtonResetBtnHover);
+              color: var(--litepicker-button-reset-color-hover);
 
               > svg {
-                fill: var(--litepickerButtonResetBtnHover);
+                fill: var(--litepicker-button-reset-color-hover);
               }
             }
           }
@@ -127,7 +129,6 @@
           .button-next-month {
             visibility: hidden;
             text-decoration: none;
-            color: var(--litepickerMonthButton);
             padding: 3px 5px;
             border-radius: 3px;
             transition: color 0.3s, border 0.3s;
@@ -135,15 +136,38 @@
 
             > svg,
             > img {
-              fill: var(--litepickerMonthButton);
               pointer-events: none;
+            }
+          }
+          .button-previous-month {
+            color: var(--litepicker-button-prev-month-color);
+
+            > svg,
+            > img {
+              fill: var(--litepicker-button-prev-month-color);
             }
 
             &:hover {
-              color: var(--litepickerMonthButtonHover);
+              color: var(--litepicker-button-prev-month-color-hover);
 
               > svg {
-                fill: var(--litepickerMonthButtonHover);
+                fill: var(--litepicker-button-prev-month-color-hover);
+              }
+            }
+          }
+          .button-next-month {
+            color: var(--litepicker-button-next-month-color);
+
+            > svg,
+            > img {
+              fill: var(--litepicker-button-next-month-color);
+            }
+
+            &:hover {
+              color: var(--litepicker-button-next-month-color-hover);
+
+              > svg {
+                fill: var(--litepicker-button-next-month-color-hover);
               }
             }
           }
@@ -153,13 +177,13 @@
           display: flex;
           justify-self: center;
           justify-content: flex-start;
-          color: var(--litepickerMonthWeekdayColor);
+          color: var(--litepicker-month-weekday-color);
 
           > div {
             padding: 5px 0;
             font-size: 85%;
             flex: 1;
-            width: var(--litepickerDayWidth);
+            width: var(--litepicker-day-width);
             text-align: center;
           }
         }
@@ -201,11 +225,11 @@
       > div,
       > a {
         padding: 5px 0;
-        width: var(--litepickerDayWidth);
+        width: var(--litepicker-day-width);
       }
 
       .day-item {
-        color: var(--litepickerDayColor);
+        color: var(--litepicker-day-color);
         text-align: center;
         text-decoration: none;
         border-radius: 3px;
@@ -213,32 +237,32 @@
         cursor: default;
 
         &:hover {
-          color: var(--litepickerDayColorHover);
-          box-shadow: inset 0 0 0 1px var(--litepickerDayColorHover);
+          color: var(--litepicker-day-color-hover);
+          box-shadow: inset 0 0 0 1px var(--litepicker-day-color-hover);
         }
 
         &.is-today {
-          color: var(--litepickerDayIsTodayColor);
+          color: var(--litepicker-is-today-color);
         }
 
         &.is-locked {
-          color: var(--litepickerDayIsLockedColor);
+          color: var(--litepicker-is-locked-color);
 
           &:hover {
-            color: var(--litepickerDayIsLockedColor);
+            color: var(--litepicker-is-locked-color);
             box-shadow: none;
             cursor: default;
           }
         }
 
         &.is-in-range {
-          background-color: var(--litepickerDayIsInRange);
+          background-color: var(--litepicker-is-in-range-color);
           border-radius: 0;
         }
 
         &.is-start-date {
-          color: var(--litepickerDayIsStartColor);
-          background-color: var(--litepickerDayIsStartBg);
+          color: var(--litepicker-is-start-color);
+          background-color: var(--litepicker-is-start-color-bg);
           border-top-left-radius: 5px;
           border-bottom-left-radius: 5px;
           border-top-right-radius: 0;
@@ -253,8 +277,8 @@
         }
 
         &.is-end-date {
-          color: var(--litepickerDayIsEndColor);
-          background-color: var(--litepickerDayIsEndBg);
+          color: var(--litepicker-is-end-color);
+          background-color: var(--litepicker-is-end-color-bg);
           border-top-left-radius: 0;
           border-bottom-left-radius: 0;
           border-top-right-radius: 5px;
@@ -276,8 +300,8 @@
         }
 
         &.is-highlighted {
-          color: var(--litepickerHighlightedDayColor);
-          background-color: var(--litepickerHighlightedDayBg);
+          color: var(--litepicker-highlighted-day-color);
+          background-color: var(--litepicker-highlighted-day-color-bg);
         }
       }
 
@@ -285,7 +309,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #9e9e9e;
+        color: var(--litepicker-month-week-number-color);
         font-size: 85%;
       }
     }
@@ -294,8 +318,8 @@
       text-align: right;
       padding: 10px 5px;
       margin: 0 5px;
-      background-color: #fafafa;
-      box-shadow: inset 0px 3px 3px 0px #ddd;
+      background-color: var(--litepicker-footer-color-bg);
+      box-shadow: inset 0px 3px 3px 0px var(--litepicker-footer-box-shadow-color);
       border-bottom-left-radius: 5px;
       border-bottom-right-radius: 5px;
 
@@ -305,8 +329,8 @@
       }
 
       .button-cancel {
-        background-color: var(--litepickerButtonCancelBg);
-        color: var(--litepickerButtonCancelColor);
+        background-color: var(--litepicker-button-cancel-color-bg);
+        color: var(--litepicker-button-cancel-color);
         border: 0;
         padding: 3px 7px 4px;
         border-radius: 3px;
@@ -318,8 +342,8 @@
       }
 
       .button-apply {
-        background-color: var(--litepickerButtonApplyBg);
-        color: var(--litepickerButtonApplyColor);
+        background-color: var(--litepicker-button-apply-color-bg);
+        color: var(--litepicker-button-apply-color);
         border: 0;
         padding: 3px 7px 4px;
         border-radius: 3px;
@@ -342,7 +366,7 @@
       margin-top: -4px;
       padding: 4px 8px;
       border-radius: 4px;
-      background-color: #fff;
+      background-color: var(--litepicker-tooltip-color-bg);
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
       white-space: nowrap;
       font-size: 11px;
@@ -363,7 +387,7 @@
         position: absolute;
         bottom: -4px;
         left: calc(50% - 4px);
-        border-top: 4px solid #fff;
+        border-top: 4px solid var(--litepicker-tooltip-color-bg);
         border-right: 4px solid transparent;
         border-left: 4px solid transparent;
         content: "";
