@@ -1,6 +1,7 @@
 ---
 type: Array
 default: []
+since: 1.1.4
 ---
 
 Highlight days. Can contains array with range:

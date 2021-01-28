@@ -1,7 +1,8 @@
 ---
 type: Boolean
-default: true
+default: null
 deprecated: true
+since: 1.3.4
 ---
 
 _Adds keyboard navigation._

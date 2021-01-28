@@ -1,3 +1,40 @@
 ---
 ---
 {% include css/just-the-docs.scss.liquid color_scheme="dark" %}
+
+#bg {
+  background-color: #27262b;
+  background-image: url(../images/bg-dark.png);
+}
+
+:root {
+  --color-profile-color-modes-toggle-moon: #ffdf5d;
+  --color-profile-color-modes-toggle-track-bg: #333;
+  --color-profile-color-modes-toggle-thumb-bg: #2f363d;
+  --color-profile-color-modes-toggle-track-border: #607d8b;
+
+  --litepickerBgColor: #27262b;
+  --litepickerMonthHeaderTextColor: #e6e1e8;
+  --litepickerDayColor: #e6e1e8;
+  --litepickerDayIsInRange: #37474f;
+  --litepickerDayIsStartBg: #e6e1e8;
+  --litepickerDayIsEndBg: #e6e1e8;
+  --litepickerDayIsStartColor: #333;
+  --litepickerDayIsEndColor: #333;
+  --litepickerDayColorHover: #fff;
+}
+
+.litepicker .container__tooltip {
+  background-color: #333;
+}
+.litepicker .container__tooltip:after {
+  border-top: 4px solid #333;
+}
+
+.main-content-wrap {
+  background-color: #27262b;
+}
+
+.site-footer {
+  color: #fafafa;
+}

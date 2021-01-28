@@ -2,6 +2,7 @@
 type: Boolean
 default: null
 deprecated: true
+since: 1.3.0
 ---
 
 _Set predefined date ranges the user can select from. Each key is the label for the range, and its value an array with two dates representing the bounds of the range._

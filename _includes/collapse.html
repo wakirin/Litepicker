@@ -1,0 +1,8 @@
+<div class="collapse">
+  <div class="collapse__title">
+    <button type="button" class="btn fs-3">{{ include.title }}</button>
+  </div>
+  <div class="collapse__content">
+    {{ include.content | markdownify  }}
+  </div>
+</div>

@@ -6,6 +6,7 @@ default: {
    months: false, 
    years: false
  }
+since: 1.0.21
 ---
 
 Enable dropdowns for months, years.

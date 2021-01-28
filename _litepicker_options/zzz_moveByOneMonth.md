@@ -2,6 +2,7 @@
 type: Boolean
 default: false
 deprecated: true
+since: 1.3.0
 ---
 
 _Indicates whether the date range picker should switch month one by one, instead of value of numberOfMonths._

@@ -33,9 +33,10 @@ setup: (picker) => {
 # Event list
 {: .no_toc }
 
-{% for opt in site.configuration_events %}
+{% for opt in site.litepicker_events %}
 {% if opt.deprecated %}
 ## <span class="label label-red">Deprecated</span> {{ opt.event }} 
+{: .text-grey-dk-000 }
 {% elsif opt.since %}
 ## {{ opt.event }} <sup>{{ opt.since }}+</sup>
 {% else %}

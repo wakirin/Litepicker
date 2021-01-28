@@ -12,6 +12,11 @@ permalink: /
 Date range picker - lightweight, no dependencies.
 {: .fs-6 .fw-300 }
 
+<div id="index-demo">
+  <div id="index-demo-selection">&nbsp;</div>
+  <div class="demo-wrapper" data-el="div" data-cfg="index"></div>
+</div>
+
 ## Features
 - No dependencies
 - Single date or date range
@@ -46,7 +51,7 @@ npm install litepicker
 
 You can get a specific version, see [jsdelivr docs](https://www.jsdelivr.com/features#npm).
 
-### Usage
+## Usage
 
 If you’re using a bundler, e.g. webpack, you’ll need to import Litepicker.
 
@@ -57,9 +62,9 @@ import Litepicker from 'litepicker';
 _If you encounter errors in Typescript, try adding `esModuleInterop: true` to your tsconfig.json. (see issue [#53](https://github.com/wakirin/Litepicker/issues/53))_
 
 
-### Now you can create Litepicker instance.
+Now you can create Litepicker instance.
 
-```js
+```html
 <script>
   const picker = new Litepicker({ 
     element: document.getElementById('litepicker') 
@@ -68,7 +73,7 @@ _If you encounter errors in Typescript, try adding `esModuleInterop: true` to yo
 
 ```
 
-### No CSS version
+## No CSS version
 To prevent the inclusion of the CSS styles tag in the head, you can define a global variable before initializing Litepicker:
 
 ```js
@@ -92,6 +97,12 @@ import Litepicker from 'litepicker/dist/nocss/litepicker.umd.js';
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/style.css"/>
 ```
 
+## Bundle version (all plugins included)
+#### Non-module environments
+```html
+<script src="https://cdn.jsdelivr.net/npm/litepicker/dist/bundle.js"></script>
+```
+
 ## IE11
 
 To support IE11 you need to install polyfills [litepicker-polyfills-ie11](https://github.com/wakirin/litepicker-polyfills-ie11).
@@ -102,7 +113,7 @@ Example:
 <--- include polyfill first --->
 <script src="https://cdn.jsdelivr.net/npm/litepicker-polyfills-ie11/dist/index.js"></script>
 <--- then include the Litepicker library --->
-<script src="https://cdn.jsdelivr.net/npm/litepicker/dist/js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/litepicker/dist/litepicker.js"></script>
 ```
 
 
@@ -118,7 +129,7 @@ import Litepicker from 'litepicker';
 
 ## About the project
 
-Litepicker is &copy; 2017-{{ "now" | date: "%Y" }} by [Rinat G.](https://github.com/wakirin)
+Litepicker is &copy; 2019-{{ "now" | date: "%Y" }} by [Rinat G.](https://github.com/wakirin)
 
 ### License
 

@@ -6,3 +6,23 @@
   {% assign color_scheme = "light" %}
 {% endif %}
 {% include css/just-the-docs.scss.liquid color_scheme=color_scheme %}
+
+:root {
+  --color-profile-color-modes-toggle-moon: #999;
+  --color-profile-color-modes-toggle-track-bg: #fff;
+  --color-profile-color-modes-toggle-thumb-bg: #2f363d;
+  --color-profile-color-modes-toggle-track-border: #d1d5da;
+}
+
+#bg {
+  background-color: #fdfbfa;
+  background-image: url(../images/bg-light.png);
+}
+
+.main-content-wrap {
+  background-color: #fff;
+}
+
+.site-footer {
+  color: #333;
+}

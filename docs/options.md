@@ -10,10 +10,11 @@ permalink: /docs/options
 
 ---
 
-{% for opt in site.configuration_options %}
-{% assign optName = opt.path | replace: '_configuration_options/', '' | replace: '.md', '' | replace: 'zzz_', '' %}
+{% for opt in site.litepicker_options %}
+{% assign optName = opt.path | replace: '_litepicker_options/', '' | replace: '.md', '' | replace: 'zzz_', '' %}
 {% if opt.deprecated %}
 ## <span class="label label-red">Deprecated</span> {{ optName }} 
+{: .text-grey-dk-000 }
 {% elsif opt.since %}
 ## {{ optName }} <sup>{{ opt.since }}+</sup>
 {% else %}

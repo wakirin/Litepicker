@@ -2,6 +2,7 @@
 type: Boolean
 default: false
 deprecated: true
+since: 1.0.22
 ---
 
 _Prevent to select date ranges with booked dates._

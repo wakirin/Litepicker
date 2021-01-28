@@ -2,6 +2,7 @@
 type: Boolean
 default: false
 deprecated: true
+since: 1.0.22
 ---
 
 _Allow to select any booked days as check-out._

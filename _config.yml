@@ -14,9 +14,9 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 title: Litepicker
-description: A Jekyll theme for documentation
+description: Date range picker - lightweight, no dependencies
 baseurl: "/Litepicker" # the subpath of your site, e.g. /blog
-url: "https://wakirin.github.io" # "http://127.0.0.1:4000" # the base hostname & protocol for your site, e.g. http://example.com
+url: "http://127.0.0.1:4000" # "https://wakirin.github.io"  # the base hostname & protocol for your site, e.g. http://example.com
 
 permalink: pretty
 exclude: ["node_modules/", "*.gemspec", "*.gem", "Gemfile", "Gemfile.lock", "package.json", "package-lock.json",  "script/", "LICENSE.txt", "lib/", "bin/", "README.md", "Rakefile"
@@ -102,8 +102,8 @@ color_scheme: nil
 
 # Google Analytics Tracking (optional)
 # e.g, UA-1234567-89
-ga_tracking: nil
-ga_tracking_anonymize_ip: true # Use GDPR compliant Google Analytics settings (true/nil by default)
+#ga_tracking: false
+#ga_tracking_anonymize_ip: true # Use GDPR compliant Google Analytics settings (true/nil by default)
 
 plugins:
   - jekyll-seo-tag
@@ -124,6 +124,6 @@ compress_html:
   #   envs: all
 
 collections:
-  - configuration_options
-  - configuration_events
-  - configuration_methods
+  - litepicker_options
+  - litepicker_events
+  - litepicker_methods
