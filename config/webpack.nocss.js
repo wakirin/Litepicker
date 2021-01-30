@@ -76,7 +76,7 @@ multiconfig.forEach(config => {
   config.plugins = [
     new webpack.BannerPlugin(banner),
     new MiniCssExtractPlugin({
-      filename: "../css/style.css",
+      filename: "../css/litepicker.css",
     }),
   ];
 });

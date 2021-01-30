@@ -363,24 +363,24 @@ export class Calendar extends LPCore {
       day.classList.add(style.isLocked);
     }
 
-    if (this.options.minDays
+    if (this.options.minDays > 1
       && this.datePicked.length === 1) {
-      const minDays = this.options.minDays - 1;
+      const minDays = this.options.minDays - 1; // subtract selected day
       const left = this.datePicked[0].clone().subtract(minDays, 'day');
       const right = this.datePicked[0].clone().add(minDays, 'day');
 
-      if (date.isBetween(left, this.datePicked[0], '[]')) {
+      if (date.isBetween(left, this.datePicked[0], '(]')) {
         day.classList.add(style.isLocked);
       }
 
-      if (date.isBetween(this.datePicked[0], right, '[]')) {
+      if (date.isBetween(this.datePicked[0], right, '[)')) {
         day.classList.add(style.isLocked);
       }
     }
 
     if (this.options.maxDays
       && this.datePicked.length === 1) {
-      const maxDays = this.options.minDays + 1;
+      const maxDays = this.options.maxDays;
       const left = this.datePicked[0].clone().subtract(maxDays, 'day');
       const right = this.datePicked[0].clone().add(maxDays, 'day');
 
