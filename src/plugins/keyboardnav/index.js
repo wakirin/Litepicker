@@ -204,5 +204,21 @@ Litepicker.add('keyboardnav', {
     if (options.elementEnd instanceof HTMLElement) {
       options.elementEnd.addEventListener('blur', onBlur.bind(picker), true);
     }
+
+    picker.on('render', (ui) => {
+      const selectors = [
+        '.month-item:first-child:not(.no-previous-month) .button-previous-month',
+        '.month-item:last-child:not(.no-next-month) .button-next-month',
+        '.reset-button',
+        'select'
+      ];
+      const elems = Array.from(ui.querySelectorAll(selectors.join(',')));
+
+      elems.forEach(x => x.tabIndex = 1);
+    });
+
+    picker.on('render:day', (day) => {
+      day.tabIndex = !day.classList.contains('is-locked') ? 2 : -1;
+    });
   },
 });

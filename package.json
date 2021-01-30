@@ -1,6 +1,6 @@
 {
   "name": "litepicker",
-  "version": "2.0.0-beta.6",
+  "version": "2.0.0-beta.7",
   "description": "Date range picker - lightweight, no dependencies",
   "main": "./dist/litepicker.umd.js",
   "types": "./dist/types/index.d.ts",
@@ -38,9 +38,12 @@
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
     "@types/jest": "^24.0.23",
     "@types/node": "^12.12.7",
     "autoprefixer": "^9.7.2",
+    "babel-loader": "^8.2.2",
     "css-loader": "^3.6.0",
     "dts-css-modules-loader": "^1.0.1",
     "eslint": "^7.3.1",

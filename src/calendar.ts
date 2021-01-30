@@ -63,7 +63,6 @@ export class Calendar extends LPCore {
       } else {
         resetButton = document.createElement('button');
         resetButton.type = 'button';
-        resetButton.tabIndex = 1;
         resetButton.className = style.resetButton;
         resetButton.innerHTML = this.options.buttonText.reset;
       }
@@ -112,7 +111,6 @@ export class Calendar extends LPCore {
     if (this.options.dropdowns.months) {
       const selectMonths = document.createElement('select');
       selectMonths.className = style.monthItemName;
-      selectMonths.tabIndex = 1;
 
       for (let x = 0; x < 12; x += 1) {
         const option = document.createElement('option');
@@ -155,7 +153,6 @@ export class Calendar extends LPCore {
     if (this.options.dropdowns.years) {
       const selectYears = document.createElement('select');
       selectYears.className = style.monthItemYear;
-      selectYears.tabIndex = 1;
 
       const minYear = this.options.dropdowns.minYear;
       const maxYear = this.options.dropdowns.maxYear
@@ -249,16 +246,10 @@ export class Calendar extends LPCore {
       month.classList.add(style.noPreviousMonth);
     }
 
-    previousMonthButton.tabIndex = calendarIdx === 0
-      && !month.classList.contains(style.noPreviousMonth) ? 1 : -1;
-
     if (this.options.maxDate
       && startDate.isSameOrAfter(new DateTime(this.options.maxDate), 'month')) {
       month.classList.add(style.noNextMonth);
     }
-
-    nextMonthButton.tabIndex = calendarIdx === this.options.numberOfMonths - 1
-      && !month.classList.contains(style.noNextMonth) ? 1 : -1;
 
     const weekdaysRow = document.createElement('div');
     weekdaysRow.className = style.monthItemWeekdaysRow;
@@ -434,8 +425,6 @@ export class Calendar extends LPCore {
         day.classList.add(style.isHighlighted);
       }
     }
-
-    day.tabIndex = !day.classList.contains('is-locked') ? 2 : -1;
 
     this.emit('render:day', day, date);
 
