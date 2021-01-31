@@ -406,6 +406,14 @@ export class Litepicker extends Calendar {
           const text = `${days} ${pluralText}`;
 
           this.showTooltip(target, text);
+
+          // fix bug iOS 10-12 - https://github.com/wakirin/Litepicker/issues/124
+          const ua = window.navigator.userAgent;
+          const iDevice = /(iphone|ipad)/i.test(ua);
+          const iOS11or12 = /OS 1([0-2])/i.test(ua);
+          if (iDevice && iOS11or12) {
+            target.dispatchEvent(new Event('click'));
+          }
         } else {
           this.hideTooltip();
         }

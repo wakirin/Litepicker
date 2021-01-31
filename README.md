@@ -23,12 +23,24 @@ See more details in docs.
 ## [Demo & Docs](https://wakirin.github.io/Litepicker)
 
 ## Compatibility
-* IE 11 (required [polyfills](https://github.com/wakirin/litepicker-polyfills-ie11))
-* Edge 17+
-* Chrome 60+
-* Firefox 52+
-* Safari 11+
-* Opera 48+
+
+##### Desktop
+- IE 11 (required [polyfills](https://github.com/wakirin/litepicker-polyfills-ie11))
+- Edge 17+
+- Chrome 60+
+- Firefox 52+
+- Safari 10.1+
+- Opera 48+
+
+##### Mobile
+- iOS 10+
+  - Safari
+  - Chrome
+- Android 6+
+  - Chrome
+  - Firefox
+  - Samsung Browser
+  - UC Browser
 
 ## Plugins
 * [keyboardnav](https://wakirin.github.io/Litepicker/docs/plugins#keyboard-navigation-plugin) - adds keyboard navigation.
