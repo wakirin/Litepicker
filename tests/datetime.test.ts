@@ -21,7 +21,7 @@ test('new DateTime', () => {
   expect(dt4 instanceof DateTime && date.getTime() === dt4.getTime()).toBe(true);
 });
 
-test('DateTime.convertArray - lockDays/bookedDays', () => {
+test('DateTime.convertArray - lockDays', () => {
   const array = [
     '2019-11-23',
     ['2019-01-01', '2019-01-15'],

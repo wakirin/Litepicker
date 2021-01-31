@@ -1,104 +1,17 @@
+import { LPCore } from './core';
 import { DateTime } from './datetime';
 import * as style from './scss/main.scss';
-import { findNestedMonthItem } from './utils';
+import { dateIsLocked, findNestedMonthItem } from './utils';
 
-export class Calendar {
-  protected options: any = {
-    element: null,
-    elementEnd: null,
-    parentEl: null,
-    // tslint:disable-next-line: object-literal-sort-keys
-    firstDay: 1,
-    format: 'YYYY-MM-DD',
-    lang: 'en-US',
-    delimiter: ' - ',
-    numberOfMonths: 1,
-    numberOfColumns: 1,
-    startDate: null,
-    endDate: null,
-    zIndex: 9999,
-
-    minDate: null,
-    maxDate: null,
-    minDays: null,
-    maxDays: null,
-    selectForward: false,
-    selectBackward: false,
-    splitView: false,
-    inlineMode: false,
-    singleMode: true,
-    autoApply: true,
-    allowRepick: false,
-    showWeekNumbers: false,
-    showTooltip: true,
-    hotelMode: false,
-    disableWeekends: false,
-    scrollToDate: true,
-    mobileFriendly: true,
-    useResetBtn: false,
-    autoRefresh: false,
-    moveByOneMonth: false,
-
-    lockDaysFormat: 'YYYY-MM-DD',
-    lockDays: [],
-    disallowLockDaysInRange: false,
-    lockDaysInclusivity: '[]',
-
-    bookedDaysFormat: 'YYYY-MM-DD',
-    bookedDays: [],
-    disallowBookedDaysInRange: false,
-    bookedDaysInclusivity: '[]',
-    anyBookedDaysAsCheckout: false,
-
-    highlightedDaysFormat: 'YYYY-MM-DD',
-    highlightedDays: [],
-
-    dropdowns: {
-      minYear: 1990,
-      // tslint:disable-next-line: object-literal-sort-keys
-      maxYear: null,
-      months: false,
-      years: false,
-    },
-
-    buttonText: {
-      apply: 'Apply',
-      cancel: 'Cancel',
-      previousMonth: '<svg width="11" height="16" xmlns="http://www.w3.org/2000/svg"><path d="M7.919 0l2.748 2.667L5.333 8l5.334 5.333L7.919 16 0 8z" fill-rule="nonzero"/></svg>',
-      nextMonth: '<svg width="11" height="16" xmlns="http://www.w3.org/2000/svg"><path d="M2.748 16L0 13.333 5.333 8 0 2.667 2.748 0l7.919 8z" fill-rule="nonzero"/></svg>',
-      reset: `<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
-        <path d="M0 0h24v24H0z" fill="none"/>
-        <path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/>
-      </svg>`,
-    },
-    tooltipText: {
-      one: 'day',
-      other: 'days',
-    },
-    tooltipPluralSelector: null,
-
-    // Events
-    onShow: null,
-    onHide: null,
-    onSelect: null,
-    onError: null,
-    onRender: null,
-    onRenderDay: null,
-    onChangeMonth: null,
-    onChangeYear: null,
-    onDayHover: null,
-    onShowTooltip: null,
-    resetBtnCallback: null,
-
-    moduleRanges: null,
-    moduleNavKeyboard: null,
-  };
-  protected calendars: DateTime[] = [];
-  protected picker: HTMLElement;
-  protected datePicked: DateTime[] = [];
-  protected nextFocus: HTMLElement;
+export class Calendar extends LPCore {
+  constructor(options) {
+    super(options);
+    //
+  }
 
   protected render() {
+    this.emit('before:render', this.ui);
+
     const mainBlock = document.createElement('div');
     mainBlock.className = style.containerMain;
     const months = document.createElement('div');
@@ -126,6 +39,7 @@ export class Calendar {
     for (let idx = startMonthIdx; idx < totalMonths; idx += 1) {
       let dateIterator = startDate.clone();
       dateIterator.setDate(1);
+      dateIterator.setHours(0, 0, 0, 0);
 
       if (this.options.splitView) {
         dateIterator = this.calendars[calendarIdx].clone();
@@ -133,62 +47,55 @@ export class Calendar {
         dateIterator.setMonth(idx);
       }
 
-      months.appendChild(this.renderMonth(dateIterator));
+      months.appendChild(this.renderMonth(dateIterator, calendarIdx));
 
       calendarIdx += 1;
     }
 
-    this.picker.innerHTML = '';
+    this.ui.innerHTML = '';
 
     mainBlock.appendChild(months);
 
-    if (this.options.useResetBtn) {
-      const resetButton = document.createElement('a');
-      resetButton.href = '#';
-      resetButton.className = style.resetButton;
-      resetButton.innerHTML = this.options.buttonText.reset;
+    if (this.options.resetButton) {
+      let resetButton;
+      if (typeof this.options.resetButton === 'function') {
+        resetButton = this.options.resetButton.call(this);
+      } else {
+        resetButton = document.createElement('button');
+        resetButton.type = 'button';
+        resetButton.className = style.resetButton;
+        resetButton.innerHTML = this.options.buttonText.reset;
+      }
+
       resetButton.addEventListener('click', (e) => {
         e.preventDefault();
 
         // tslint:disable-next-line: no-string-literal
         this['clearSelection']();
-
-        if (typeof this.options.resetBtnCallback === 'function') {
-          this.options.resetBtnCallback.call(this);
-        }
       });
+
       mainBlock
         .querySelector(`.${style.monthItem}:last-child`)
         .querySelector(`.${style.monthItemHeader}`)
         .appendChild(resetButton);
     }
 
-    this.picker.appendChild(mainBlock);
+    this.ui.appendChild(mainBlock);
 
     if (!this.options.autoApply || this.options.footerHTML) {
-      this.picker.appendChild(this.renderFooter());
+      this.ui.appendChild(this.renderFooter());
     }
 
     if (this.options.showTooltip) {
-      this.picker.appendChild(this.renderTooltip());
+      this.ui.appendChild(this.renderTooltip());
     }
 
-    if (this.options.moduleRanges) {
-      // tslint:disable-next-line: no-string-literal
-      if (typeof this['enableModuleRanges'] === 'function') {
-        // tslint:disable-next-line: no-string-literal
-        this['enableModuleRanges'].call(this, this);
-      } else {
-        throw new Error('moduleRanges is on but library does not included. See https://github.com/wakirin/litepicker-module-ranges.');
-      }
-    }
+    this.ui.dataset.plugins = (this.options.plugins || []).join('|');
 
-    if (typeof this.options.onRender === 'function') {
-      this.options.onRender.call(this, this.picker);
-    }
+    this.emit('render', this.ui);
   }
 
-  protected renderMonth(date: DateTime) {
+  protected renderMonth(date: DateTime, calendarIdx: number) {
     const startDate = date.clone();
 
     const totalDays = 32 - new Date(startDate.getFullYear(), startDate.getMonth(), 32).getDate();
@@ -232,9 +139,7 @@ export class Calendar {
         this.calendars[idx].setMonth(Number(target.value));
         this.render();
 
-        if (typeof this.options.onChangeMonth === 'function') {
-          this.options.onChangeMonth.call(this, this.calendars[idx], idx);
-        }
+        this.emit('change:month', this.calendars[idx], idx, e);
       });
 
       monthAndYear.appendChild(selectMonths);
@@ -267,8 +172,8 @@ export class Calendar {
       for (let x = maxYear; x >= minYear; x -= 1) {
         const option = document.createElement('option');
         const optionYear = new DateTime(new Date(x, 0, 1, 0, 0, 0));
-        option.value = x;
-        option.text = x;
+        option.value = String(x);
+        option.text = String(x);
         option.disabled = (this.options.minDate
           && optionYear.isBefore(new DateTime(this.options.minDate), 'year'))
           || (this.options.maxDate
@@ -311,9 +216,7 @@ export class Calendar {
         this.calendars[idx].setFullYear(Number(target.value));
         this.render();
 
-        if (typeof this.options.onChangeYear === 'function') {
-          this.options.onChangeYear.call(this, this.calendars[idx], idx);
-        }
+        this.emit('change:year', this.calendars[idx], idx, e);
       });
 
       monthAndYear.appendChild(selectYears);
@@ -324,13 +227,13 @@ export class Calendar {
       monthAndYear.appendChild(monthYear);
     }
 
-    const previousMonthButton = document.createElement('a');
-    previousMonthButton.href = '#';
+    const previousMonthButton = document.createElement('button');
+    previousMonthButton.type = 'button';
     previousMonthButton.className = style.buttonPreviousMonth;
     previousMonthButton.innerHTML = this.options.buttonText.previousMonth;
 
-    const nextMonthButton = document.createElement('a');
-    nextMonthButton.href = '#';
+    const nextMonthButton = document.createElement('button');
+    nextMonthButton.type = 'button';
     nextMonthButton.className = style.buttonNextMonth;
     nextMonthButton.innerHTML = this.options.buttonText.nextMonth;
 
@@ -393,14 +296,15 @@ export class Calendar {
     month.appendChild(weekdaysRow);
     month.appendChild(days);
 
+    this.emit('render:month', month, date);
+
     return month;
   }
 
   protected renderDay(date: DateTime) {
     date.setHours();
 
-    const day = document.createElement('a');
-    day.href = '#';
+    const day = document.createElement('div');
     day.className = style.dayItem;
     day.innerHTML = String(date.getDate());
     day.dataset.time = String(date.getTime());
@@ -429,7 +333,10 @@ export class Calendar {
         }
       }
     } else if (this.options.startDate) {
-      if (this.options.startDate.toDateString() === date.toDateString()) {
+      const startDate = this.options.startDate as DateTime;
+      const endDate = this.options.endDate as DateTime;
+
+      if (startDate.toDateString() === date.toDateString()) {
         day.classList.add(style.isStartDate);
 
         if (this.options.singleMode) {
@@ -437,12 +344,12 @@ export class Calendar {
         }
       }
 
-      if (this.options.endDate && this.options.endDate.toDateString() === date.toDateString()) {
+      if (endDate && endDate.toDateString() === date.toDateString()) {
         day.classList.add(style.isEndDate);
       }
 
-      if (this.options.startDate && this.options.endDate) {
-        if (date.isBetween(this.options.startDate, this.options.endDate)) {
+      if (startDate && endDate) {
+        if (date.isBetween(startDate, endDate)) {
           day.classList.add(style.isInRange);
         }
       }
@@ -456,11 +363,11 @@ export class Calendar {
       day.classList.add(style.isLocked);
     }
 
-    if (this.options.minDays
+    if (this.options.minDays > 1
       && this.datePicked.length === 1) {
-      const hotelMode = Number(!this.options.hotelMode);
-      const left = this.datePicked[0].clone().subtract(this.options.minDays - hotelMode, 'day');
-      const right = this.datePicked[0].clone().add(this.options.minDays - hotelMode, 'day');
+      const minDays = this.options.minDays - 1; // subtract selected day
+      const left = this.datePicked[0].clone().subtract(minDays, 'day');
+      const right = this.datePicked[0].clone().add(minDays, 'day');
 
       if (date.isBetween(left, this.datePicked[0], '(]')) {
         day.classList.add(style.isLocked);
@@ -473,9 +380,9 @@ export class Calendar {
 
     if (this.options.maxDays
       && this.datePicked.length === 1) {
-      const hotelMode = Number(this.options.hotelMode);
-      const left = this.datePicked[0].clone().subtract(this.options.maxDays + hotelMode, 'day');
-      const right = this.datePicked[0].clone().add(this.options.maxDays + hotelMode, 'day');
+      const maxDays = this.options.maxDays;
+      const left = this.datePicked[0].clone().subtract(maxDays, 'day');
+      const right = this.datePicked[0].clone().add(maxDays, 'day');
 
       if (date.isSameOrBefore(left)) {
         day.classList.add(style.isLocked);
@@ -498,19 +405,10 @@ export class Calendar {
       day.classList.add(style.isLocked);
     }
 
-    if (this.options.lockDays.length) {
-      const locked = this.options.lockDays
-        .filter((d) => {
-          if (d instanceof Array) {
-            return date.isBetween(d[0], d[1], this.options.lockDaysInclusivity);
-          }
+    const locked = dateIsLocked(date, this.options, this.datePicked);
 
-          return d.isSame(date, 'day');
-        }).length;
-
-      if (locked) {
-        day.classList.add(style.isLocked);
-      }
+    if (locked) {
+      day.classList.add(style.isLocked);
     }
 
     if (this.options.highlightedDays.length) {
@@ -528,45 +426,7 @@ export class Calendar {
       }
     }
 
-    if (this.datePicked.length <= 1
-      && this.options.bookedDays.length) {
-      let inclusivity = this.options.bookedDaysInclusivity;
-
-      if (this.options.hotelMode && this.datePicked.length === 1) {
-        inclusivity = '()';
-      }
-
-      const dateBefore = date.clone();
-      dateBefore.subtract(1, 'day');
-
-      const dateAfter = date.clone();
-      dateAfter.add(1, 'day');
-
-      const booked = this.dateIsBooked(date, inclusivity);
-      const isBookedBefore = this.dateIsBooked(dateBefore, '[]');
-      const isCheckInAndCheckOut = this.dateIsBooked(date, '(]');
-      // const isBookedAfter = this.dateIsBooked(dateAfter, '[]');
-
-      const shouldBooked = (this.datePicked.length === 0 && booked)
-        || (this.datePicked.length === 1 && isBookedBefore && booked)
-        || (this.datePicked.length === 1 && isBookedBefore && isCheckInAndCheckOut);
-
-      const anyBookedDaysAsCheckout = this.options.anyBookedDaysAsCheckout
-        && this.datePicked.length === 1;
-
-      if (shouldBooked && !anyBookedDaysAsCheckout) {
-        day.classList.add(style.isBooked);
-      }
-    }
-
-    if (this.options.disableWeekends
-      && (date.getDay() === 6 || date.getDay() === 0)) {
-      day.classList.add(style.isLocked);
-    }
-
-    if (typeof this.options.onRenderDay === 'function') {
-      this.options.onRenderDay.call(this, day);
-    }
+    this.emit('render:day', day, date);
 
     return day;
   }
@@ -604,6 +464,8 @@ export class Calendar {
       }
     }
 
+    this.emit('render:footer', footer);
+
     return footer;
   }
 
@@ -621,17 +483,6 @@ export class Calendar {
     t.className = style.containerTooltip;
 
     return t;
-  }
-
-  protected dateIsBooked(date, inclusivity) {
-    return this.options.bookedDays
-      .filter((d) => {
-        if (d instanceof Array) {
-          return date.isBetween(d[0], d[1], inclusivity);
-        }
-
-        return d.isSame(date, 'day');
-      }).length;
   }
 
   private weekdayName(day, representation = 'short') {

@@ -1,15 +1,15 @@
 export class DateTime {
 
   public static parseDateTime(
-    date: Date | DateTime | string,
+    date: Date | DateTime | string | number,
     format: string = 'YYYY-MM-DD',
     lang: string = 'en-US'): Date {
     if (!date) return new Date(NaN);
 
     if (date instanceof Date) return new Date(date);
-    if (date instanceof DateTime) return date.clone().getDateInstance();
+    if (date instanceof DateTime) return date.clone().toJSDate();
 
-    if (/^-?\d{10,}$/.test(date)) return DateTime.getDateZeroTime(new Date(Number(date)));
+    if (/^-?\d{10,}$/.test(date as string)) return DateTime.getDateZeroTime(new Date(Number(date)));
 
     if (typeof date === 'string') {
       const matches = [];
@@ -158,10 +158,14 @@ export class DateTime {
   private dateInstance: Date;
 
   constructor(
-    date: Date | DateTime | string = null,
-    format: string = null,
+    date: Date | DateTime | number | string = null,
+    format: object | string = null,
     lang: string = 'en-US') {
-    if (format) {
+
+    if (typeof format === 'object' && format !== null) {
+      // tslint:disable-next-line: max-line-length
+      this.dateInstance = (format as any).parse(date instanceof DateTime ? date.clone().toJSDate() : date);
+    } else if (typeof format === 'string') {
       this.dateInstance = (DateTime.parseDateTime(date, format, lang));
     } else if (date) {
       this.dateInstance = (DateTime.parseDateTime(date));
@@ -172,7 +176,7 @@ export class DateTime {
     this.lang = lang;
   }
 
-  public getDateInstance(): Date {
+  public toJSDate(): Date {
     return this.dateInstance;
   }
 
@@ -241,11 +245,10 @@ export class DateTime {
   }
 
   public clone(): DateTime {
-    return new DateTime(this.getDateInstance());
+    return new DateTime(this.toJSDate());
   }
 
   public isBetween(date1: DateTime, date2: DateTime, inclusivity = '()'): boolean {
-
     switch (inclusivity) {
       default:
       case '()':
@@ -431,7 +434,11 @@ export class DateTime {
     }
   }
 
-  public format(format: string, lang: string = 'en-US'): string {
+  public format(format: object | string, lang: string = 'en-US'): string {
+    if (typeof format === 'object') {
+      return (format as any).output(this.clone().toJSDate());
+    }
+
     let response = '';
 
     const matches = [];

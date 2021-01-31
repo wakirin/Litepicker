@@ -1,11 +1,9 @@
 {
   "compilerOptions": {
-    "outDir": "./dist/js",
+    "outDir": "./dist/types",
     "module": "commonjs",
-    "target": "ES5",
+    "target": "es5",
     "declaration": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
     "plugins": [{ "name": "typescript-plugin-css-modules" }]
   },
   "include": [

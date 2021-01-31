@@ -13,37 +13,37 @@ Date range picker - lightweight, no dependencies
 * Select forward/backward
 * Inline mode
 * Repick date range
-* Lock/Booked days  
+* Lock days  
+* Keyboard accessibility (with plugin)
+* Mobile friendly (with plugin)
+* Predefined ranges (with plugin)
   
 See more details in docs.
 
 ## [Demo & Docs](https://wakirin.github.io/Litepicker)
 
 ## Compatibility
-* IE 11 (polyfill required, [docs](https://wakirin.github.io/Litepicker/#anchor-IE11))
+* IE 11 (required [polyfills](https://github.com/wakirin/litepicker-polyfills-ie11))
 * Edge 17+
 * Chrome 60+
 * Firefox 52+
 * Safari 11+
 * Opera 48+
 
-## Roadmap
-* Time picker
-* ...
-
-## Additional modules
-* [litepicker-module-ranges](https://github.com/wakirin/litepicker-module-ranges) - adds predefined ranges. [demo](https://jsfiddle.net/waki/td0uapeo/)
-* [litepicker-module-navkeyboard](https://github.com/wakirin/litepicker-module-navkeyboard) - adds keyboard navigation. [demo](https://jsfiddle.net/waki/3b5uwj1z/)
+## Plugins
+* [keyboardnav](https://wakirin.github.io/Litepicker/docs/plugins#keyboard-navigation-plugin) - adds keyboard navigation.
+* [mobilefriendly](https://wakirin.github.io/Litepicker/docs/plugins#mobile-friendly-plugin) - adds swipes (left/right) to switch months.
+* [ranges](https://wakirin.github.io/Litepicker/docs/plugins#predefined-ranges-plugin) - adds predefined ranges.
 
 ## See also:
 * [Drupal module](https://www.drupal.org/project/date_range_picker) by [kviolka](https://github.com/kviolka)
 * [Wordpress Ninja forms](https://github.com/soderlind/date-range-ninja-forms) by [soderlind](https://github.com/soderlind)
 
 ## Supporting Litepicker
-[![](docs/images/coffee.png)](https://ko-fi.com/wakirin)
+[![](https://github.com/wakirin/Litepicker/blob/gh-pages/assets/images/coffee.png?raw=true)](https://ko-fi.com/wakirin)
 
 ## Tested on real browsers
 Tested on real browsers via BrowserStack.  
 Thanks to the BrowserStack for supporting the open-source projects.  
 
-[![](docs/images/Browserstack-logo.png)](https://www.browserstack.com/)
+[![](https://github.com/wakirin/Litepicker/blob/gh-pages/assets/images/Browserstack-logo.png?raw=true)](https://www.browserstack.com/)

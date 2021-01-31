@@ -8,8 +8,7 @@
       "Symbol.toStringTag",
       "Object.entries",
       "Object.assign",
-      "Intl.PluralRules",
-      "window.scrollX"
+      "Intl.PluralRules"
     ]
   }
 }

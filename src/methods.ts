@@ -1,111 +1,60 @@
 import { DateTime } from './datetime';
 import { Litepicker } from './litepicker';
-import * as style from './scss/main.scss';
-import { getOrientation, isMobile } from './utils';
 
 declare module './litepicker' {
   // tslint:disable-next-line: interface-name
   interface Litepicker {
-    show(element?);
-    hide();
+    show(element?): void;
+    hide(): void;
+    gotoDate(date, idx?): void;
+    clearSelection(): void;
+    destroy(): void;
 
-    getDate();
-    getStartDate();
-    getEndDate();
+    getDate(): DateTime | null;
+    getStartDate(): DateTime | null;
+    getEndDate(): DateTime | null;
 
-    setDate(date);
-    setStartDate(date);
-    setEndDate(date);
-    setDateRange(date1, date2);
+    setDate(date): void;
+    setStartDate(date): void;
+    setEndDate(date): void;
+    setDateRange(date1, date2): void;
 
-    setLockDays(array);
-    setBookedDays(array);
-    setHighlightedDays(array);
-
-    gotoDate(date, idx?);
-
-    setOptions(options);
-
-    clearSelection();
-
-    destroy();
+    setLockDays(array): void;
+    setHighlightedDays(array): void;
+    setOptions(options): void;
   }
 }
 
 Litepicker.prototype.show = function (el = null) {
+  this.emit('before:show', el);
+
   const element = el ? el : this.options.element;
   this.triggerElement = element;
 
+  if (this.isShowning()) {
+    return;
+  }
+
   if (this.options.inlineMode) {
-    this.picker.style.position = 'static';
-    this.picker.style.display = 'inline-block';
-    this.picker.style.top = null;
-    this.picker.style.left = null;
-    this.picker.style.bottom = null;
-    this.picker.style.right = null;
+    this.ui.style.position = 'static';
+    this.ui.style.display = 'inline-block';
+    this.ui.style.top = null;
+    this.ui.style.left = null;
+    this.ui.style.bottom = null;
+    this.ui.style.right = null;
     return;
   }
 
-  if (this.options.scrollToDate) {
-    if (this.options.startDate && (!el || el === this.options.element)) {
-      const startDate = this.options.startDate.clone();
-      startDate.setDate(1);
-      this.calendars[0] = startDate.clone();
-    } else if (el && this.options.endDate && el === this.options.elementEnd) {
-      const endDate = this.options.endDate.clone();
-      endDate.setDate(1);
-      if (this.options.numberOfMonths > 1) {
-        endDate.setMonth(endDate.getMonth() - (this.options.numberOfMonths - 1));
-      }
-      this.calendars[0] = endDate.clone();
-    }
-  }
-
-  if (this.options.mobileFriendly && isMobile()) {
-    this.picker.style.position = 'fixed';
-    this.picker.style.display = 'block';
-
-    if (getOrientation() === 'portrait') {
-      this.options.numberOfMonths = 1;
-      this.options.numberOfColumns = 1;
-    } else {
-      this.options.numberOfMonths = 2;
-      this.options.numberOfColumns = 2;
-    }
-
-    this.render();
-
-    const pickerBCR = this.picker.getBoundingClientRect();
-    this.picker.style.top = `calc(50% - ${(pickerBCR.height / 2)}px)`;
-    this.picker.style.left = `calc(50% - ${(pickerBCR.width / 2)}px)`;
-    this.picker.style.right = null;
-    this.picker.style.bottom = null;
-    this.picker.style.zIndex = this.options.zIndex;
-
-    this.backdrop.style.display = 'block';
-    this.backdrop.style.zIndex = this.options.zIndex - 1;
-    document.body.classList.add(style.litepickerOpen);
-
-    if (typeof this.options.onShow === 'function') {
-      this.options.onShow.call(this);
-    }
-
-    if (el) {
-      el.blur();
-    } else {
-      this.options.element.blur();
-    }
-    return;
-  }
+  this.scrollToDate(el);
 
   this.render();
 
-  this.picker.style.position = 'absolute';
-  this.picker.style.display = 'block';
-  this.picker.style.zIndex = this.options.zIndex;
+  this.ui.style.position = 'absolute';
+  this.ui.style.display = 'block';
+  this.ui.style.zIndex = this.options.zIndex;
 
   const elBCR = element.getBoundingClientRect();
-  const pickerBCR = this.picker.getBoundingClientRect();
+  const pickerBCR = this.ui.getBoundingClientRect();
 
   let top = elBCR.bottom;
   let left = elBCR.left;
@@ -115,7 +64,7 @@ Litepicker.prototype.show = function (el = null) {
   let leftAlt = 0;
 
   if (this.options.parentEl) {
-    const parentBCR = this.picker.parentNode.getBoundingClientRect();
+    const parentBCR = this.ui.parentNode.getBoundingClientRect();
     top -= parentBCR.bottom;
     top += elBCR.height;
 
@@ -145,14 +94,12 @@ Litepicker.prototype.show = function (el = null) {
     }
   }
 
-  this.picker.style.top = `${(topAlt ? topAlt : top) + scrollY}px`;
-  this.picker.style.left = `${(leftAlt ? leftAlt : left) + scrollX}px`;
-  this.picker.style.right = null;
-  this.picker.style.bottom = null;
+  this.ui.style.top = `${(topAlt ? topAlt : top) + scrollY}px`;
+  this.ui.style.left = `${(leftAlt ? leftAlt : left) + scrollX}px`;
+  this.ui.style.right = null;
+  this.ui.style.bottom = null;
 
-  if (typeof this.options.onShow === 'function') {
-    this.options.onShow.call(this);
-  }
+  this.emit('show', el);
 };
 
 Litepicker.prototype.hide = function () {
@@ -168,35 +115,26 @@ Litepicker.prototype.hide = function () {
     return;
   }
 
-  this.picker.style.display = 'none';
+  this.ui.style.display = 'none';
 
-  if (typeof this.options.onHide === 'function') {
-    this.options.onHide.call(this);
-  }
-
-  if (this.options.mobileFriendly) {
-    document.body.classList.remove(style.litepickerOpen);
-    this.backdrop.style.display = 'none';
-  }
+  this.emit('hide');
 };
 
-Litepicker.prototype.getDate = function (): Date {
+Litepicker.prototype.getDate = function (): DateTime {
   return this.getStartDate();
 };
 
-Litepicker.prototype.getStartDate = function (): Date {
+Litepicker.prototype.getStartDate = function (): DateTime {
   if (this.options.startDate) {
-    const castedObj = this.options.startDate.clone() as DateTime;
-    return castedObj.getDateInstance();
+    return this.options.startDate.clone();
   }
 
   return null;
 };
 
-Litepicker.prototype.getEndDate = function (): Date {
+Litepicker.prototype.getEndDate = function (): DateTime {
   if (this.options.endDate) {
-    const castedObj = this.options.endDate.clone() as DateTime;
-    return castedObj.getDateInstance();
+    return this.options.endDate.clone();
   }
 
   return null;
@@ -205,9 +143,7 @@ Litepicker.prototype.getEndDate = function (): Date {
 Litepicker.prototype.setDate = function (date) {
   this.setStartDate(date);
 
-  if (typeof this.options.onSelect === 'function') {
-    this.options.onSelect.call(this, this.getDate());
-  }
+  this.emit('selected', this.getDate());
 };
 
 Litepicker.prototype.setStartDate = function (date) {
@@ -252,9 +188,7 @@ Litepicker.prototype.setDateRange = function (date1, date2) {
 
   this.updateInput();
 
-  if (typeof this.options.onSelect === 'function') {
-    this.options.onSelect.call(this, this.getStartDate(), this.getEndDate());
-  }
+  this.emit('selected', this.getStartDate(), this.getEndDate());
 };
 
 Litepicker.prototype.gotoDate = function (date, idx = 0) {
@@ -268,14 +202,6 @@ Litepicker.prototype.setLockDays = function (array) {
   this.options.lockDays = DateTime.convertArray(
     array,
     this.options.lockDaysFormat,
-  );
-  this.render();
-};
-
-Litepicker.prototype.setBookedDays = function (array) {
-  this.options.bookedDays = DateTime.convertArray(
-    array,
-    this.options.bookedDaysFormat,
   );
   this.render();
 };
@@ -345,13 +271,6 @@ Litepicker.prototype.setOptions = function (options) {
     );
   }
 
-  if (this.options.bookedDays.length) {
-    this.options.bookedDays = DateTime.convertArray(
-      this.options.bookedDays,
-      this.options.bookedDaysFormat,
-    );
-  }
-
   if (this.options.highlightedDays.length) {
     this.options.highlightedDays = DateTime.convertArray(
       this.options.highlightedDays,
@@ -381,12 +300,10 @@ Litepicker.prototype.clearSelection = function () {
 };
 
 Litepicker.prototype.destroy = function () {
-  if (this.picker && this.picker.parentNode) {
-    this.picker.parentNode.removeChild(this.picker);
-    this.picker = null;
+  if (this.ui && this.ui.parentNode) {
+    this.ui.parentNode.removeChild(this.ui);
+    this.ui = null;
   }
 
-  if (this.backdrop && this.backdrop.parentNode) {
-    this.backdrop.parentNode.removeChild(this.backdrop);
-  }
+  this.emit('destroy');
 };

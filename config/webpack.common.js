@@ -1,36 +1,38 @@
 const webpack = require('webpack');
 const path = require('path');
-const getPackageJson = require('./getPackageJson');
+const banner = require('./banner');
+const createVariants = require('parallel-webpack').createVariants;
 
-const {
-  version,
-  name,
-  license,
-} = getPackageJson('version', 'name', 'license');
+const createConfig = (options) => {
+  const fileName = !['var'].includes(options.target) ? `.${options.target}.js` : '.js';
 
-const banner = `
-    Litepicker v${version} (https://github.com/wakirin/Litepicker)
-    Package: ${name} (https://www.npmjs.com/package/litepicker)
-    License: ${license} (https://github.com/wakirin/Litepicker/blob/master/LICENCE.md)
-    Copyright 2019-${new Date().getFullYear()} Rinat G.
-    
-    Hash: [hash]
-    Generated on: ${Date.now()}
-    `;
-
-module.exports = {
-  entry: {
-    'js/main.js': path.join(__dirname, '../src/index.ts'),
-  },
-  output: {
+  const outputConfig = {
     path: path.join(__dirname, '../dist'),
-    filename: '[name]',
+    filename: 'litepicker' + fileName,
     library: 'Litepicker',
-    libraryTarget: 'umd',
-    libraryExport: 'Litepicker',
-    umdNamedDefine: true
-  },
-  module: {
+    libraryTarget: options.target
+  }
+
+  if (options.target === 'var') {
+    outputConfig.libraryExport = 'Litepicker';
+  }
+
+  if (options.target === 'umd') {
+    outputConfig.umdNamedDefine = true;
+  }
+
+  return {
+    entry: path.join(__dirname, '../src/index.ts'),
+    output: outputConfig,
+  }
+}
+
+const multiconfig = createVariants({
+  target: ['var', 'commonjs2', 'umd', 'amd']
+}, createConfig);
+
+multiconfig.forEach(config => {
+  config.module = {
     rules: [
       {
         exclude: /node_modules/,
@@ -91,11 +93,15 @@ module.exports = {
         ]
       },
     ]
-  },
-  resolve: {
+  };
+
+  config.resolve = {
     extensions: [".ts", ".tsx", ".js"]
-  },
-  plugins: [
+  };
+
+  config.plugins = [
     new webpack.BannerPlugin(banner),
-  ],
-}
+  ];
+});
+
+module.exports = multiconfig;

@@ -1,0 +1,57 @@
+:root {
+  --litepicker-mobilefriendly-backdrop-color-bg: #000;
+}
+
+.litepicker-backdrop {
+  display: none;
+  background-color: var(--litepicker-mobilefriendly-backdrop-color-bg);
+  opacity: 0.3;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.litepicker-open {
+  overflow: hidden;
+}
+
+.litepicker .container__months {
+  overflow: hidden;
+}
+
+
+.litepicker .container__months .month-item {
+  transform-origin: center;
+}
+
+.litepicker .container__months .month-item.touch-target-next {
+  animation-name: lp-bounce-target-next;
+  animation-duration: .5s;
+  animation-timing-function: ease;
+}
+
+.litepicker .container__months .month-item.touch-target-prev {
+  animation-name: lp-bounce-target-prev;
+  animation-duration: .5s;
+  animation-timing-function: ease;
+}
+
+@keyframes lp-bounce-target-next {
+  from {
+    transform: translateX(100px) scale(0.5);
+  }
+  to {
+    transform: translateX(0px) scale(1);
+  }
+}
+
+@keyframes lp-bounce-target-prev {
+  from {
+    transform: translateX(-100px) scale(0.5);
+  }
+  to {
+    transform: translateX(0px) scale(1);
+  }
+}
