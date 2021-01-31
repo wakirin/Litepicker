@@ -72,13 +72,14 @@ Litepicker.add('mobilefriendly', {
         if (Math.abs(xDiff) + Math.abs(yDiff) > threshold) {
           if (isHorizontal) {
             const date = picker.DateTime(picker.ui.querySelector('.day-item').dataset.time);
+            const numberOfMonths = picker.options.numberOfMonths;
 
             if (xDiff > 0) {
               picker.touchTargetMonth = 'next';
-              picker.gotoDate(date.add(1, 'month').clone());
+              picker.gotoDate(date.clone().add(numberOfMonths, 'month'));
             } else {
               picker.touchTargetMonth = 'prev';
-              picker.gotoDate(date.subtract(1, 'month').clone());
+              picker.gotoDate(date.clone().subtract(numberOfMonths, 'month'));
             }
           } else {
             if (yDiff > 0) {

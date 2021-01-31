@@ -426,6 +426,11 @@ export class Calendar extends LPCore {
       }
     }
 
+    // fix bug iOS 11, 12 - https://github.com/wakirin/Litepicker/issues/124
+    if (this.options.plugins instanceof Array && !this.options.plugins.includes('keyboardnav')) {
+      day.tabIndex = 0;
+    }
+
     this.emit('render:day', day, date);
 
     return day;
