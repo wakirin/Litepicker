@@ -114,10 +114,13 @@ export class Calendar extends LPCore {
 
       for (let x = 0; x < 12; x += 1) {
         const option = document.createElement('option');
+        // day 2 because iOS bug with `toLocaleString`
+        // https://github.com/wakirin/Litepicker/issues/113
+        const monthName = new DateTime(new Date(date.getFullYear(), x, 2, 0, 0, 0));
         const optionMonth = new DateTime(new Date(date.getFullYear(), x, 1, 0, 0, 0));
 
         option.value = String(x);
-        option.text = optionMonth.toLocaleString(this.options.lang, { month: 'long' });
+        option.text = monthName.toLocaleString(this.options.lang, { month: 'long' });
         option.disabled = (this.options.minDate
           && optionMonth.isBefore(new DateTime(this.options.minDate), 'month'))
           || (this.options.maxDate && optionMonth.isAfter(new DateTime(this.options.maxDate), 'month'));
