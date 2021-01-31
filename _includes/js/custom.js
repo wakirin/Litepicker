@@ -194,7 +194,7 @@ lp.favicon();
 
 lp.tags().then(function (ver) { return lp.addScript(ver) });
 
-document.addEventListener('DOMContentLoaded', function (evt) {
+jtd.onReady(function () {
   lp.toggableDarkMode();
 
   collapse.initialize();

@@ -12,7 +12,122 @@
 
   <link rel="shortcut icon" href="{{ 'favicon.ico' | relative_url }}" type="image/x-icon">
 
-  <link rel="stylesheet" href="{{ '/assets/css/just-the-docs-default.css' | relative_url }}">
+  <style>
+    body.is-preloading {
+      overflow: hidden;
+    }
+    #preloader {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      display: flex;
+      align-items: center;
+      background-color: #fff;
+      z-index: 999;
+    }
+    [data-color-mode="dark"] #preloader {
+      background-color: #27262b;
+    }
+    #preloader .spinner {
+      margin: 100px auto;
+      width: 40px;
+      height: 40px;
+      position: relative;
+    }
+
+    #preloader .spinner .cube1, #preloader .spinner .cube2 {
+      background-color: #333;
+      width: 15px;
+      height: 15px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      
+      -webkit-animation: sk-cubemove 1.8s infinite ease-in-out;
+      animation: sk-cubemove 1.8s infinite ease-in-out;
+    }
+    [data-color-mode="dark"] #preloader .spinner .cube1,
+    [data-color-mode="dark"] #preloader .spinner .cube2 {
+      background-color: #fff;
+    }
+
+    #preloader .spinner .cube2 {
+      -webkit-animation-delay: -0.9s;
+      animation-delay: -0.9s;
+    }
+
+    @-webkit-keyframes sk-cubemove {
+      25% { -webkit-transform: translateX(42px) rotate(-90deg) scale(0.5) }
+      50% { -webkit-transform: translateX(42px) translateY(42px) rotate(-180deg) }
+      75% { -webkit-transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5) }
+      100% { -webkit-transform: rotate(-360deg) }
+    }
+
+    @keyframes sk-cubemove {
+      25% { 
+        transform: translateX(42px) rotate(-90deg) scale(0.5);
+        -webkit-transform: translateX(42px) rotate(-90deg) scale(0.5);
+      } 50% { 
+        transform: translateX(42px) translateY(42px) rotate(-179deg);
+        -webkit-transform: translateX(42px) translateY(42px) rotate(-179deg);
+      } 50.1% { 
+        transform: translateX(42px) translateY(42px) rotate(-180deg);
+        -webkit-transform: translateX(42px) translateY(42px) rotate(-180deg);
+      } 75% { 
+        transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5);
+        -webkit-transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5);
+      } 100% { 
+        transform: rotate(-360deg);
+        -webkit-transform: rotate(-360deg);
+      }
+    }
+  </style>
+
+  <script>
+    function add_stylessheet() {
+      var _link = document.createElement('link');
+      _link.rel = 'stylesheet';
+      _link.onload = function() {
+        document.body.className = '';
+        document.getElementById('preloader').style.display = 'none';
+      };
+
+      if (localStorage.getItem('theme') === 'dark') {
+        _link.href = "{{ '/assets/css/just-the-docs-dark.css' | relative_url }}";
+        document.documentElement.dataset.colorMode = 'dark';
+      }
+      else {
+        _link.href = "{{ '/assets/css/just-the-docs-default.css' | relative_url }}";
+      }
+       
+      document.head.appendChild(_link);
+    }
+
+    function add_script(url, onload) {
+      var s = document.createElement('script');
+      s.type = 'text/javascript';
+      s.src = url;
+      s.defer = true;
+      document.head.appendChild(s);
+    }
+
+    var isAncientBrowser = !Array.prototype.filter 
+      || !String.prototype.includes 
+      || !Array.from
+      || !('fetch' in window)
+      || !('Promise' in window);
+
+    add_stylessheet();
+
+    if (isAncientBrowser) {
+      add_script('https://cdn.jsdelivr.net/npm/litepicker-polyfills-ie11/dist/index.js');
+      add_script("{{ '/assets/js/ie11.js' | relative_url }}");
+    }
+
+    add_script("{{ '/assets/js/just-the-docs.js' | relative_url }}")
+  </script>
 
   {% if site.ga_tracking != nil %}
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.ga_tracking }}"></script>
@@ -29,9 +144,6 @@
   {% if site.search_enabled != false %}
     <script type="text/javascript" src="{{ '/assets/js/vendor/lunr.min.js' | relative_url }}"></script>
   {% endif %}
-  <script src="https://cdn.jsdelivr.net/npm/litepicker-polyfills-ie11/dist/index.js"></script>
-  <script src="{{ '/assets/js/just-the-docs-ie11.js' | relative_url }}"></script>
-  <script type="text/javascript" src="{{ '/assets/js/just-the-docs.js' | relative_url }}"></script>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
 

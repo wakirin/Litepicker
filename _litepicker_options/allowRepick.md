@@ -21,7 +21,7 @@ new Litepicker({
   element: document.getElementById('start-date'),
   elementEnd: document.getElementById('end-date'),
   singleMode: false,
-  allowRepick: false,
+  allowRepick: true,
 })
 ```
 {% endcapture %}

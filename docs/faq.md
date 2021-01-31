@@ -62,5 +62,28 @@ new Litepicker({
 })
 ```
 
+## How to add Litepicker to NuxtJS ?
+
+- Download Litepicker from CDN: `https://cdn.jsdelivr.net/npm/litepicker/dist/litepicker.js`
+- Place in `plugins` folder of your NuxtJS project.
+- Update `nuxt.config.js`
+```js
+// nuxt.config.js
+  plugins: [
+    { src: '~/plugins/litepicker.js', mode: 'client' }
+  ],
+```
+- Initialize Litepicker
+```ts
+// index.vue
+export default {
+    mounted: function () {
+      new Litepicker({
+        element: document.getElementById("datepicker"),
+      });
+    },
+};
+```
+
 ## @TODO
 add more examples

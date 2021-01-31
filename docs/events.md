@@ -10,8 +10,6 @@ permalink: /docs/events
 
 ---
 
-Since v2 all events work with EventEmitter.
-
 Example initialize:
 
 ```js

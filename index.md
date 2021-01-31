@@ -61,7 +61,9 @@ npm install litepicker
 <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/litepicker.js"></script>
 ```
 
-You can get a specific version, see [jsdelivr docs](https://www.jsdelivr.com/features#npm).
+Be careful, this link will return the latest version.  
+To avoid breaking changes, you need to install a specific version.   
+See [jsdelivr docs](https://www.jsdelivr.com/features#npm).
 
 ## Usage
 
@@ -108,7 +110,7 @@ import Litepicker from 'litepicker/dist/nocss/litepicker.umd.js';
 #### CSS basic styles
 {: .no_toc }
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/style.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css"/>
 ```
 
 ## Bundle version (all plugins included)

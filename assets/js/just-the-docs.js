@@ -460,14 +460,6 @@ jtd.setTheme = function(theme) {
   document.documentElement.dataset.colorMode = theme;
 }
 
-jtd.restoreTheme = function() {
-  var theme = localStorage.getItem('theme');
-
-  if (theme && theme !== 'light') {
-    jtd.setTheme(theme);
-  }
-}
-
 // Document ready
 
 jtd.onReady(function(){
@@ -475,8 +467,6 @@ jtd.onReady(function(){
   {%- if site.search_enabled != false %}
   initSearch();
   {%- endif %}
-  
-  jtd.restoreTheme();
 });
 
 })(window.jtd = window.jtd || {});
