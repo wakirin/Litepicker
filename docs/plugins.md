@@ -18,6 +18,21 @@ permalink: /docs/plugins
 
 # Keyboard navigation plugin
 
+Adds keyboard navigation.  
+Supports Tab, Shift+Tab, Arrow keys.
+
+{% capture keyboardnav_video %}
+<video class="demo-video" autoplay="autoplay" muted loop preload="metadata">
+    <source src="{{ '/assets/video/keyboardnav.mp4' | relative_url }}" type="video/mp4">
+</video>
+{% endcapture %}
+
+{% include collapse.html title="Video" content=keyboardnav_video %}
+
+
+### Installation
+{: .no_toc }
+
 ```html
 <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/litepicker.js"></script>
 // include plugin after Litepicker
@@ -42,7 +57,44 @@ const picker = new Litepicker({
 </script>
 ```
 
+{% capture keyboardnav_content %}
+1. Click on first input.
+2. Press `Tab` key.
+
+<div style="display:flex">
+  <input placeholder="Some previous element" class="form-control" style="width: 250px;margin-right: 15px;" />
+  <input id="input-keyboardnav" class="form-control" style="width: 250px" readonly/>
+</div>
+<div class="demo-wrapper" data-cfg="keyboardnav"></div>
+
+---
+
+Code:
+
+```js
+new Litepicker({
+  element: document.getElementById('datepicker'),
+  plugins: ['keyboardnav']
+})
+```
+{% endcapture %}
+
+{% include collapse.html title="Demo" content=keyboardnav_content %}
+
 # Mobile friendly plugin
+
+Adds swipes (left/right) to switch months.
+
+{% capture mobilefriendly_video %}
+<video class="demo-video" autoplay="autoplay" muted loop preload="metadata">
+    <source src="{{ '/assets/video/mobilefriendly.mp4' | relative_url }}" type="video/mp4">
+</video>
+{% endcapture %}
+
+{% include collapse.html title="Video" content=mobilefriendly_video %}
+
+### Installation
+{: .no_toc }
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/litepicker.js"></script>
@@ -109,7 +161,43 @@ setup: (picker) => {
 ...
 ```
 
+{% capture mobilefriendly_content %}
+Test on mobile.
+
+<div style="display:flex">
+  <input id="input-mobilefriendly" class="form-control" style="width: 250px" readonly/>
+</div>
+<div class="demo-wrapper" data-cfg="mobilefriendly"></div>
+
+---
+
+Code:
+
+```js
+new Litepicker({
+  element: document.getElementById('datepicker'),
+  plugins: ['mobilefriendly']
+})
+```
+{% endcapture %}
+
+{% include collapse.html title="Demo" content=mobilefriendly_content %}
+
 # Predefined ranges plugin
+
+Adds predefined ranges.
+
+{% capture ranges_video %}
+<video class="demo-video" autoplay="autoplay" muted loop preload="metadata">
+    <source src="{{ '/assets/video/ranges.mp4' | relative_url }}" type="video/mp4">
+</video>
+{% endcapture %}
+
+{% include collapse.html title="Video" content=ranges_video %}
+
+
+### Installation
+{: .no_toc }
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/litepicker.js"></script>
@@ -151,3 +239,24 @@ const picker = new Litepicker({
 });
 </script>
 ```
+
+{% capture ranges_content %}
+<div style="display:flex">
+  <input id="input-ranges" class="form-control" style="width: 250px" readonly/>
+</div>
+<div class="demo-wrapper" data-cfg="ranges"></div>
+
+---
+
+Code:
+
+```js
+new Litepicker({
+  element: document.getElementById('datepicker'),
+  singleMode: false,
+  plugins: ['ranges']
+})
+```
+{% endcapture %}
+
+{% include collapse.html title="Demo" content=ranges_content %}

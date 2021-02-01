@@ -12,7 +12,7 @@ const demoCfg = {
     setup: function (picker) {
       picker.on('selected', function (date1, date2) {
         document.getElementById('index-demo-selection').innerHTML = date1.format('D MMMM YYYY') + ' - ' + date2.format('D MMMM YYYY');
-      })
+      }) 
     }
   },
   allowRepick: {
@@ -53,7 +53,21 @@ const demoCfg = {
         }
       });
     }
-  }
+  },
+
+  keyboardnav: {
+    element: '#input-keyboardnav',
+    plugins: ['keyboardnav']
+  },
+  mobilefriendly: {
+    element: '#input-mobilefriendly',
+    plugins: ['mobilefriendly']
+  },
+  ranges: {
+    element: '#input-ranges',
+    singleMode: false,
+    plugins: ['ranges']
+  },
 }
 
 const collapse = {

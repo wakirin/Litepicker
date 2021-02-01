@@ -94,3 +94,14 @@ div#index-demo-selection {
     }
   }
 }
+
+video {
+  width: 100%;
+  height: auto;
+
+  &.demo-video {
+    padding: 15px;
+    background-color: #f5f6fa;
+    border-radius: 4px;
+  }
+}
