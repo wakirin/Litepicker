@@ -9,6 +9,7 @@ module.exports = {
     'plugins/keyboardnav.js': path.join(__dirname, '../src/plugins/keyboardnav/index.js'),
     'plugins/mobilefriendly.js': path.join(__dirname, '../src/plugins/mobilefriendly/index.js'),
     'plugins/ranges.js': path.join(__dirname, '../src/plugins/ranges/index.js'),
+    'plugins/multiselect.js': path.join(__dirname, '../src/plugins/multiselect/index.js'),
   },
   output: {
     path: path.join(__dirname, '../dist/nocss/'),

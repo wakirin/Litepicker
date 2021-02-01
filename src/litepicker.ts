@@ -171,6 +171,15 @@ export class Litepicker extends Calendar {
       return;
     }
 
+    this.emit('before:click', target);
+
+    // tslint:disable-next-line: no-string-literal
+    if ('preventClick' in this && this['preventClick']) {
+      // tslint:disable-next-line: no-string-literal
+      (this['preventClick'] as any) = false;
+      return;
+    }
+
     // Click on date
     if (target.classList.contains(style.dayItem)) {
       e.preventDefault();
