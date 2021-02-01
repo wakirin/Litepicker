@@ -36,7 +36,7 @@ See more details in docs.
 - iOS 10+
   - Safari
   - Chrome
-- Android 6+
+- Android 7+
   - Chrome
   - Firefox
   - Samsung Browser

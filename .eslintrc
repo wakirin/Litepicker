@@ -8,7 +8,10 @@
       "Symbol.toStringTag",
       "Object.entries",
       "Object.assign",
-      "Intl.PluralRules"
+      "Intl.PluralRules",
+      "window.scrollX",
+      "Object.getOwnPropertySymbols",
+      "Number.isNaN"
     ]
   }
 }
