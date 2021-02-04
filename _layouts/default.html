@@ -92,7 +92,7 @@ layout: table_wrappers
         <nav aria-label="Auxiliary" class="aux-nav">
           <ul class="aux-nav-list">
             {% for link in site.aux_links %}
-              <li class="aux-nav-list-item">
+              <li class="aux-nav-list-item flex-nav-item">
                 <a href="{{ link.last }}" class="site-button"
                   {% if site.aux_links_new_tab %}
                   target="_blank" rel="noopener noreferrer"
