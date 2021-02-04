@@ -1,5 +1,6 @@
 import { Calendar } from './calendar';
 import { DateTime } from './datetime';
+import { ILPConfiguration } from './interfaces';
 import * as style from './scss/main.scss';
 import {
   findNestedMonthItem,
@@ -9,8 +10,9 @@ import {
 export class Litepicker extends Calendar {
   protected triggerElement;
   protected backdrop;
+  protected preventClick: boolean = false;
 
-  constructor(options) {
+  constructor(options: ILPConfiguration) {
     super(options);
     //
 
@@ -173,10 +175,8 @@ export class Litepicker extends Calendar {
 
     this.emit('before:click', target);
 
-    // tslint:disable-next-line: no-string-literal
-    if ('preventClick' in this && this['preventClick']) {
-      // tslint:disable-next-line: no-string-literal
-      (this['preventClick'] as any) = false;
+    if (this.preventClick) {
+      this.preventClick = false;
       return;
     }
 

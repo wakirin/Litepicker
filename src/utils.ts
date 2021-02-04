@@ -39,8 +39,12 @@ export function rangeIsLocked(days: DateTime[], options): boolean {
     isLocked = options.lockDays
       .filter((d) => {
         if (d instanceof Array) {
+          const isEqualToRange = days[0].toDateString() === d[0].toDateString()
+            && days[1].toDateString() === d[1].toDateString();
+
           return d[0].isBetween(days[0], days[1], options.lockDaysInclusivity)
-            || d[1].isBetween(days[0], days[1], options.lockDaysInclusivity);
+            || d[1].isBetween(days[0], days[1], options.lockDaysInclusivity)
+            || isEqualToRange;
         }
 
         return d.isBetween(days[0], days[1], options.lockDaysInclusivity);

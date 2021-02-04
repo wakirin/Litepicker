@@ -17,22 +17,22 @@
   overflow: hidden;
 }
 
-.litepicker[data-plugins~="mobilefriendly"] .container__months {
+.litepicker[data-plugins*="mobilefriendly"] .container__months {
   overflow: hidden;
 }
 
 
-.litepicker[data-plugins~="mobilefriendly"] .container__months .month-item {
+.litepicker[data-plugins*="mobilefriendly"] .container__months .month-item {
   transform-origin: center;
 }
 
-.litepicker[data-plugins~="mobilefriendly"] .container__months .month-item.touch-target-next {
+.litepicker[data-plugins*="mobilefriendly"] .container__months .month-item.touch-target-next {
   animation-name: lp-bounce-target-next;
   animation-duration: .5s;
   animation-timing-function: ease;
 }
 
-.litepicker[data-plugins~="mobilefriendly"] .container__months .month-item.touch-target-prev {
+.litepicker[data-plugins*="mobilefriendly"] .container__months .month-item.touch-target-prev {
   animation-name: lp-bounce-target-prev;
   animation-duration: .5s;
   animation-timing-function: ease;

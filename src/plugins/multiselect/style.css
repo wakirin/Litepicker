@@ -5,12 +5,12 @@
   --litepicker-multiselect-hover-color: #fff;
 }
 
-.litepicker[data-plugins~="multiselect"] .container__days .day-item {
+.litepicker[data-plugins*="multiselect"] .container__days .day-item {
   position: relative;
   z-index: 1;
 }
 
-.litepicker[data-plugins~="multiselect"] .container__days .day-item:not(.is-locked):after {
+.litepicker[data-plugins*="multiselect"] .container__days .day-item:not(.is-locked):after {
   content: '';
   position: absolute;
   width: 27px;
@@ -22,19 +22,19 @@
   transform: translate(-50%, -50%);
 }
 
-.litepicker[data-plugins~="multiselect"] .container__days .day-item:not(.is-locked):hover {
+.litepicker[data-plugins*="multiselect"] .container__days .day-item:not(.is-locked):hover {
   box-shadow: none;
   color: var(--litepicker-day-color);
   font-weight: bold;
 }
 
 
-.litepicker[data-plugins~="multiselect"] .container__days .day-item.is-selected,
-.litepicker[data-plugins~="multiselect"] .container__days .day-item.is-selected:hover {
+.litepicker[data-plugins*="multiselect"] .container__days .day-item.is-selected,
+.litepicker[data-plugins*="multiselect"] .container__days .day-item.is-selected:hover {
   color: var(--litepicker-multiselect-is-selected-color);
 }
 
-.litepicker[data-plugins~="multiselect"] .container__days .day-item.is-selected:after {
+.litepicker[data-plugins*="multiselect"] .container__days .day-item.is-selected:after {
   color: var(--litepicker-multiselect-is-selected-color);
   background-color: var(--litepicker-multiselect-is-selected-color-bg);
 }

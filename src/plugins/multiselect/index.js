@@ -3,10 +3,6 @@ import './style.css';
 Litepicker.add('multiselect', {
   init: function (picker) {
     Object.defineProperties(picker, {
-      preventClick: {
-        value: false,
-        writable: true
-      },
       multipleDates: {
         value: [],
         enumerable: true,
@@ -23,18 +19,19 @@ Litepicker.add('multiselect', {
     };
     picker.options.multiselect = { ...defaultOptions, ...picker.options.multiselect };
 
-    picker.options.autoApply = false;
+    picker.options.autoApply = picker.options.inlineMode;
     picker.options.showTooltip = false;
 
     const previewPreSelect = () => {
       const days = picker.preMultipleDates.length;
-      if (days > 0) {
+      const previewEl = picker.ui.querySelector('.preview-date-range');
+      if (previewEl && days > 0) {
         const pluralName = picker.pluralSelector(days);
         const pluralText = picker.options.tooltipText[pluralName]
           ? picker.options.tooltipText[pluralName]
           : `[${pluralName}]`;
         const text = `${days} ${pluralText}`;
-        picker.ui.querySelector('.preview-date-range').innerText = text;
+        previewEl.innerText = text;
       }
     }
 
@@ -66,6 +63,10 @@ Litepicker.add('multiselect', {
           picker.preMultipleDates[picker.preMultipleDates.length] = time;
 
           picker.emit('multiselect.select', picker.DateTime(time));
+        }
+
+        if (picker.options.autoApply) {
+          picker.emit('button:apply');
         }
 
         picker.render();
