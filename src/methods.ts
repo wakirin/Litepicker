@@ -297,6 +297,8 @@ Litepicker.prototype.clearSelection = function () {
   if (this.isShowning()) {
     this.render();
   }
+
+  this.emit('clear:selection');
 };
 
 Litepicker.prototype.destroy = function () {

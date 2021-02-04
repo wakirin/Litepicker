@@ -1,10 +1,11 @@
 import { LPCore } from './core';
 import { DateTime } from './datetime';
+import { ILPConfiguration } from './interfaces';
 import * as style from './scss/main.scss';
 import { dateIsLocked, findNestedMonthItem } from './utils';
 
 export class Calendar extends LPCore {
-  constructor(options) {
+  constructor(options: ILPConfiguration) {
     super(options);
     //
   }
@@ -429,7 +430,7 @@ export class Calendar extends LPCore {
       }
     }
 
-    // fix bug iOS 11, 12 - https://github.com/wakirin/Litepicker/issues/124
+    // fix bug iOS 10-12 - https://github.com/wakirin/Litepicker/issues/124
     day.tabIndex = !day.classList.contains('is-locked') ? 0 : -1;
 
     this.emit('render:day', day, date);

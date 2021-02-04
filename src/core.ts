@@ -77,7 +77,7 @@ export class LPCore extends EventEmitter {
     },
   };
 
-  constructor(options) {
+  constructor(options: ILPConfiguration) {
     super();
 
     this.options = { ...this.options, ...options.element.dataset };
@@ -157,11 +157,15 @@ export class LPCore extends EventEmitter {
         ? this.options.startDate.clone()
         : new DateTime();
 
-      if (this.options.maxDate && idx === 0) {
-        date = new DateTime(this.options.maxDate);
-        date.setDate(1);
-        const offsetMonths = this.options.numberOfMonths - 1;
-        date.setMonth(date.getMonth() - offsetMonths);
+      if (this.options.maxDate) {
+        const maxDate = new DateTime(this.options.maxDate);
+
+        if (idx === 0 && date.isAfter(maxDate)) {
+          date = maxDate.clone();
+          date.setDate(1);
+          const offsetMonths = this.options.numberOfMonths - 1;
+          date.setMonth(date.getMonth() - offsetMonths);
+        }
       }
 
       date.setDate(1);

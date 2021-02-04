@@ -2,15 +2,13 @@ import './style.css';
 
 Litepicker.add('ranges', {
   init: function (picker) {
-    if (picker.options.singleMode) {
-      return;
-    }
-
     const defaultOptions = {
       position: 'left',
       customRanges: {},
     };
     picker.options.ranges = { ...defaultOptions, ...picker.options.ranges };
+
+    picker.options.singleMode = false;
 
     if (!Object.keys(picker.options.ranges.customRanges).length) {
       const date = picker.DateTime();
@@ -35,8 +33,8 @@ Litepicker.add('ranges', {
       picker.options.ranges.customRanges = {
         Today: [date.clone(), date.clone()],
         Yesterday: [date.clone().subtract(1, 'day'), date.clone().subtract(1, 'day')],
-        'Last 7 Days': [date.clone().subtract(7, 'day'), date],
-        'Last 30 Days': [date.clone().subtract(30, 'day'), date],
+        'Last 7 Days': [date.clone().subtract(6, 'day'), date],
+        'Last 30 Days': [date.clone().subtract(29, 'day'), date],
         'This Month': thisMonth(date),
         'Last Month': lastMonth(date),
       };
