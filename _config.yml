@@ -16,7 +16,7 @@
 title: Litepicker
 description: Date range picker - lightweight, no dependencies
 baseurl: "/Litepicker" # the subpath of your site, e.g. /blog
-url: https://wakirin.github.io # "http://127.0.0.1:4000"  # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://wakirin.github.io" # "http://127.0.0.1:4000"  # the base hostname & protocol for your site, e.g. http://example.com
 
 permalink: pretty
 exclude: ["node_modules/", "*.gemspec", "*.gem", "Gemfile", "Gemfile.lock", "package.json", "package-lock.json",  "script/", "LICENSE.txt", "lib/", "bin/", "README.md", "Rakefile"
@@ -124,6 +124,4 @@ compress_html:
   #   envs: all
 
 collections:
-  - litepicker_options
-  - litepicker_events
-  - litepicker_methods
+  - v2

@@ -31,7 +31,10 @@ setup: (picker) => {
 # Event list
 {: .no_toc }
 
-{% for opt in site.litepicker_events %}
+{% for opt in site.v2 %}
+  {% unless opt.url contains '/events/' %}
+    {% continue %}
+  {% endunless %}
 {% if opt.deprecated %}
 ## <span class="label label-red">Deprecated</span> {{ opt.event }} 
 {: .text-grey-dk-000 }

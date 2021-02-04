@@ -10,8 +10,11 @@ permalink: /docs/methods
 
 ---
 
-{% for opt in site.litepicker_methods %}
-{% assign optName = opt.path | replace: '_litepicker_methods/', '' | replace: '.md', '' | replace: 'zzz_', '' %}
+{% for opt in site.v2 %}
+  {% unless opt.url contains '/methods/' %}
+    {% continue %}
+  {% endunless %}
+{% assign optName = opt.path | replace: '_v2/methods/', '' | replace: '.md', '' | replace: 'zzz_', '' %}
 {% if opt.deprecated %}
 ## <span class="label label-red">Deprecated</span> {{ optName }} 
 {: .text-grey-dk-000 }

@@ -39,21 +39,31 @@ lockDaysFilter: (day) => {
 ...
 ```
 
-With disallowLockDaysInRange option enabled:
+If you want to disallow locked days in a range, you must check the range yourself.  
+Example for disabled weekends.  
 
 ```js
 ...
-lockDaysFilter: (date1, date2, pickedDates) => {
+  // enable option to trigger check
+  disallowLockDaysInRange: true,
+  // check locked days yourself
+  lockDaysFilter: (date1, date2, pickedDates) => {
 
-   while (date1.toJSDate() < date2.toJSDate()) {
-     const day = date1.getDay();
-     isWeekend = [6, 0].includes(day);
-     if (isWeekend) { return true; }
-       date1.add(1, 'day');
-   }
+    if (!date2) {
+      const d = date1.getDay();
 
-   return false;
-},
+      return [6, 0].includes(d);
+    }
+
+    while (date1.toJSDate() < date2.toJSDate()) {
+      const day = date1.getDay();
+      isWeekend = [6, 0].includes(day);
+      if (isWeekend) { return true; }
+      date1.add(1, 'day');
+    }
+
+    return false;
+  }
 ...
 ```
 

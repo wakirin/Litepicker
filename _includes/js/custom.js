@@ -65,8 +65,16 @@ const demoCfg = {
   },
   ranges: {
     element: '#input-ranges',
-    singleMode: false,
     plugins: ['ranges']
+  },
+  multiselect: {
+    element: '#input-multiselect',
+    plugins: ['multiselect'],
+    setup: (picker) => {
+      picker.on('button:apply', () => {
+        document.getElementById('input-multiselect').value = picker.multipleDatesToString();
+      });
+    }
   },
 }
 
