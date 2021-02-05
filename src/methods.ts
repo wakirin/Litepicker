@@ -36,7 +36,7 @@ Litepicker.prototype.show = function (el = null) {
   }
 
   if (this.options.inlineMode) {
-    this.ui.style.position = 'static';
+    this.ui.style.position = 'relative';
     this.ui.style.display = 'inline-block';
     this.ui.style.top = null;
     this.ui.style.left = null;
