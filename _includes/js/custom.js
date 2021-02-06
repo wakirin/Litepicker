@@ -197,7 +197,7 @@ const lp = {
     const date = (new Date()).getDate();
     const favicon = document.querySelector('link[rel="shortcut icon"]');
 
-    favicon.setAttribute('href', '{{ "assets/favicon/" | relative_url }}' + date + '.png');
+    favicon.setAttribute('href',  '/assets/favicon/' + date + '.png');
   },
   toggableDarkMode: function () {
     const toggleDarkMode = document.querySelector('.js-promo-color-modes-toggle');
