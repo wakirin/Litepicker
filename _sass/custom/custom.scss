@@ -1,15 +1,12 @@
 #bg {
-  display: inline-block;
   z-index: -20;
-  line-height: 0;
-  opacity: 1;
   background-size: cover;
   height: 100%;
   width: 100%;
   position: fixed;
-  top: 0px;
-  left: 0px;
-  background-position: center top;
+  top: 0;
+  left: 0;
+  background-position: center center;
   background-attachment: fixed;
 }
 

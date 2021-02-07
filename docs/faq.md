@@ -1,6 +1,8 @@
 ---
 layout: default
-title: FAQ
+nav: FAQ
+title: "FAQ"
+description: "Frequently asked questions."
 nav_order: 7
 permalink: /docs/examples
 ---
@@ -85,5 +87,6 @@ export default {
 };
 ```
 
-## @TODO
-add more examples
+## Need a custom solution for date picker ?
+Contact me, we will discuss it.  
+<a href="mailto:litepicker@lvl.ninja">litepicker@lvl.ninja</a>

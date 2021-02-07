@@ -1,6 +1,7 @@
 ---
 layout: default
-title: Comments
+nav: Comments
+title: "Comments"
 nav_order: 10
 permalink: /docs/comments
 ---

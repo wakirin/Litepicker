@@ -1,6 +1,7 @@
 ---
 layout: default
-title: Customize colors
+nav: Customize colors
+title: "Customize colors"
 nav_order: 6
 permalink: /docs/customize-colors
 ---

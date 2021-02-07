@@ -1,8 +1,9 @@
 ---
 layout: default
-title: Home
+nav: Home
+title: "Open-source date range picker. No dependencies."
+description: "Lightweight, highly configurable, many options. Plugins: keyboard accessibility, mobile friendly, predefined ranges, multiple select."
 nav_order: 1
-description: "Date range picker - lightweight, no dependencies."
 permalink: /
 ---
 

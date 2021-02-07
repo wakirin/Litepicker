@@ -1,6 +1,8 @@
 ---
 layout: default
-title: Keyboard navigation plugin
+nav: Keyboard navigation plugin
+title: "Keyboard navigation plugin"
+description: "Adds keyboard navigation. Supports Tab, Shift+Tab, Arrow keys."
 parent: Plugins
 ---
 

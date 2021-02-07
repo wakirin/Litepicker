@@ -1,6 +1,8 @@
 ---
 layout: default
-title: Predefined ranges plugin
+nav: Predefined ranges plugin
+title: "Predefined ranges plugin"
+description: "Adds predefined ranges."
 parent: Plugins
 ---
 

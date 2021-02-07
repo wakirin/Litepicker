@@ -64,7 +64,7 @@ heading_anchors: true
 
 # Aux links for the upper right navigation
 aux_links:
-  "Litepicker on GitHub":
+  "GitHub":
     - "//github.com/wakirin/Litepicker"
 
 # Makes Aux links open in a new tab. Default is false
@@ -107,6 +107,7 @@ color_scheme: nil
 
 plugins:
   - jekyll-seo-tag
+  - jekyll-sitemap
 
 kramdown:
   syntax_highlighter_opts:

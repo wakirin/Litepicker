@@ -1,5 +1,6 @@
 ---
 layout: default
+nav: Methods
 title: Methods
 nav_order: 4
 permalink: /docs/methods

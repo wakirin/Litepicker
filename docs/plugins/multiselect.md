@@ -1,6 +1,8 @@
 ---
 layout: default
-title: Multiselect plugin
+nav: Multiselect plugin
+title: "Multiselect plugin"
+description: "Adds multiple selection."
 parent: Plugins
 ---
 

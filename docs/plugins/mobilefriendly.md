@@ -1,6 +1,8 @@
 ---
 layout: default
-title: Mobile friendly plugin
+nav: Mobile friendly plugin
+title: "Mobile friendly plugin"
+description: "Adds swipes (left/right) to switch months."
 parent: Plugins
 ---
 

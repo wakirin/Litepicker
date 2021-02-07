@@ -1,6 +1,8 @@
 ---
 layout: default
-title: Events
+nav: Events
+title: "Events"
+description: "All available Litepicker events."
 nav_order: 3
 permalink: /docs/events
 ---

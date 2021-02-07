@@ -1,6 +1,8 @@
 ---
 layout: default
-title: Options
+nav: Options
+title: "Options"
+description: "All available Litepicker options."
 nav_order: 2
 permalink: /docs/options
 ---
