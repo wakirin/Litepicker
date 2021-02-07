@@ -86,7 +86,3 @@ export default {
     },
 };
 ```
-
-## Need a custom solution for date picker ?
-Contact me, we will discuss it.  
-<a href="mailto:litepicker@lvl.ninja">litepicker@lvl.ninja</a>
