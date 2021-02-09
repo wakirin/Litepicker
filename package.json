@@ -1,6 +1,6 @@
 {
   "name": "litepicker",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "Date range picker - lightweight, no dependencies",
   "main": "./dist/litepicker.umd.js",
   "types": "./dist/types/index.d.ts",
@@ -31,7 +31,7 @@
     "email": "litepicker@lvl.ninja",
     "url": "https://lvl.ninja"
   },
-  "homepage": "https://github.com/wakirin/litepicker#readme",
+  "homepage": "https://litepicker.com",
   "bugs": {
     "url": "https://github.com/wakirin/litepicker/issues"
   },

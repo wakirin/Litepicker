@@ -21,7 +21,7 @@ Date range picker - lightweight, no dependencies
   
 See more details in docs.
 
-# [Documentation](https://wakirin.github.io/Litepicker)
+# [Documentation](https://litepicker.com)
 
 ## Compatibility
 
@@ -44,10 +44,10 @@ See more details in docs.
   - UC Browser
 
 ## Plugins
-* [keyboardnav](https://wakirin.github.io/Litepicker/docs/plugins/keyboardnav/) - adds keyboard navigation.
-* [mobilefriendly](https://wakirin.github.io/Litepicker/docs/plugins/mobilefriendly/) - adds swipes (left/right) to switch months.
-* [ranges](https://wakirin.github.io/Litepicker/docs/plugins/ranges/) - adds predefined ranges.
-* [multiselect](https://wakirin.github.io/Litepicker/docs/plugins/multiselect/) - adds multiple selection.
+* [keyboardnav](https://litepicker.com/docs/plugins/keyboardnav/) - adds keyboard navigation.
+* [mobilefriendly](https://litepicker.com/docs/plugins/mobilefriendly/) - adds swipes (left/right) to switch months.
+* [ranges](https://litepicker.com/docs/plugins/ranges/) - adds predefined ranges.
+* [multiselect](https://litepicker.com/docs/plugins/multiselect/) - adds multiple selection.
 
 ## See also:
 * [Drupal module](https://www.drupal.org/project/date_range_picker) by [kviolka](https://github.com/kviolka)

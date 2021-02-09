@@ -63,8 +63,6 @@ export class Litepicker extends Calendar {
       }
     }
 
-    this.render();
-
     if (this.options.parentEl) {
       if (this.options.parentEl instanceof HTMLElement) {
         this.options.parentEl.appendChild(this.ui);
@@ -83,16 +81,18 @@ export class Litepicker extends Calendar {
       }
     }
 
-    if (this.options.inlineMode) {
-      this.show();
-    }
-
     this.updateInput();
 
     this.init();
 
     if (typeof this.options.setup === 'function') {
       this.options.setup.call(this, this);
+    }
+
+    this.render();
+
+    if (this.options.inlineMode) {
+      this.show();
     }
   }
 
