@@ -24,7 +24,7 @@ interface ILPOptionTooltip {
 
 export interface ILPConfiguration {
   element: HTMLElement | HTMLInputElement;
-  elementEnd?: HTMLInputElement | null;
+  elementEnd?: HTMLElement | HTMLInputElement | null;
   parentEl?: HTMLElement | null;
   firstDay?: number;
   format?: string | object;

@@ -10,6 +10,11 @@ Litepicker.add('keyboardnav', {
       },
     });
 
+    const defaultOptions = {
+      firstTabIndex: 1,
+    };
+    picker.options.keyboardnav = { ...defaultOptions, ...picker.options.keyboardnav };
+
     function handleEnter(target, evt) {
       if (target.classList.contains('day-item')) {
         evt.preventDefault();
@@ -17,7 +22,10 @@ Litepicker.add('keyboardnav', {
         document.activeElement.dispatchEvent(new Event('click'));
   
         setTimeout(() => {
-          const focusEl = picker.ui.querySelector('[tabindex="2"]');
+          let focusEl = picker.ui.querySelector('.is-start-date[tabindex="2"]');
+          if (!focusEl) {
+            focusEl = picker.ui.querySelector('[tabindex="2"]');
+          }
           focusEl.focus();
         });
       }
@@ -166,7 +174,7 @@ Litepicker.add('keyboardnav', {
 
       this.show(evt.target);
 
-      const focusEl = this.ui.querySelector('[tabindex="1"]');
+      const focusEl = this.ui.querySelector(`[tabindex="${picker.options.keyboardnav.firstTabIndex}"]`);
       focusEl.focus();
     }
 

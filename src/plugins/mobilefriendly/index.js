@@ -57,30 +57,45 @@ Litepicker.add('mobilefriendly', {
         const isHorizontal = Math.abs(xDiff) > Math.abs(yDiff);
         const threshold = 100;
 
+        const numberOfMonths = picker.options.numberOfMonths;
+        let nextDate = null;
+        let canSwipe = false;
+        let touchTargetMonth = '';
+
         const monthItems = Array.from(picker.ui.querySelectorAll('.month-item'));
         if (isHorizontal) {
+          const date = picker.DateTime(picker.ui.querySelector('.day-item').dataset.time);
           const opacityValue = Number(`${1 - (Math.abs(xDiff) / threshold)}`);
-          monthItems.map(x => x.style.opacity = opacityValue);        
+          let translateX = 0;
 
           if (xDiff > 0) {
-            monthItems.map(x => x.style.transform = `translateX(${-Math.abs(xDiff)}px)`);
+            translateX = -Math.abs(xDiff);
+            nextDate = date.clone().add(numberOfMonths, 'month');
+
+            const maxDate = picker.options.maxDate;
+            canSwipe = !maxDate || (nextDate.isSameOrBefore(picker.DateTime(maxDate), 'month'));
+            touchTargetMonth = 'next';
           } else {
-            monthItems.map(x => x.style.transform = `translateX(${Math.abs(xDiff)}px)`);
+            translateX = Math.abs(xDiff);
+            nextDate = date.clone().subtract(numberOfMonths, 'month');
+
+            const minDate = picker.options.minDate;
+            canSwipe = !minDate || (nextDate.isSameOrAfter(picker.DateTime(minDate), 'month'));
+            touchTargetMonth = 'prev';
+          }
+
+          if (canSwipe) {
+            monthItems.map(x => {
+              x.style.opacity = opacityValue
+              x.style.transform = `translateX(${translateX}px)`
+            });
           }
         }
 
         if (Math.abs(xDiff) + Math.abs(yDiff) > threshold) {
-          if (isHorizontal) {
-            const date = picker.DateTime(picker.ui.querySelector('.day-item').dataset.time);
-            const numberOfMonths = picker.options.numberOfMonths;
-
-            if (xDiff > 0) {
-              picker.touchTargetMonth = 'next';
-              picker.gotoDate(date.clone().add(numberOfMonths, 'month'));
-            } else {
-              picker.touchTargetMonth = 'prev';
-              picker.gotoDate(date.clone().subtract(numberOfMonths, 'month'));
-            }
+          if (isHorizontal && nextDate && canSwipe) {
+            picker.touchTargetMonth = touchTargetMonth;
+            picker.gotoDate(nextDate);
           } else {
             if (yDiff > 0) {
               /* up swipe */

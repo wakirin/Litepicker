@@ -8,9 +8,9 @@ import {
 } from './utils';
 
 export class Litepicker extends Calendar {
+  public preventClick: boolean = false;
   protected triggerElement;
   protected backdrop;
-  protected preventClick: boolean = false;
 
   constructor(options: ILPConfiguration) {
     super(options);
