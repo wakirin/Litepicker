@@ -30,6 +30,7 @@ export class LPCore extends EventEmitter {
     startDate: null,
     endDate: null,
     zIndex: 9999,
+    position: 'auto',
 
     selectForward: false,
     selectBackward: false,
@@ -255,5 +256,53 @@ export class LPCore extends EventEmitter {
 
   protected isShowning() {
     return this.ui && this.ui.style.display !== 'none';
+  }
+
+  protected findPosition(element) {
+    const rect = element.getBoundingClientRect();
+    const calRect = this.ui.getBoundingClientRect();
+    const orientation = this.options.position.split(' ');
+    const scrollX = window.scrollX || window.pageXOffset;
+    const scrollY = window.scrollY || window.pageYOffset;
+
+    let top = 0;
+    let left = 0;
+
+    if (orientation[0] === 'auto' || !(/top|bottom/.test(orientation[0]))) {
+      if (rect.bottom + calRect.height > window.innerHeight && scrollY > calRect.height) {
+        top = (rect.top + scrollY) - calRect.height;
+      } else {
+        top = rect.bottom + scrollY;
+      }
+    } else {
+      top = rect[orientation[0]] + scrollY;
+
+      if (orientation[0] === 'top') {
+        top -= calRect.height;
+      }
+    }
+
+    if (!(/left|right/.test(orientation[0])) && (!orientation[1] || orientation[1] === 'auto' || !(/left|right/.test(orientation[1])))) {
+      if (rect.left + calRect.width > window.innerWidth) {
+        left = (rect.right + scrollX) - calRect.width;
+      } else {
+        left = rect.left + scrollX;
+      }
+    } else {
+      if (/left|right/.test(orientation[0])) {
+        left = rect[orientation[0]] + scrollX;
+      } else {
+        left = rect[orientation[1]] + scrollX;
+      }
+
+      if (orientation[0] === 'right' || orientation[1] === 'right') {
+        left -= calRect.width;
+      }
+    }
+
+    return {
+      left,
+      top,
+    };
   }
 }

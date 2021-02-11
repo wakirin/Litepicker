@@ -69,4 +69,5 @@ export interface ILPConfiguration {
   setup?: (picker: Litepicker) => void;
   tooltipNumber?: (totalDays: number) => number;
   plugins?: string[];
+  position?: string;
 }

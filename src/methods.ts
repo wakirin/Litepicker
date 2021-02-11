@@ -54,49 +54,10 @@ Litepicker.prototype.show = function (el = null) {
   this.ui.style.display = 'block';
   this.ui.style.zIndex = this.options.zIndex;
 
-  const elBCR = element.getBoundingClientRect();
-  const pickerBCR = this.ui.getBoundingClientRect();
+  const position = this.findPosition(element);
 
-  let top = elBCR.bottom;
-  let left = elBCR.left;
-  let scrollX = 0;
-  let scrollY = 0;
-  let topAlt = 0;
-  let leftAlt = 0;
-
-  if (this.options.parentEl) {
-    const parentBCR = this.ui.parentNode.getBoundingClientRect();
-    top -= parentBCR.bottom;
-    top += elBCR.height;
-
-    if (top + pickerBCR.height > window.innerHeight
-      && (elBCR.top - parentBCR.top) - elBCR.height > 0) {
-      topAlt = (elBCR.top - parentBCR.top) - elBCR.height;
-    }
-
-    left -= parentBCR.left;
-
-    if (left + pickerBCR.width > window.innerWidth
-      && (elBCR.right - parentBCR.right) - pickerBCR.width > 0) {
-      leftAlt = (elBCR.right - parentBCR.right) - pickerBCR.width;
-    }
-  } else {
-    scrollX = window.scrollX || window.pageXOffset;
-    scrollY = window.scrollY || window.pageYOffset;
-
-    if (top + pickerBCR.height > window.innerHeight
-      && elBCR.top - pickerBCR.height > 0) {
-      topAlt = elBCR.top - pickerBCR.height;
-    }
-
-    if (left + pickerBCR.width > window.innerWidth
-      && elBCR.right - pickerBCR.width > 0) {
-      leftAlt = elBCR.right - pickerBCR.width;
-    }
-  }
-
-  this.ui.style.top = `${(topAlt ? topAlt : top) + scrollY}px`;
-  this.ui.style.left = `${(leftAlt ? leftAlt : left) + scrollX}px`;
+  this.ui.style.top = `${position.top}px`;
+  this.ui.style.left = `${position.left}px`;
   this.ui.style.right = null;
   this.ui.style.bottom = null;
 

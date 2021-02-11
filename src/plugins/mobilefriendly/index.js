@@ -38,6 +38,16 @@ Litepicker.add('mobilefriendly', {
       return orientation;
     }
 
+    function fitNumberOfMonths() {
+      if (getOrientation() === 'portrait') {
+        picker.options.numberOfMonths = 1;
+        picker.options.numberOfColumns = 1;
+      } else {
+        picker.options.numberOfMonths = 2;
+        picker.options.numberOfColumns = 2;
+      }
+    }
+
     const swipe = {
       onTouchStart: (evt) => {
         const firstTouch = evt.touches[0];
@@ -179,13 +189,7 @@ Litepicker.add('mobilefriendly', {
         picker.ui.style.position = 'fixed';
         picker.ui.style.display = 'block';
 
-        if (getOrientation() === 'portrait') {
-          picker.options.numberOfMonths = 1;
-          picker.options.numberOfColumns = 1;
-        } else {
-          picker.options.numberOfMonths = 2;
-          picker.options.numberOfColumns = 2;
-        }
+        fitNumberOfMonths();
 
         picker.scrollToDate(el);
 
@@ -205,6 +209,10 @@ Litepicker.add('mobilefriendly', {
         (el || picker.options.element).blur();
 
         picker.emit('mobilefriendly.show', el);
+      } else if (isMobile()) {
+        fitNumberOfMonths();
+
+        picker.render();
       }
     });
 
