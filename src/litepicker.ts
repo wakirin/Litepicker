@@ -451,7 +451,7 @@ export class Litepicker extends Calendar {
       isValid = startValue instanceof DateTime
         && endValue instanceof DateTime
         && startValue.format(dateFormat) === (this.options.element as HTMLInputElement).value
-        && endValue.format(dateFormat) === this.options.elementEnd.value;
+        && endValue.format(dateFormat) === (this.options.elementEnd as HTMLInputElement).value;
     } else if (this.options.singleMode) {
       isValid = startValue instanceof DateTime
         && startValue.format(dateFormat) === (this.options.element as HTMLInputElement).value;

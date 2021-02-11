@@ -5,6 +5,7 @@ Litepicker.add('ranges', {
     const defaultOptions = {
       position: 'left',
       customRanges: {},
+      force: false,
     };
     picker.options.ranges = { ...defaultOptions, ...picker.options.ranges };
 
@@ -59,7 +60,11 @@ Litepicker.add('ranges', {
           const el = e.target;
 
           if (el) {
-            picker.setDateRange(Number(el.dataset.start), Number(el.dataset.end));
+            picker.setDateRange(
+              Number(el.dataset.start),
+              Number(el.dataset.end),
+              picker.options.ranges.force
+            );
 
             if (picker.options.autoApply) {
               picker.hide();

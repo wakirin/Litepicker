@@ -1,5 +1,6 @@
 import { DateTime } from './datetime';
 import { Litepicker } from './litepicker';
+import { dateIsLocked, rangeIsLocked } from './utils';
 
 declare module './litepicker' {
   // tslint:disable-next-line: interface-name
@@ -140,10 +141,22 @@ Litepicker.prototype.getEndDate = function (): DateTime {
   return null;
 };
 
-Litepicker.prototype.setDate = function (date) {
-  this.setStartDate(date);
+Litepicker.prototype.setDate = function (date, force: boolean = false) {
+  const d = new DateTime(
+    date,
+    this.options.format,
+    this.options.lang,
+  );
 
-  this.emit('selected', this.getDate());
+  const isLocked = dateIsLocked(d, this.options, [d]);
+
+  if (isLocked && !force) {
+    this.emit('error:date', d);
+  } else {
+    this.setStartDate(date);
+
+    this.emit('selected', this.getDate());
+  }
 };
 
 Litepicker.prototype.setStartDate = function (date) {
@@ -179,16 +192,38 @@ Litepicker.prototype.setEndDate = function (date) {
   this.updateInput();
 };
 
-Litepicker.prototype.setDateRange = function (date1, date2) {
+Litepicker.prototype.setDateRange = function (date1, date2, force: boolean = false) {
   // stop repicking by resetting the trigger element
   this.triggerElement = undefined;
 
-  this.setStartDate(date1);
-  this.setEndDate(date2);
+  const d1 = new DateTime(
+    date1,
+    this.options.format,
+    this.options.lang,
+  );
+  const d2 = new DateTime(
+    date2,
+    this.options.format,
+    this.options.lang,
+  );
+  let isLocked = false;
+  if (this.options.disallowLockDaysInRange) {
+    isLocked = rangeIsLocked([d1, d2], this.options);
+  } else {
+    isLocked = dateIsLocked(d1, this.options, [d1, d2])
+      || dateIsLocked(d2, this.options, [d1, d2]);
+  }
 
-  this.updateInput();
+  if (isLocked && !force) {
+    this.emit('error:range', [d1, d2]);
+  } else {
+    this.setStartDate(d1);
+    this.setEndDate(d2);
 
-  this.emit('selected', this.getStartDate(), this.getEndDate());
+    this.updateInput();
+
+    this.emit('selected', this.getStartDate(), this.getEndDate());
+  }
 };
 
 Litepicker.prototype.gotoDate = function (date, idx = 0) {
