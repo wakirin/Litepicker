@@ -88,9 +88,9 @@ layout: table_wrappers
         </div>
       {% endif %}
       {% include header_custom.html %}
-      {% if site.aux_links %}
         <nav aria-label="Auxiliary" class="aux-nav">
           <ul class="aux-nav-list">
+            {% if site.aux_links %}
             {% for link in site.aux_links %}
               <li class="aux-nav-list-item flex-nav-item">
                 <a href="{{ link.last }}" class="site-button"
@@ -102,6 +102,12 @@ layout: table_wrappers
                 </a>
               </li>
             {% endfor %}
+            {% endif %}
+
+            <li class="aux-nav-list-item flex-nav-item">
+              <a class="github-button" href="https://github.com/wakirin/litepicker/" data-color-scheme="no-preference: light; light: light; dark: dark;" 
+              data-size="large" aria-label="Go to wakirin/litepicker">Github</a>
+            </li>
 
             <li class="aux-nav-list-item flex-nav-item">
               <a class="github-button" href="https://github.com/wakirin/litepicker" data-color-scheme="no-preference: light; light: light; dark: dark;" data-icon="octicon-star"
@@ -126,7 +132,6 @@ layout: table_wrappers
             </li>
           </ul>
         </nav>
-      {% endif %}
     </div>
     <div id="main-content-wrap" class="main-content-wrap">
       {% unless page.url == "/" %}

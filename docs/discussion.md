@@ -1,9 +1,9 @@
 ---
 layout: default
-nav: Comments
-title: "Comments"
+nav: Discussion
+title: "Discussion"
 nav_order: 10
-permalink: /docs/comments
+permalink: /docs/discussion
 ---
 
 # Comments

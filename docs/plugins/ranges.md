@@ -48,21 +48,70 @@ const picker = new Litepicker({
 </script>
 ```
 
-You can define your own ranges:
+# Options
 
-```html
-<script>
+### position
+
+Type: `String`
+
+Default: `left`
+
+Ranges block position.  
+Possible values: `left`, `top`, `right`, `bottom`.
+
+Example: 
+
+```js
 const picker = new Litepicker({ 
   element: document.getElementById('litepicker'),
   plugins: ['ranges'],
   ranges: {
-    position: 'left',
+    position: 'left'
+  }
+});
+```
+
+### customRanges
+
+Type: `Object`
+
+Default: `{ _default_ranges_ }`
+
+Define your own ranges.  
+Default ranges is: `Today`, `Yesterday`, `Last 7 days`, `Last 30 days`, `This month`, `Last month`.
+
+Example: 
+
+```js
+const picker = new Litepicker({ 
+  element: document.getElementById('litepicker'),
+  plugins: ['ranges'],
+  ranges: {
     customRanges: {
       'New range': [new Date('2020-11-19'), new Date()] // first start date then end date.
     }
   }
 });
-</script>
+```
+
+### force
+
+Type: `Boolean`
+
+Default: `false`
+
+When `true` ignores locked days and selects a date range.
+
+Example: 
+
+```js
+const picker = new Litepicker({ 
+  element: document.getElementById('litepicker'),
+  plugins: ['ranges'],
+  ranges: {
+    force: true
+  }
+});
 ```
 
 {% capture ranges_content %}

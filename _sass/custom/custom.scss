@@ -82,12 +82,22 @@ div#index-demo-selection {
 
 .aux-nav {
   width: 100%;
+  padding-right: 0;
 
   .aux-nav-list {
     align-items: center;
 
-    .flex-nav-item:last-child {
-      margin-left: auto;
+    .flex-nav-item {
+      padding: 10px 0 10px 10px;
+
+      &:first-child {
+        padding-left: 10px;
+      }
+
+      &:last-child {
+        margin-left: auto;
+        padding-right: 10px;
+      }
     }
   }
 }

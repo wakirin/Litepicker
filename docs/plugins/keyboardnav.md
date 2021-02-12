@@ -49,6 +49,30 @@ const picker = new Litepicker({
 </script>
 ```
 
+# Options
+
+### firstTabIndex
+
+Type: `Number`
+
+Default: `1`
+
+First target to focus on.  
+tabIndex `1` are the header elements (buttons on header).  
+tabIndex `2` are elements of days.  
+
+Example: 
+
+```js
+new Litepicker({
+  element: document.getElementById('datepicker'),
+  plugins: ['keyboardnav']
+  keyboardnav: {
+    firstTabIndex: 2,
+  },
+})
+```
+
 {% capture keyboardnav_content %}
 1. Click on first input.
 2. Press `Tab` key.

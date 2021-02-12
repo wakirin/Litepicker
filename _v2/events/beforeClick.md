@@ -6,6 +6,7 @@ args: (target)
 `target` is clicked element.
 
 Event is called before click on calendar elements.
+Note: «Calendar elements» are children of `.litepicker` element.
 
 ```js
 ...
