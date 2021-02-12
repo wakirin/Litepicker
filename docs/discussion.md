@@ -6,7 +6,7 @@ nav_order: 10
 permalink: /docs/discussion
 ---
 
-# Comments
+# Discussion
 {: .no_toc }
 
 ---
