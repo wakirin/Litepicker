@@ -51,7 +51,7 @@ const picker = new Litepicker({
 
 # Options
 
-### firstTabIndex
+### firstTabIndex <sup>2.0.5+</sup>
 
 Type: `Number`
 
