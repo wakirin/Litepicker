@@ -30,6 +30,7 @@ export interface ILPConfiguration {
   format?: string | object;
   lang?: string;
   delimiter?: string;
+  delimitSameDate?: boolean;
   numberOfMonths?: number;
   numberOfColumns?: number;
   startDate?: DateTime | Date | string | number;
