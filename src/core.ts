@@ -25,6 +25,7 @@ export class LPCore extends EventEmitter {
     format: 'YYYY-MM-DD',
     lang: 'en-US',
     delimiter: ' - ',
+    delimitSameDate: true,
     numberOfMonths: 1,
     numberOfColumns: 1,
     startDate: null,
