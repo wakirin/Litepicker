@@ -146,7 +146,9 @@ Litepicker.add('mobilefriendly', {
       // https://stackoverflow.com/a/49383279/2873909
       const afterOrientationChange = () => {
         if (isMobile() && picker.isShowning()) {
-          switch (getOrientation()) {
+          const orientation = getOrientation();
+
+          switch (orientation) {
             case 'landscape':
               options.numberOfMonths = 2;
               options.numberOfColumns = 2;
@@ -159,13 +161,10 @@ Litepicker.add('mobilefriendly', {
               break;
           }
 
-          picker.render();
+          picker.ui.classList.toggle('mobilefriendly-portrait', orientation === 'portrait');
+          picker.ui.classList.toggle('mobilefriendly-landscape', orientation === 'landscape');
 
-          if (!options.inlineMode) {
-            const pickerBCR = picker.ui.getBoundingClientRect();
-            picker.ui.style.top = `calc(50% - ${(pickerBCR.height / 2)}px)`;
-            picker.ui.style.left = `calc(50% - ${(pickerBCR.width / 2)}px)`;
-          }
+          picker.render();
         }
 
         window.removeEventListener('resize', afterOrientationChange);
@@ -195,9 +194,12 @@ Litepicker.add('mobilefriendly', {
 
         picker.render();
 
-        const pickerBCR = picker.ui.getBoundingClientRect();
-        picker.ui.style.top = `calc(50% - ${(pickerBCR.height / 2)}px)`;
-        picker.ui.style.left = `calc(50% - ${(pickerBCR.width / 2)}px)`;
+        const orientation = getOrientation();
+        picker.ui.classList.add('mobilefriendly');
+        picker.ui.classList.toggle('mobilefriendly-portrait', orientation === 'portrait');
+        picker.ui.classList.toggle('mobilefriendly-landscape', orientation === 'landscape');
+        picker.ui.style.top = '50%';
+        picker.ui.style.left = '50%';
         picker.ui.style.right = null;
         picker.ui.style.bottom = null;
         picker.ui.style.zIndex = picker.options.zIndex;
@@ -228,6 +230,7 @@ Litepicker.add('mobilefriendly', {
     picker.on('hide', () => {
       document.body.classList.remove('litepicker-open');
       picker.backdrop.style.display = 'none';
+      picker.ui.classList.remove('mobilefriendly', 'mobilefriendly-portrait', 'mobilefriendly-landscape');
     });
 
     picker.on('destroy', () => {

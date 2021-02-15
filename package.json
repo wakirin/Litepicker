@@ -5,7 +5,7 @@
   "main": "./dist/litepicker.umd.js",
   "types": "./dist/types/index.d.ts",
   "scripts": {
-    "prod": "webpack --config config/webpack.prod.js && webpack --config config/webpack.nocss.js && webpack --config config/webpack.plugins.js && webpack --config config/webpack.plugins.nocss.js",
+    "prod": "webpack --config config/webpack.prod.js",
     "dev": "webpack --config config/webpack.dev.js",
     "nocss": "webpack --config config/webpack.nocss.js",
     "plugins": "webpack --config config/webpack.plugins.js && webpack --config config/webpack.plugins.nocss.js",

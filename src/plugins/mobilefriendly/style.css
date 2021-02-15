@@ -17,8 +17,33 @@
   overflow: hidden;
 }
 
+.litepicker.mobilefriendly[data-plugins*="mobilefriendly"] {
+  transform: translate(-50%, -50%);
+  font-size: 1.1rem;
+  --litepicker-container-months-box-shadow-color: #616161;
+}
+.litepicker.mobilefriendly-portrait {
+  --litepicker-day-width: 13.5vw;
+  --litepicker-month-width: calc(var(--litepicker-day-width) * 7);
+}
+.litepicker.mobilefriendly-landscape {
+  --litepicker-day-width: 5.5vw;
+  --litepicker-month-width: calc(var(--litepicker-day-width) * 7);
+}
+
 .litepicker[data-plugins*="mobilefriendly"] .container__months {
   overflow: hidden;
+}
+
+.litepicker.mobilefriendly[data-plugins*="mobilefriendly"] .container__months .month-item-header {
+  height: var(--litepicker-day-width);
+}
+
+.litepicker.mobilefriendly[data-plugins*="mobilefriendly"] .container__days > div {
+  height: var(--litepicker-day-width);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 
