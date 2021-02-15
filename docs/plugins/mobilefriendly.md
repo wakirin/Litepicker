@@ -50,7 +50,7 @@ const picker = new Litepicker({
 # Events:
 {: .no_toc }
 
-### mobilefriendly.before:show <sup>2.0.0+</sup>
+### mobilefriendly.before:show
 {: .no_toc }
 
 Arguments: `(el)`
@@ -69,7 +69,7 @@ setup: (picker) => {
 ...
 ```
 
-### mobilefriendly.show <sup>2.0.0+</sup>
+### mobilefriendly.show
 {: .no_toc }
 
 Arguments: `(el)`

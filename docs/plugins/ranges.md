@@ -94,7 +94,7 @@ const picker = new Litepicker({
 });
 ```
 
-### force
+### force <sup>2.0.5+</sup>
 
 Type: `Boolean`
 

@@ -134,7 +134,7 @@ Arguments: `(format, delimiter)`
 Return: `String`
 
 `format` is optional, default is `YYYY-MM-DD`. Allowed formats see in `format` option of Litepicker.
-`delimiter` is optinal, default is `,`.
+`delimiter` is optional, default is `,`.
 
 Return selected days as string.
 
