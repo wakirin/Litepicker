@@ -70,4 +70,17 @@ export interface ILPConfiguration {
   tooltipNumber?: (totalDays: number) => number;
   plugins?: string[];
   position?: string;
+
+  // plugins
+  ranges?: {
+    position?: string;
+    customRanges?: object;
+    force?: boolean;
+  };
+  multiselect?: {
+    max?: number | null;
+  };
+  keyboardnav?: {
+    firstTabIndex?: number;
+  };
 }
