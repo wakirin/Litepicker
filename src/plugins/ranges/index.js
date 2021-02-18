@@ -46,7 +46,7 @@ Litepicker.add('ranges', {
     picker.on('render', (ui) => {
       const block = document.createElement('div');
       block.className = 'container__predefined-ranges';
-      block.dataset.pos = options.position;
+      picker.ui.dataset.rangesPosition = options.position;
 
       Object.keys(options.customRanges).forEach((itemKey) => {
         const values = options.customRanges[itemKey];
