@@ -71,7 +71,7 @@ export interface ILPConfiguration {
   plugins?: string[];
   position?: string;
 
-  // plugins
+  // Plugins
   ranges?: {
     position?: string;
     customRanges?: object;
