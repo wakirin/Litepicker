@@ -15,7 +15,7 @@ Date range picker - lightweight, no dependencies.
 
 <div id="index-demo">
   <div id="index-demo-selection">&nbsp;</div>
-  <div class="demo-wrapper" data-cfg="index">
+  <div class="demo-wrapper" data-cfg="index" style="min-height: 232px;">
     <div id="index-demo-lp"></div>
   </div>
 </div>
