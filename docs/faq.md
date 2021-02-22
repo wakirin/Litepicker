@@ -1,13 +1,13 @@
 ---
 layout: default
-nav: FAQ
-title: "FAQ"
+nav: Examples
+title: "Examples"
 description: "Frequently asked questions."
 nav_order: 7
 permalink: /docs/examples
 ---
 
-# FAQ
+# Examples
 {: .no_toc }
 
 ## Table of contents
@@ -18,7 +18,7 @@ permalink: /docs/examples
 
 ---
 
-## How to show nights in tooltip ?
+## Show nights in tooltip
 
 <div>
   <input id="input-eg-show-nights" class="form-control" style="width: 300px;margin: 15px 0" readonly/>
@@ -39,7 +39,28 @@ new Litepicker({
 })
 ```
 
-## How to show previous month instead of current ?
+## Allowed days instead of lock days
+
+<div>
+  <input id="input-eg-lock-days-filter" class="form-control" style="width: 300px;margin: 15px 0" readonly/>
+</div>
+<div class="demo-wrapper" data-cfg="egLockDaysFilter"></div>  
+
+```js
+const allowedDates = [
+  '2021-02-01', '2021-02-05', '2021-02-08', 
+  '2021-02-12', '2021-02-15', '2021-02-19',
+];
+new Litepicker({
+  element: document.getElementById('datepicker'),
+  singleMode: false,
+  lockDaysFilter: (date1, date2, pickedDates) => {
+    return !allowedDates.includes(date1.format('YYYY-MM-DD'));
+  }
+})
+```
+
+## Show previous month instead of current month
 
 <div>
   <input id="input-eg-show-previous-month" class="form-control" style="width: 300px;margin: 15px 0" readonly/>
@@ -64,7 +85,7 @@ new Litepicker({
 })
 ```
 
-## How to add Litepicker to NuxtJS ?
+## Add Litepicker to NuxtJS project
 
 - Download Litepicker from CDN: `https://cdn.jsdelivr.net/npm/litepicker/dist/litepicker.js`
 - Place in `plugins` folder of your NuxtJS project.

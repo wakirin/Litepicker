@@ -54,6 +54,27 @@ const demoCfg = {
       });
     }
   },
+  egLockDaysFilter: {
+    element: '#input-eg-lock-days-filter',
+    setup: (picker) => {
+      const allowedDates = [
+        '2021-02-01',
+        '2021-02-05',
+        '2021-02-08',
+        '2021-02-12',
+        '2021-02-15',
+        '2021-02-19',
+      ];
+
+      picker.options.lockDaysFilter = (date1, date2, pickedDates) => {
+        return !allowedDates.includes(date1.format('YYYY-MM-DD'));
+      }
+
+      picker.on('show', () => {
+        picker.gotoDate('2021-02-01');
+      })
+    }
+  },
 
   keyboardnav: {
     element: '#input-keyboardnav',
