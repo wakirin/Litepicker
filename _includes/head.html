@@ -15,8 +15,18 @@
   <link rel="shortcut icon" href="{{ 'favicon.ico' | relative_url }}" type="image/x-icon">
 
   <style>
+    body {
+      margin: 0;
+    }
     body.is-preloading {
       overflow: hidden;
+      height: 100vh;
+    }
+    body.is-preloading * {
+      visibility: hidden;
+    }
+    body.is-preloading #preloader {
+      visibility: visible;
     }
     #preloader {
       position: fixed;
