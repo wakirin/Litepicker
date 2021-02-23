@@ -19,6 +19,17 @@ Litepicker.add('mobilefriendly', {
       },
     });
 
+    var supportsPassive = false;
+    try {
+      var opts = Object.defineProperty({}, 'passive', {
+        get: function () {
+          supportsPassive = true;
+        }
+      });
+      window.addEventListener("testPassive", null, opts);
+      window.removeEventListener("testPassive", null, opts);
+    } catch (e) { }
+
     function isMobile() {
       const isPortrait = getOrientation() === 'portrait';
       return window.matchMedia(`(max-device-${isPortrait ? 'width' : 'height'}: ${480}px)`).matches;
@@ -239,8 +250,8 @@ Litepicker.add('mobilefriendly', {
       }
     });
 
-    picker.ui.addEventListener('touchstart', swipe.onTouchStart, false);
-    picker.ui.addEventListener('touchmove', swipe.onTouchMove, false);
-    picker.ui.addEventListener('touchend', swipe.onTouchEnd, false);
+    picker.ui.addEventListener('touchstart', swipe.onTouchStart, supportsPassive ? { passive: true } : false);
+    picker.ui.addEventListener('touchmove', swipe.onTouchMove, supportsPassive ? { passive: true } : false);
+    picker.ui.addEventListener('touchend', swipe.onTouchEnd, supportsPassive ? { passive: true } : false);
   }
 });
