@@ -60,17 +60,26 @@ Litepicker.add('ranges', {
           const el = e.target;
 
           if (el) {
-            picker.setDateRange(
-              Number(el.dataset.start),
-              Number(el.dataset.end),
-              picker.options.ranges.force
-            );
+            const startDate = picker.DateTime(Number(el.dataset.start));
+            const endEnd = picker.DateTime(Number(el.dataset.end));
+
+            if (picker.options.autoApply) {
+              picker.setDateRange(
+                startDate,
+                endEnd,
+                picker.options.ranges.force
+              );
+
+              picker.hide();
+            } else {
+              picker.datePicked = [
+                startDate,
+                endEnd,
+              ];
+            }
 
             if (picker.options.inlineMode || !picker.options.autoApply) {
               picker.gotoDate(Number(el.dataset.start));
-            }
-            else if (picker.options.autoApply) {
-              picker.hide();
             }
           }
         });
