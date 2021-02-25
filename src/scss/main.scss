@@ -110,9 +110,11 @@
           .reset-button {
             color: var(--litepicker-button-reset-color);
 
-            > svg,
-            > img {
+            > svg {
               fill: var(--litepicker-button-reset-color);
+            }
+
+            * {
               pointer-events: none;
             }
 
@@ -134,8 +136,7 @@
             transition: color 0.3s, border 0.3s;
             cursor: default;
 
-            > svg,
-            > img {
+            * {
               pointer-events: none;
             }
           }
@@ -335,8 +336,7 @@
         padding: 3px 7px 4px;
         border-radius: 3px;
 
-        > svg,
-        > img {
+        * {
           pointer-events: none;
         }
       }
@@ -354,8 +354,7 @@
           opacity: 0.7;
         }
 
-        > svg,
-        > img {
+        * {
           pointer-events: none;
         }
       }

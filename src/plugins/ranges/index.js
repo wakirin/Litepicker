@@ -66,10 +66,11 @@ Litepicker.add('ranges', {
               picker.options.ranges.force
             );
 
-            if (picker.options.autoApply) {
-              picker.hide();
-            } else {
+            if (picker.options.inlineMode || !picker.options.autoApply) {
               picker.gotoDate(Number(el.dataset.start));
+            }
+            else if (picker.options.autoApply) {
+              picker.hide();
             }
           }
         });
@@ -77,7 +78,7 @@ Litepicker.add('ranges', {
         block.appendChild(item);
       });
 
-      ui.prepend(block);
+      ui.querySelector('.container__main').prepend(block);
     });
   }
 })

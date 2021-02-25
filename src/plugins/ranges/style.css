@@ -1,46 +1,44 @@
-.litepicker[data-plugins*="ranges"] .container__predefined-ranges {
+.litepicker[data-plugins*="ranges"] > .container__main > .container__predefined-ranges {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   background: var(--litepicker-container-months-color-bg);
   box-shadow: -2px 0px 5px var(--litepicker-footer-box-shadow-color);
   border-radius: 3px;
-}.litepicker[data-plugins*="ranges"][data-ranges-position][style*="display: block"] {
-  display: flex !important;
 }
-.litepicker[data-plugins*="ranges"][data-ranges-position="left"] {
+.litepicker[data-plugins*="ranges"][data-ranges-position="left"] > .container__main {
   /* */
 }
-.litepicker[data-plugins*="ranges"][data-ranges-position="right"] {
+.litepicker[data-plugins*="ranges"][data-ranges-position="right"] > .container__main{
   flex-direction: row-reverse;
 }
-.litepicker[data-plugins*="ranges"][data-ranges-position="right"] .container__predefined-ranges {
+.litepicker[data-plugins*="ranges"][data-ranges-position="right"] > .container__main > .container__predefined-ranges {
   box-shadow: 2px 0px 2px var(--litepicker-footer-box-shadow-color);
 }
-.litepicker[data-plugins*="ranges"][data-ranges-position="top"] {
+.litepicker[data-plugins*="ranges"][data-ranges-position="top"] > .container__main {
   flex-direction: column;
 }
-.litepicker[data-plugins*="ranges"][data-ranges-position="top"] .container__predefined-ranges {
+.litepicker[data-plugins*="ranges"][data-ranges-position="top"] > .container__main > .container__predefined-ranges {
   flex-direction: row;
   box-shadow: 2px 0px 2px var(--litepicker-footer-box-shadow-color);
 }
-.litepicker[data-plugins*="ranges"][data-ranges-position="bottom"] {
+.litepicker[data-plugins*="ranges"][data-ranges-position="bottom"] > .container__main {
   flex-direction: column-reverse;
 }
-.litepicker[data-plugins*="ranges"][data-ranges-position="bottom"] .container__predefined-ranges {
+.litepicker[data-plugins*="ranges"][data-ranges-position="bottom"] > .container__main > .container__predefined-ranges {
   flex-direction: row;
   box-shadow: 2px 0px 2px var(--litepicker-footer-box-shadow-color);
 }
-.litepicker[data-plugins*="ranges"] .container__predefined-ranges button {
+.litepicker[data-plugins*="ranges"] > .container__main > .container__predefined-ranges button {
   padding: 5px;
   margin: 2px 0;
 }
-.litepicker[data-plugins*="ranges"][data-ranges-position="left"] .container__predefined-ranges button,
-.litepicker[data-plugins*="ranges"][data-ranges-position="right"] .container__predefined-ranges button{
+.litepicker[data-plugins*="ranges"][data-ranges-position="left"] > .container__main > .container__predefined-ranges button,
+.litepicker[data-plugins*="ranges"][data-ranges-position="right"] > .container__main > .container__predefined-ranges button{
   width: 100%;
   text-align: left;
 }
-.litepicker[data-plugins*="ranges"] .container__predefined-ranges button:hover {
+.litepicker[data-plugins*="ranges"] > .container__main > .container__predefined-ranges button:hover {
   cursor: default;
   opacity: .6;
 }
