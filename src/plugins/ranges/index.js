@@ -6,6 +6,7 @@ Litepicker.add('ranges', {
       position: 'left',
       customRanges: {},
       force: false,
+      autoApply: picker.options.autoApply,
     };
     picker.options.ranges = { ...defaultOptions, ...picker.options.ranges };
 
@@ -63,12 +64,14 @@ Litepicker.add('ranges', {
             const startDate = picker.DateTime(Number(el.dataset.start));
             const endEnd = picker.DateTime(Number(el.dataset.end));
 
-            if (picker.options.autoApply) {
+            if (options.autoApply) {
               picker.setDateRange(
                 startDate,
                 endEnd,
-                picker.options.ranges.force
+                options.force
               );
+
+              picker.emit('ranges.selected', startDate, endEnd);
 
               picker.hide();
             } else {
@@ -76,10 +79,12 @@ Litepicker.add('ranges', {
                 startDate,
                 endEnd,
               ];
+
+              picker.emit('ranges.preselect', startDate, endEnd);
             }
 
-            if (picker.options.inlineMode || !picker.options.autoApply) {
-              picker.gotoDate(Number(el.dataset.start));
+            if (picker.options.inlineMode || !options.autoApply) {
+              picker.gotoDate(startDate);
             }
           }
         });
