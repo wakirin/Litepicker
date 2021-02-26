@@ -114,6 +114,68 @@ const picker = new Litepicker({
 });
 ```
 
+### autoApply <sup>2.0.10+</sup>
+
+Type: `Boolean`
+
+Default: `true`
+
+Automatically apply a new date range as soon as ranges are clicked.  
+By default equal to `autoApply` from Litepicker options.
+
+Example: 
+
+```js
+const picker = new Litepicker({ 
+  element: document.getElementById('litepicker'),
+  plugins: ['ranges'],
+  ranges: {
+    autoApply: true
+  }
+});
+```
+
+# Events:
+{: .no_toc }
+
+### ranges.preselect <sup>2.0.10+</sup>
+{: .no_toc }
+
+Arguments: `(date1, date2)`
+
+`date1`, `date2` is DateTime object.
+
+Event is called on select days by ranges (when `autoApply` is `false`).
+
+```js
+...
+setup: (picker) => {
+  picker.on('ranges.preselect', (date1, date2) => {
+    // some action
+  });
+},
+...
+```
+
+### ranges.selected <sup>2.0.10+</sup>
+{: .no_toc }
+
+Arguments: `(date1, date2)`
+
+`date1`, `date2` is DateTime object.
+
+Event is called when ranges is submitted.
+
+```js
+...
+setup: (picker) => {
+  picker.on('ranges.selected', (date1, date2) => {
+    // some action
+  });
+},
+...
+```
+
 {% capture ranges_content %}
 <div style="display:flex">
   <input id="input-ranges" class="form-control" style="width: 250px" readonly/>
