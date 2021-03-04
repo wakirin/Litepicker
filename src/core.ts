@@ -158,13 +158,19 @@ export class LPCore extends EventEmitter {
         ? this.options.startDate.clone()
         : new DateTime();
 
-      if (this.options.maxDate) {
-        const maxDate = new DateTime(this.options.maxDate);
+      if (!this.options.startDate && (idx === 0 || this.options.splitView)) {
+        const maxDate = this.options.maxDate ? new DateTime(this.options.maxDate) : null;
+        const minDate = this.options.minDate ? new DateTime(this.options.minDate) : null;
+        const offsetMonths = this.options.numberOfMonths - 1;
 
-        if (idx === 0 && date.isAfter(maxDate)) {
+        const isDateRange = minDate && maxDate && date.isAfter(maxDate);
+
+        if (isDateRange) {
+          date = minDate.clone();
+          date.setDate(1);
+        } else if (!minDate && maxDate && maxDate.isAfter(date)) {
           date = maxDate.clone();
           date.setDate(1);
-          const offsetMonths = this.options.numberOfMonths - 1;
           date.setMonth(date.getMonth() - offsetMonths);
         }
       }

@@ -4,6 +4,11 @@ Litepicker.add('mobilefriendly', {
   init: function (picker) {
     const options = picker.options;
 
+    const defaultOptions = {
+      breakpoint: 480,
+    };
+    picker.options.mobilefriendly = { ...defaultOptions, ...options.mobilefriendly };
+
     Object.defineProperties(picker, {
       xTouchDown: {
         value: null,
@@ -32,7 +37,7 @@ Litepicker.add('mobilefriendly', {
 
     function isMobile() {
       const isPortrait = getOrientation() === 'portrait';
-      return window.matchMedia(`(max-device-${isPortrait ? 'width' : 'height'}: ${480}px)`).matches;
+      return window.matchMedia(`(max-device-${isPortrait ? 'width' : 'height'}: ${picker.options.mobilefriendly.breakpoint}px)`).matches;
     }
 
     function getOrientation() {

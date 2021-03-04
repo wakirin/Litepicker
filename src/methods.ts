@@ -116,6 +116,10 @@ Litepicker.prototype.setDate = function (date, force: boolean = false) {
   } else {
     this.setStartDate(date);
 
+    if (this.options.inlineMode) {
+      this.render();
+    }
+
     this.emit('selected', this.getDate());
   }
 };
@@ -180,6 +184,10 @@ Litepicker.prototype.setDateRange = function (date1, date2, force: boolean = fal
   } else {
     this.setStartDate(d1);
     this.setEndDate(d2);
+
+    if (this.options.inlineMode) {
+      this.render();
+    }
 
     this.updateInput();
 
