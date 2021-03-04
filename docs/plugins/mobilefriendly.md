@@ -47,6 +47,28 @@ const picker = new Litepicker({
 </script>
 ```
 
+# Options
+
+### breakpoint <sup>2.0.11+</sup>
+
+Type: `Number`
+
+Default: `480`
+
+Breakpoint for mobile detection.
+
+Example: 
+
+```js
+new Litepicker({
+  element: document.getElementById('datepicker'),
+  plugins: ['mobilefriendly']
+  mobilefriendly: {
+    breakpoint: 480,
+  },
+})
+```
+
 # Events:
 {: .no_toc }
 
