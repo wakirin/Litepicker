@@ -168,7 +168,7 @@ export class LPCore extends EventEmitter {
         if (isDateRange) {
           date = minDate.clone();
           date.setDate(1);
-        } else if (!minDate && maxDate && maxDate.isAfter(date)) {
+        } else if (!minDate && maxDate && date.isAfter(maxDate)) {
           date = maxDate.clone();
           date.setDate(1);
           date.setMonth(date.getMonth() - offsetMonths);
