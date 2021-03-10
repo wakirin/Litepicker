@@ -56,7 +56,7 @@ const demoCfg = {
   },
   egLockDaysFilter: {
     element: '#input-eg-lock-days-filter',
-    setup: (picker) => {
+    setup: function (picker) {
       const allowedDates = [
         '2021-02-01',
         '2021-02-05',
@@ -66,11 +66,11 @@ const demoCfg = {
         '2021-02-19',
       ];
 
-      picker.options.lockDaysFilter = (date1, date2, pickedDates) => {
+      picker.options.lockDaysFilter = function (date1, date2, pickedDates) {
         return !allowedDates.includes(date1.format('YYYY-MM-DD'));
       }
 
-      picker.on('show', () => {
+      picker.on('show', function (){
         picker.gotoDate('2021-02-01');
       })
     }
@@ -91,8 +91,8 @@ const demoCfg = {
   multiselect: {
     element: '#input-multiselect',
     plugins: ['multiselect'],
-    setup: (picker) => {
-      picker.on('button:apply', () => {
+    setup: function(picker) {
+      picker.on('button:apply', function() {
         document.getElementById('input-multiselect').value = picker.multipleDatesToString();
       });
     }
