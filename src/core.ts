@@ -31,6 +31,9 @@ export class LPCore extends EventEmitter {
     endDate: null,
     zIndex: 9999,
     position: 'auto',
+    static: false,
+    left: null,
+    top: null,
 
     selectForward: false,
     selectBackward: false,
@@ -265,6 +268,12 @@ export class LPCore extends EventEmitter {
   }
 
   protected findPosition(element) {
+    const isStatic = this.options.static || false;
+
+    if (isStatic) {
+        return { left: this.options.left || 0, top: this.options.top || 0 };
+    }
+
     const rect = element.getBoundingClientRect();
     const calRect = this.ui.getBoundingClientRect();
     const orientation = this.options.position.split(' ');
