@@ -9,6 +9,14 @@ export class LPCore extends EventEmitter {
     Litepicker.prototype[name] = data;
   }
 
+  public get isShown() {
+    return this.isShowning();
+  }
+
+  public get isHidden() {
+    return !this.isShown;
+  }
+
   protected plugins: string[];
   protected ui: HTMLElement;
   protected datePicked: DateTime[] = [];
