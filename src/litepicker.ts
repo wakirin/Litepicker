@@ -373,6 +373,9 @@ export class Litepicker extends Calendar {
         date2 = tempDate.clone();
         isFlipped = true;
       }
+      if (this.shouldCheckLockDays() && rangeIsLocked([date1, date2], this.options)) {
+        return;
+      }
       const allDayItems = Array.prototype.slice.call(this.ui.querySelectorAll(`.${style.dayItem}`));
       allDayItems.forEach((d: HTMLElement) => {
         const date = new DateTime(d.dataset.time);
