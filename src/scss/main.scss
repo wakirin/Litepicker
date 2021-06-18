@@ -69,6 +69,10 @@
       &.columns-4 {
         width: calc((var(--litepicker-month-width) * 4) + 40px);
       }
+        
+      &.columns-6 {
+        width: calc((var(--litepicker-month-width) * 6) + 40px);
+      }
 
       &.split-view {
         .month-item {
