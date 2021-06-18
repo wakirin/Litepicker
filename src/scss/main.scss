@@ -70,8 +70,36 @@
         width: calc((var(--litepicker-month-width) * 4) + 40px);
       }
         
+      &.columns-5 {
+        width: calc((var(--litepicker-month-width) * 5) + 40px);
+      }
+       
       &.columns-6 {
         width: calc((var(--litepicker-month-width) * 6) + 40px);
+      }
+        
+      &.columns-7 {
+        width: calc((var(--litepicker-month-width) * 7) + 40px);
+      }
+        
+      &.columns-8 {
+        width: calc((var(--litepicker-month-width) * 8) + 40px);
+      }
+        
+      &.columns-9 {
+        width: calc((var(--litepicker-month-width) * 9) + 40px);
+      }
+        
+      &.columns-10 {
+        width: calc((var(--litepicker-month-width) * 10) + 40px);
+      }
+        
+      &.columns-11 {
+        width: calc((var(--litepicker-month-width) * 11) + 40px);
+      }
+        
+      &.columns-12 {
+        width: calc((var(--litepicker-month-width) * 12) + 40px);
       }
 
       &.split-view {
