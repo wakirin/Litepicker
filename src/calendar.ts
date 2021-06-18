@@ -19,7 +19,7 @@ export class Calendar extends LPCore {
     months.className = style.containerMonths;
 
     if (style[`columns${this.options.numberOfColumns}`]) {
-      months.classList.remove(style.columns2, style.columns3, style.columns4);
+      months.classList.remove(style.columns2, style.columns3, style.columns4, style.columns5, style.columns6, style.columns7, style.columns8, style.columns9, style.columns10, style.columns11, style.columns12);
       months.classList.add(style[`columns${this.options.numberOfColumns}`]);
     }
 
