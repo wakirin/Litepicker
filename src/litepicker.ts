@@ -151,7 +151,11 @@ export class Litepicker extends Calendar {
   }
 
   private onClick(e) {
-    const target = e.target as HTMLElement;
+    let target = e.target as HTMLElement;
+
+    if (e.target.shadowRoot) {
+      target = e.composedPath()[0] as HTMLElement;
+    }
 
     if (!target || !this.ui) {
       return;
