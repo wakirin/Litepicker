@@ -5,14 +5,11 @@ Litepicker.add('ranges', {
     const defaultOptions = {
       position: 'left',
       customRanges: {},
+      customRangesLabels: ['Today', 'Yesterday', 'Last 7 Days', 'Last 30 Days', 'This Month', 'Last Month'],
       force: false,
       autoApply: picker.options.autoApply,
     };
     picker.options.ranges = { ...defaultOptions, ...picker.options.ranges };
-
-    if (picker.options.ranges.customRangesLabels === undefined) {
-      picker.options.ranges.customRangesLabels = ['Today', 'Yesterday', 'Last 7 Days', 'Last 30 Days', 'This Month', 'Last Month'];
-    }
 
     picker.options.singleMode = false;
 
