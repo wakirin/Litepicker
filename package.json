@@ -36,7 +36,6 @@
     "url": "https://github.com/wakirin/litepicker/issues"
   },
   "license": "MIT",
-  "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.12.10",
     "@babel/preset-env": "^7.12.11",
@@ -51,10 +50,10 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.9.0",
     "mini-css-extract-plugin": "^0.8.2",
-    "node-sass": "^4.14.1",
     "parallel-webpack": "^2.6.0",
     "postcss-loader": "^3.0.0",
     "proxy-polyfill": "^0.3.0",
+    "sass": "^1.42.1",
     "sass-loader": "^8.0.0",
     "style-loader": "^1.0.0",
     "ts-jest": "^24.2.0",
