@@ -339,7 +339,8 @@ export class Litepicker extends Calendar {
     return this.options.elementEnd
       && this.options.allowRepick
       && this.options.startDate
-      && this.options.endDate;
+      && this.options.endDate
+      && this.datePicked.length < 2;
   }
 
   private isDayItem(el: HTMLElement) {
