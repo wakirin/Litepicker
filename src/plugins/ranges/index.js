@@ -5,6 +5,7 @@ Litepicker.add('ranges', {
     const defaultOptions = {
       position: 'left',
       customRanges: {},
+      customRangesLabels: ['Today', 'Yesterday', 'Last 7 Days', 'Last 30 Days', 'This Month', 'Last Month'],
       force: false,
       autoApply: picker.options.autoApply,
     };
@@ -12,7 +13,9 @@ Litepicker.add('ranges', {
 
     picker.options.singleMode = false;
 
-    if (!Object.keys(picker.options.ranges.customRanges).length) {
+    const options = picker.options.ranges;
+
+    if (!Object.keys(options.customRanges).length) {
       const date = picker.DateTime();
 
       const thisMonth = (date) => {
@@ -32,17 +35,15 @@ Litepicker.add('ranges', {
         return [d1, d2];
       };
 
-      picker.options.ranges.customRanges = {
-        Today: [date.clone(), date.clone()],
-        Yesterday: [date.clone().subtract(1, 'day'), date.clone().subtract(1, 'day')],
-        'Last 7 Days': [date.clone().subtract(6, 'day'), date],
-        'Last 30 Days': [date.clone().subtract(29, 'day'), date],
-        'This Month': thisMonth(date),
-        'Last Month': lastMonth(date),
+      options.customRanges = {
+        [options.customRangesLabels[0]]: [date.clone(), date.clone()],
+        [options.customRangesLabels[1]]: [date.clone().subtract(1, 'day'), date.clone().subtract(1, 'day')],
+        [options.customRangesLabels[2]]: [date.clone().subtract(6, 'day'), date],
+        [options.customRangesLabels[3]]: [date.clone().subtract(29, 'day'), date],
+        [options.customRangesLabels[4]]: thisMonth(date),
+        [options.customRangesLabels[5]]: lastMonth(date),
       };
     }
-
-    const options = picker.options.ranges;
 
     picker.on('render', (ui) => {
       const block = document.createElement('div');
