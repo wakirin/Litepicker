@@ -39,6 +39,7 @@ export class LPCore extends EventEmitter {
     singleMode: true,
     autoApply: true,
     allowRepick: false,
+    showOnClick: true,
     showWeekNumbers: false,
     showTooltip: true,
     scrollToDate: true,

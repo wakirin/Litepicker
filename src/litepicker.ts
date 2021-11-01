@@ -132,7 +132,7 @@ export class Litepicker extends Calendar {
   }
 
   private shouldShown(el) {
-    return !el.disabled && (el === this.options.element
+    return !el.disabled && this.options.showOnClick && (el === this.options.element
       || (this.options.elementEnd && el === this.options.elementEnd));
   }
 

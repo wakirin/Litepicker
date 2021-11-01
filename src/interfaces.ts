@@ -47,6 +47,7 @@ export interface ILPConfiguration {
   singleMode?: boolean;
   autoApply?: boolean;
   allowRepick?: boolean;
+  showOnClick?: boolean;
   showWeekNumbers?: boolean;
   showTooltip?: boolean;
   scrollToDate?: boolean;
