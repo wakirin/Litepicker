@@ -1,7 +1,8 @@
+/* eslint-disable no-param-reassign */
 import './style.css';
 
 Litepicker.add('ranges', {
-  init: function (picker) {
+  init(picker) {
     const defaultOptions = {
       position: 'left',
       customRanges: {},
@@ -13,29 +14,36 @@ Litepicker.add('ranges', {
     picker.options.ranges = { ...defaultOptions, ...picker.options.ranges };
     picker.options.singleMode = false;
 
-    const options =  picker.options.ranges;
+    const options = picker.options.ranges;
+    const date = picker.DateTime();
 
-    const thisMonth = (date) => {
-        const d1 = date.clone();
-        d1.setDate(1);
-        const d2 = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+    const customInput1 = document.createElement('input');
+    customInput1.value = picker.getStartDate().format('MM-DD-YYYY');
+    customInput1.dataset.time = picker.getStartDate().getTime();
 
-        return [d1, d2];
+    const customInput2 = document.createElement('input');
+    customInput2.value = picker.getEndDate().format('MM-DD-YYYY');
+    customInput2.dataset.time = picker.getEndDate().getTime();
+
+    const thisMonth = (currDate) => {
+      const d1 = currDate.clone();
+      d1.setDate(1);
+      const d2 = new Date(currDate.getFullYear(), currDate.getMonth() + 1, 0);
+
+      return [d1, d2];
     };
 
-    const lastMonth = (date) => {
-        const d1 = date.clone();
-        d1.setDate(1);
-        d1.setMonth(date.getMonth() - 1);
-        const d2 = new Date(date.getFullYear(), date.getMonth(), 0);
+    const lastMonth = (currDate) => {
+      const d1 = currDate.clone();
+      d1.setDate(1);
+      d1.setMonth(currDate.getMonth() - 1);
+      const d2 = new Date(currDate.getFullYear(), currDate.getMonth(), 0);
 
-        return [d1, d2];
+      return [d1, d2];
     };
 
     // Set Default ranges if there are no custom ranges specified in options
     if (!Object.keys(options.customRanges).length) {
-      const date = picker.DateTime();
-
       options.customRanges = {
         [options.customRangesLabels[0]]: [date.clone(), date.clone()],
         [options.customRangesLabels[1]]: [date.clone().subtract(1, 'day'), date.clone().subtract(1, 'day')],
@@ -45,6 +53,11 @@ Litepicker.add('ranges', {
         [options.customRangesLabels[5]]: lastMonth(date),
       };
     }
+
+    const input1 = document.createElement('input');
+    input1.value = picker.getStartDate().format('MM-DD-YYYY');
+    const input2 = document.createElement('input');
+    input2.value = picker.getEndDate().format('MM-DD-YYYY');
 
     picker.on('render', (ui) => {
       const block = document.createElement('div');
@@ -59,6 +72,7 @@ Litepicker.add('ranges', {
         item.tabIndex = ui.dataset.plugins.indexOf('keyboardnav') >= 0 ? 1 : -1;
         item.dataset.start = values[0].getTime();
         item.dataset.end = values[1].getTime();
+
         item.addEventListener('click', (e) => {
           const el = e.target;
 
@@ -70,7 +84,7 @@ Litepicker.add('ranges', {
               picker.setDateRange(
                 startDate,
                 endEnd,
-                options.force
+                options.force,
               );
 
               picker.emit('ranges.selected', startDate, endEnd);
@@ -94,39 +108,142 @@ Litepicker.add('ranges', {
         block.appendChild(item);
       });
 
-      if(options.rangeInputs){
+      if (options.rangeInputs) {
+        input1.setAttribute('type', 'text');
+        input1.className = 'form-control';
+        input1.id = 'start-date';
 
-        const customButton = document.createElement('button');
-        customButton.innerText = "Custom";
-        customButton.tabIndex = ui.dataset.plugins.indexOf('keyboardnav') >= 0 ? 1 : -1;
+        input2.setAttribute('type', 'text');
+        input2.className = 'form-control';
+        input2.id = 'end-date';
 
-        const customDiv = document.createElement('div');
+        input1.addEventListener('blur', (e) => {
+          const el = e.target;
 
-        const customInput1 = document.createElement('input');
-        const customInput2 = document.createElement('input');
+          if (el) {
+            const startDate = picker.DateTime(input1.value);
+            const endEnd = picker.DateTime(input2.value);
 
-        customDiv.appendChild(customInput1);
-        customDiv.appendChild(customInput2);
+            if (options.autoApply) {
+              picker.setDateRange(
+                startDate,
+                endEnd,
+                options.force,
+              );
 
-        customButton.addEventListener('click', (e) => {
-            const el = e.target;
-            if (el) {
-                if (customDiv.style.display === "none") {
-                    customDiv.style.display = "block";
-                } else {
-                    customDiv.style.display = "none";
-                }
-              }
+              picker.emit('ranges.selected', startDate, endEnd);
+
+              picker.hide();
+            } else {
+              picker.datePicked = [
+                startDate,
+                endEnd,
+              ];
+
+              picker.emit('ranges.preselect', startDate, endEnd);
+            }
+
+            if (picker.options.inlineMode || !options.autoApply) {
+              picker.gotoDate(startDate);
+            }
+          }
         });
 
+        input2.addEventListener('blur', (e) => {
+          const el = e.target;
+
+          if (el) {
+            const startDate = picker.DateTime(input1.value);
+            const endEnd = picker.DateTime(input2.value);
+
+            if (options.autoApply) {
+              picker.setDateRange(
+                startDate,
+                endEnd,
+                options.force,
+              );
+
+              picker.emit('ranges.selected', startDate, endEnd);
+
+              picker.hide();
+            } else {
+              picker.datePicked = [
+                startDate,
+                endEnd,
+              ];
+
+              picker.emit('ranges.preselect', startDate, endEnd);
+            }
+
+            if (picker.options.inlineMode || !options.autoApply) {
+              picker.gotoDate(startDate);
+            }
+          }
+        });
+
+        picker.on('ranges.preselect', (date1, date2) => {
+          input1.value = date1.format('MM-DD-YYYY');
+          input2.value = date2.format('MM-DD-YYYY');
+        });
+
+        picker.on('preselect', (date1, date2) => {
+          input1.value = date1.format('MM-DD-YYYY');
+          input2.value = date1.format('MM-DD-YYYY');
+
+          if (date2) {
+            input2.value = date2.format('MM-DD-YYYY');
+          }
+        });
+
+        const customButton = document.createElement('button');
+        customButton.className = 'custom-button';
+        customButton.innerText = 'Custom';
+        customButton.tabIndex = ui.dataset.plugins.indexOf('keyboardnav') >= 0 ? 1 : -1;
+
+        const customForm = document.createElement('form');
+        customForm.className = 'container__custom-range';
+
+        const customFormGroup = document.createElement('div');
+        customFormGroup.className = 'form-group';
+
+        const customDiv1 = document.createElement('div');
+
+        const customLabel1 = document.createElement('label');
+        customLabel1.innerText = 'From';
+
+        customDiv1.appendChild(customLabel1);
+
+        const customDiv2 = document.createElement('div');
+        customDiv2.className = 'form-control-wrapper';
+
+        const customLabel2 = document.createElement('label');
+        customLabel2.innerText = 'To';
+
+        customDiv2.appendChild(customLabel2);
+
+        customFormGroup.appendChild(customDiv1);
+        customFormGroup.appendChild(customDiv2);
+
+        customForm.appendChild(customFormGroup);
+
+        customButton.addEventListener('click', (e) => {
+          const el = e.target;
+          if (el) {
+            if (customForm.style.display === 'none') {
+              customForm.style.display = 'block';
+            } else {
+              customForm.style.display = 'none';
+            }
+          }
+        });
+
+        customDiv1.appendChild(input1);
+        customDiv2.appendChild(input2);
         block.appendChild(customButton);
-
-        const fromInput = document.createElement('input');
-        const toInput = document.createElement('input');
-
+        block.appendChild(customForm);
       }
 
       ui.querySelector('.container__main').prepend(block);
     });
-  }
-})
+  },
+});

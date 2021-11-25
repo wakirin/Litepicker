@@ -42,3 +42,26 @@
   cursor: default;
   opacity: .6;
 }
+.litepicker[data-plugins*="ranges"] > .container__main > .container__predefined-ranges > .custom-button {
+    width: 150px !important;
+  }
+.litepicker[data-plugins*="ranges"] > .container__main > .container__predefined-ranges > .container__custom-range {
+    width: 150px;
+}
+.litepicker[data-plugins*="ranges"] > .container__main > .container__predefined-ranges > .container__custom-range > .form-group {
+    margin-left: 5px;
+    margin-top: 10px;
+    margin-bottom: 0px;
+    display: flex;
+    flex-direction: row;
+}
+.litepicker[data-plugins*="ranges"] > .container__main > .container__predefined-ranges > .container__custom-range > .form-group > .form-control-wrapper {
+    padding-left: 5px;
+}
+.litepicker[data-plugins*="ranges"] > .container__main > .container__predefined-ranges > .container__custom-range input{
+    width: 100%;
+    padding: 2px;
+    height: 20px;
+}
+
+

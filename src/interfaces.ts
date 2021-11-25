@@ -75,6 +75,7 @@ export interface ILPConfiguration {
   ranges?: {
     position?: string;
     customRanges?: object;
+    rangeInputs?: boolean,
     force?: boolean;
   };
   multiselect?: {
