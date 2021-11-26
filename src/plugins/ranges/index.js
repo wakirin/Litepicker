@@ -7,7 +7,6 @@ Litepicker.add('ranges', {
       position: 'left',
       customRanges: {},
       rangeInputs: false,
-      autoRefresh: false,
       customRangesLabels: ['Today', 'Yesterday', 'Last 7 Days', 'Last 30 Days', 'This Month', 'Last Month'],
       force: false,
       autoApply: picker.options.autoApply,
@@ -75,10 +74,11 @@ Litepicker.add('ranges', {
       const customFormGroup = document.createElement('div');
       customFormGroup.className = 'form-group';
       const customDiv1 = document.createElement('div');
+      customDiv1.className = 'form-control-wrapper';
       const customLabel1 = document.createElement('label');
       customLabel1.innerText = 'From';
       const customDiv2 = document.createElement('div');
-      customDiv2.className = 'form-control-wrapper';
+      customDiv2.className = 'form-control-wrapper spacer';
       const customLabel2 = document.createElement('label');
       customLabel2.innerText = 'To';
       const customFieldButton = document.createElement('button');
@@ -139,11 +139,7 @@ Litepicker.add('ranges', {
                 options.force,
               );
 
-              picker.emit('ranges.selected', startDate, endEnd);
-              if (options.autoRefresh) {
-                picker.emit('button:apply', startDate, endEnd);
-                picker.emit('selected', startDate, endEnd);
-              }
+              picker.emit('selected', startDate, endEnd);
 
               picker.hide();
             } else {
@@ -152,11 +148,7 @@ Litepicker.add('ranges', {
                 endEnd,
               ];
 
-              picker.emit('ranges.preselect', startDate, endEnd);
-              if (options.autoRefresh) {
-                picker.emit('button:apply', startDate, endEnd);
-                picker.emit('preselect', startDate, endEnd);
-              }
+              picker.emit('preselect', startDate, endEnd);
             }
 
             if (picker.options.inlineMode || !options.autoApply) {
@@ -192,12 +184,7 @@ Litepicker.add('ranges', {
                 options.force,
               );
 
-              picker.emit('ranges.selected', startDate, endEnd);
-
-              if (options.autoRefresh) {
-                picker.emit('button:apply', startDate, endEnd);
-                picker.emit('selected', startDate, endEnd);
-              }
+              picker.emit('selected', startDate, endEnd);
 
               picker.hide();
             } else {
@@ -206,11 +193,7 @@ Litepicker.add('ranges', {
                 endEnd,
               ];
 
-              picker.emit('ranges.preselect', startDate, endEnd);
-              if (options.autoRefresh) {
-                picker.emit('button:apply', startDate, endEnd);
-                picker.emit('preselect', startDate, endEnd);
-              }
+              picker.emit('preselect', startDate, endEnd);
             }
 
             if (picker.options.inlineMode || !options.autoApply) {
@@ -235,6 +218,10 @@ Litepicker.add('ranges', {
               endEnd = picker.DateTime(customFieldInput1.value);
             }
 
+            if (endEnd.getTime() > date.getTime()) {
+              endEnd = picker.DateTime(date);
+            }
+
             if (options.autoApply) {
               picker.setDateRange(
                 startDate,
@@ -242,11 +229,7 @@ Litepicker.add('ranges', {
                 options.force,
               );
 
-              picker.emit('ranges.selected', startDate, endEnd);
-              if (options.autoRefresh) {
-                picker.emit('button:apply', startDate, endEnd);
-                picker.emit('selected', startDate, endEnd);
-              }
+              picker.emit('selected', startDate, endEnd);
 
               picker.hide();
             } else {
@@ -255,11 +238,7 @@ Litepicker.add('ranges', {
                 endEnd,
               ];
 
-              picker.emit('ranges.preselect', startDate, endEnd);
-              if (options.autoRefresh) {
-                picker.emit('button:apply', startDate, endEnd);
-                picker.emit('preselect', startDate, endEnd);
-              }
+              picker.emit('preselect', startDate, endEnd);
             }
 
             if (picker.options.inlineMode || !options.autoApply) {

@@ -12,6 +12,7 @@
 .litepicker[data-plugins*="ranges"][data-ranges-position="right"] > .container__main{
   flex-direction: row-reverse;
 }
+
 .litepicker[data-plugins*="ranges"][data-ranges-position="right"] > .container__main > .container__predefined-ranges {
   box-shadow: 2px 0px 2px var(--litepicker-footer-box-shadow-color);
 }
@@ -42,28 +43,47 @@
   cursor: pointer;
   //opacity: .6;
 }
-.litepicker[data-plugins*="ranges"] > .container__main > .container__predefined-ranges > .custom-button {
-    width: 150px !important;
-  }
-.litepicker[data-plugins*="ranges"] > .container__main > .container__predefined-ranges > .container__custom-range {
-    width: 150px;
-}
+
+
 .litepicker[data-plugins*="ranges"] > .container__main > .container__predefined-ranges > .container__custom-range > .form-group {
     margin-top: 10px;
     margin-bottom: 0px;
     display: flex;
     flex-direction: row;
+    width: 100%;
 }
 .litepicker[data-plugins*="ranges"] > .container__main > .container__predefined-ranges > .container__custom-range > .form-group > .form-control-wrapper {
+    width: 100%;
+}
+
+.litepicker[data-plugins*="ranges"] > .container__main > .container__predefined-ranges > .container__custom-range > .form-group > .form-control-wrapper > .spacer {
     padding-left: 5px;
 }
-.litepicker[data-plugins*="ranges"] > .container__main > .container__predefined-ranges > .container__custom-range input{
-    width: 100%;
-    padding: 2px;
-    height: 20px;
-}
+
 .litepicker[data-plugins*="ranges"] > .container__main > .container__predefined-ranges > .container__custom-range input:disabled{
     color: #C0C0C0;
 }
 
+.litepicker[data-plugins*="ranges"] > .container__main > .container__predefined-ranges > .container__custom-range {
+    width: 100%;
+}
 
+@media only screen and (min-width: 860px) {
+    .litepicker[data-plugins*="ranges"][data-ranges-position="left"] > .container__main > .container__months {
+        padding-right: 20px;
+    }
+    .litepicker[data-plugins*="ranges"][data-ranges-position="right"] > .container__main > .container__months {
+        padding-left: 20px;
+    }
+    .litepicker[data-plugins*="ranges"] > .container__main > .container__predefined-ranges > .custom-button {
+        width: 150px !important;
+    }
+    .litepicker[data-plugins*="ranges"] > .container__main > .container__predefined-ranges > .container__custom-range input{
+        width: 100%;
+        padding: 2px;
+        height: 20px;
+    }
+    .litepicker[data-plugins*="ranges"] > .container__main > .container__predefined-ranges > .container__custom-range {
+        width: 150px;
+    }
+}
