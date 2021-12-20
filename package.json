@@ -1,6 +1,6 @@
 {
     "name": "@mmmbacon/litepicker",
-    "version": "2.0.14",
+    "version": "2.0.15",
     "description": "Date range picker - lightweight, no dependencies",
     "main": "./dist/litepicker.umd.js",
     "types": "./dist/types/index.d.ts",
