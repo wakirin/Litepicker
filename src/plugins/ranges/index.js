@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import './style.css';
 
 Litepicker.add('ranges', {
@@ -64,117 +63,148 @@ Litepicker.add('ranges', {
     });
 
     picker.on('render', (ui) => {
-      const block = document.createElement('div');
-      block.className = 'container__predefined-ranges';
-      picker.ui.dataset.rangesPosition = options.position;
+        const block = document.createElement('div');
+        block.className = 'container__predefined-ranges';
 
-      // Set up HTML Elements for Custom Range Group
-      const customForm = document.createElement('form');
-      customForm.className = 'container__custom-range';
-      const customFormGroup = document.createElement('div');
-      customFormGroup.className = 'form-group';
-      const customDiv1 = document.createElement('div');
-      customDiv1.className = 'form-control-wrapper';
-      const customLabel1 = document.createElement('label');
-      customLabel1.innerText = 'From';
-      const customDiv2 = document.createElement('div');
-      customDiv2.className = 'form-control-wrapper spacer';
-      const customLabel2 = document.createElement('label');
-      customLabel2.innerText = 'To';
-      const customFieldButton = document.createElement('button');
-      customFieldButton.className = `${customActive ? 'custom-button active' : 'custom-button inactive'}`;
-      customFieldButton.innerText = 'Custom';
-      customFieldButton.tabIndex = ui.dataset.plugins.indexOf('keyboardnav') >= 0 ? 1 : -1;
-      const customFieldInput1 = document.createElement('input');
-      customFieldInput1.value = customFieldInput1.setAttribute('type', 'text');
-      customFieldInput1.className = 'form-control';
-      customFieldInput1.id = 'start-date';
-      customFieldInput1.value = field1Value;
-      customFieldInput1.disabled = !customActive;
-      const customFieldInput2 = document.createElement('input');
-      customFieldInput2.setAttribute('type', 'text');
-      customFieldInput2.className = 'form-control';
-      customFieldInput2.id = 'end-date';
-      customFieldInput2.value = field2Value;
-      customFieldInput2.disabled = !customActive;
+        picker.ui.dataset.rangesPosition = options.position;
 
-      customDiv1.appendChild(customLabel1);
-      customDiv2.appendChild(customLabel2);
-      customFormGroup.appendChild(customDiv1);
-      customFormGroup.appendChild(customDiv2);
-      customForm.appendChild(customFormGroup);
+        Object.keys(options.customRanges).forEach((itemKey) => {
+            const values = options.customRanges[itemKey];
+            const item = document.createElement('button');
+            item.innerText = itemKey;
+            item.tabIndex = ui.dataset.plugins.indexOf('keyboardnav') >= 0 ? 1 : -1;
+            item.dataset.start = values[0].getTime();
+            item.dataset.end = values[1].getTime();
+            item.className = values[2] ? 'active' : 'inactive';
 
-      Object.keys(options.customRanges).forEach((itemKey) => {
-        const values = options.customRanges[itemKey];
+            item.addEventListener('click', (e) => {
+              const el = e.target;
 
-        const item = document.createElement('button');
-        item.innerText = itemKey;
-        item.tabIndex = ui.dataset.plugins.indexOf('keyboardnav') >= 0 ? 1 : -1;
-        item.dataset.start = values[0].getTime();
-        item.dataset.end = values[1].getTime();
-        item.className = values[2] ? 'active' : 'inactive';
+              if (el) {
+                const startDate = picker.DateTime(Number(el.dataset.start));
+                const endEnd = picker.DateTime(Number(el.dataset.end));
 
-        item.addEventListener('click', (e) => {
-          const el = e.target;
+                // Update the button state for all buttons
+                Object.keys(options.customRanges).forEach((iK) => {
+                  const val = options.customRanges[iK];
+                  val[2] = false;
+                });
 
-          if (el) {
-            const startDate = picker.DateTime(Number(el.dataset.start));
-            const endEnd = picker.DateTime(Number(el.dataset.end));
+                customActive = false;
 
-            // Update the button state for all buttons
-            Object.keys(options.customRanges).forEach((iK) => {
-              const val = options.customRanges[iK];
-              val[2] = false;
+                // Set button active
+                values[2] = true;
+
+                if (options.autoApply) {
+                  picker.setDateRange(
+                    startDate,
+                    endEnd,
+                    options.force,
+                  );
+
+                  picker.emit('selected', startDate, endEnd);
+
+                  picker.hide();
+                } else {
+                  picker.datePicked = [
+                    startDate,
+                    endEnd,
+                  ];
+
+                  picker.emit('preselect', startDate, endEnd);
+                }
+
+                if (picker.options.inlineMode || !options.autoApply) {
+                  picker.gotoDate(startDate);
+                }
+              }
             });
 
-            customActive = false;
-
-            // Set button active
-            values[2] = true;
-
-            if (options.autoApply) {
-              picker.setDateRange(
-                startDate,
-                endEnd,
-                options.force,
-              );
-
-              picker.emit('selected', startDate, endEnd);
-
-              picker.hide();
-            } else {
-              picker.datePicked = [
-                startDate,
-                endEnd,
-              ];
-
-              picker.emit('preselect', startDate, endEnd);
-            }
-
-            if (picker.options.inlineMode || !options.autoApply) {
-              picker.gotoDate(startDate);
-            }
-          }
+            block.appendChild(item);
+            block.css = ('width', '200');
         });
 
-        block.appendChild(item);
-      });
+        // Set up HTML Elements for Custom Range Group
+        const customRangesButton = document.createElement('button');
+        customRangesButton.className = `${customActive ? 'custom-button active' : 'custom-button inactive'}`;
+        customRangesButton.innerText = 'Custom';
+        customRangesButton.tabIndex = ui.dataset.plugins.indexOf('keyboardnav') >= 0 ? 1 : -1;
+
+        const customRangesForm = document.createElement('form');
+        customRangesForm.className = 'container__custom-range';
+
+        const customRangesFormGroup = document.createElement('div');
+        customRangesFormGroup.className = 'form-group';
+
+        // Form and Main Container
+        customRangesForm.appendChild(customRangesFormGroup);
+        block.appendChild(customRangesButton);
+        block.appendChild(customRangesForm);
+
+        // From Input / Label Container
+        const customRangesDiv1 = document.createElement('div');
+        const customRangesDiv1_1 = document.createElement('div');
+        const customRangesDiv1_2 = document.createElement('div');
+        customRangesDiv1.className = 'form-control-wrapper';
+        customRangesDiv1_1.className = 'form-control-div'; // Label Div
+        customRangesDiv1_2.className = 'form-control-div'; // Input Div
+
+        const customRangesLabel1 = document.createElement('label');
+        customRangesLabel1.innerText = 'From';
+        const customRangesInput1 = document.createElement('input');
+        customRangesInput1.value = customRangesInput1.setAttribute('type', 'text');
+        customRangesInput1.className = 'form-control';
+        customRangesInput1.id = 'start-date';
+        customRangesInput1.value = field1Value;
+        customRangesInput1.disabled = !customActive;
+
+        customRangesDiv1.appendChild(customRangesDiv1_1);
+        customRangesDiv1.appendChild(customRangesDiv1_2);
+        customRangesDiv1_1.appendChild(customRangesLabel1);
+        customRangesDiv1_2.appendChild(customRangesInput1);
+
+        // To Input / Label Container
+        const customRangesDiv2 = document.createElement('div');
+        const customRangesDiv2_1 = document.createElement('div');
+        const customRangesDiv2_2 = document.createElement('div');
+        customRangesDiv2.className = 'form-control-wrapper spacer';
+        customRangesDiv2_1.className = 'form-control-div'; // Label Div
+        customRangesDiv2_2.className = 'form-control-div'; // Input Div
+
+        const customRangesLabel2 = document.createElement('label');
+        customRangesLabel2.innerText = 'To';
+        const customRangesInput2 = document.createElement('input');
+        customRangesInput2.setAttribute('type', 'text');
+        customRangesInput2.className = 'form-control';
+        customRangesInput2.id = 'end-date';
+        customRangesInput2.value = field2Value;
+        customRangesInput2.disabled = !customActive;
+
+        customRangesDiv2.appendChild(customRangesDiv2_1);
+        customRangesDiv2.appendChild(customRangesDiv2_2);
+        customRangesDiv2_1.appendChild(customRangesLabel2);
+        customRangesDiv2_2.appendChild(customRangesInput2);
+
+        customRangesFormGroup.appendChild(customRangesDiv1);
+        customRangesFormGroup.appendChild(customRangesDiv2);
+
+
 
       if (options.rangeInputs) {
-        customFieldInput1.addEventListener('keypress', (keydown) => {
+        customRangesInput1.addEventListener('keypress', (keydown) => {
           if (keydown.key === 'Enter') {
-            customFieldInput1.blur();
+            customRangesInput1.blur();
           }
         });
-        customFieldInput1.addEventListener('blur', (e) => {
+        customRangesInput1.addEventListener('blur', (e) => {
           const el = e.target;
 
           if (el) {
-            let startDate = picker.DateTime(customFieldInput1.value);
-            const endEnd = picker.DateTime(customFieldInput2.value);
+            let startDate = picker.DateTime(customRangesInput1.value);
+            const endEnd = picker.DateTime(customRangesInput2.value);
 
             if (endEnd.getTime() < startDate.getTime()) {
-              startDate = picker.DateTime(customFieldInput2.value);
+              startDate = picker.DateTime(customRangesInput2.value);
             }
 
             if (options.autoApply) {
@@ -201,21 +231,20 @@ Litepicker.add('ranges', {
             }
           }
         });
-
-        customFieldInput2.addEventListener('keypress', (keydown) => {
+        customRangesInput2.addEventListener('keypress', (keydown) => {
           if (keydown.key === 'Enter') {
-            customFieldInput2.blur();
+            customRangesInput2.blur();
           }
         });
-        customFieldInput2.addEventListener('blur', (e) => {
+        customRangesInput2.addEventListener('blur', (e) => {
           const el = e.target;
 
           if (el) {
-            const startDate = picker.DateTime(customFieldInput1.value);
-            let endEnd = picker.DateTime(customFieldInput2.value);
+            const startDate = picker.DateTime(customRangesInput1.value);
+            let endEnd = picker.DateTime(customRangesInput2.value);
 
             if (endEnd.getTime() < startDate.getTime()) {
-              endEnd = picker.DateTime(customFieldInput1.value);
+              endEnd = picker.DateTime(customRangesInput1.value);
             }
 
             if (endEnd.getTime() > date.getTime()) {
@@ -246,8 +275,7 @@ Litepicker.add('ranges', {
             }
           }
         });
-
-        customFieldButton.addEventListener('click', (e) => {
+        customRangesButton.addEventListener('click', (e) => {
           const el = e.target;
           if (el) {
             // Update the button state for all buttons
@@ -258,8 +286,8 @@ Litepicker.add('ranges', {
 
             customActive = true;
 
-            const startDate = picker.DateTime(customFieldInput1.value);
-            const endEnd = picker.DateTime(customFieldInput2.value);
+            const startDate = picker.DateTime(customRangesInput1.value);
+            const endEnd = picker.DateTime(customRangesInput2.value);
 
             if (options.autoApply) {
               picker.setDateRange(
@@ -286,10 +314,8 @@ Litepicker.add('ranges', {
           }
         });
 
-        customDiv1.appendChild(customFieldInput1);
-        customDiv2.appendChild(customFieldInput2);
-        block.appendChild(customFieldButton);
-        block.appendChild(customForm);
+
+
       }
 
       ui.querySelector('.container__main').prepend(block);
