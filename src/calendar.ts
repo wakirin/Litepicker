@@ -274,15 +274,21 @@ export class Calendar extends LPCore {
     const days = document.createElement('div');
     days.className = style.containerDays;
 
+    const elementsPerRow = this.options.showWeekNumbers ? 8 : 7;
+    let week = document.createElement('div');
+    week.className = style.monthItemWeekRow;
+
     const skipDays = this.calcSkipDays(startDate);
 
     if (this.options.showWeekNumbers && skipDays) {
-      days.appendChild(this.renderWeekNumber(startDate));
+      week.appendChild(this.renderWeekNumber(startDate));
     }
 
+    const skipDate = startDate.clone();
+    skipDate.setDate(-skipDays + 1);
     for (let idx = 0; idx < skipDays; idx += 1) {
-      const dummy = document.createElement('div');
-      days.appendChild(dummy);
+      week.appendChild(this.renderDay(skipDate, date));
+      skipDate.setDate(skipDate.getDate() + 1);
     }
 
     // tslint:disable-next-line: prefer-for-of
@@ -290,11 +296,23 @@ export class Calendar extends LPCore {
       startDate.setDate(idx);
 
       if (this.options.showWeekNumbers && startDate.getDay() === this.options.firstDay) {
-        days.appendChild(this.renderWeekNumber(startDate));
+        week.appendChild(this.renderWeekNumber(startDate));
       }
 
-      days.appendChild(this.renderDay(startDate));
+      week.appendChild(this.renderDay(startDate, date));
+      if (week.childNodes.length == elementsPerRow) {
+        days.appendChild(week);
+        week = document.createElement('div');
+        week.className = style.monthItemWeekRow;
+      }
     }
+
+    const remainingDays = elementsPerRow - week.childNodes.length;
+    for (let idx = 0; idx < remainingDays; idx += 1) {
+      startDate.setDate(startDate.getDate() + 1);
+      week.appendChild(this.renderDay(startDate, date));
+    }
+    days.appendChild(week);
 
     month.appendChild(monthHeader);
     month.appendChild(weekdaysRow);
@@ -305,7 +323,7 @@ export class Calendar extends LPCore {
     return month;
   }
 
-  protected renderDay(date: DateTime) {
+  protected renderDay(date: DateTime, month: DateTime) {
     date.setHours();
 
     const day = document.createElement('div');
@@ -315,6 +333,10 @@ export class Calendar extends LPCore {
 
     if (date.toDateString() === (new Date()).toDateString()) {
       day.classList.add(style.isToday);
+    }
+
+    if (date.getMonth() != month.getMonth()) {
+      day.classList.add(style.isDifferentMonth);
     }
 
     if (this.datePicked.length) {
