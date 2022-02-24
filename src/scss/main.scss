@@ -8,7 +8,7 @@
   --litepicker-button-prev-month-color: #9e9e9e;
   --litepicker-button-next-month-color: #9e9e9e;
   --litepicker-button-prev-month-color-hover: #2196f3;
-  --litepicker-button-next-month-color-hover: #2196f3; 
+  --litepicker-button-next-month-color-hover: #2196f3;
   --litepicker-month-width: calc(var(--litepicker-day-width) * 7); // 7 days
   --litepicker-month-weekday-color: #9e9e9e;
   --litepicker-month-week-number-color: #9e9e9e;
@@ -28,6 +28,8 @@
   --litepicker-button-apply-color-bg: #2196f3;
   --litepicker-button-reset-color: #909090;
   --litepicker-button-reset-color-hover: #2196f3;
+  --litepicker-different-month-day-color: #333;
+  --litepicker-different-month-day-color-bg: #ddd;
   --litepicker-highlighted-day-color: #333;
   --litepicker-highlighted-day-color-bg: #ffeb3b;
 }
@@ -174,7 +176,8 @@
           }
         }
 
-        &-weekdays-row {
+        &-weekdays-row,
+        &-week-row {
           display: flex;
           justify-self: center;
           justify-content: flex-start;
@@ -188,6 +191,7 @@
             text-align: center;
           }
         }
+
 
         &:first-child {
           .button-previous-month {
@@ -303,6 +307,11 @@
         &.is-highlighted {
           color: var(--litepicker-highlighted-day-color);
           background-color: var(--litepicker-highlighted-day-color-bg);
+        }
+
+        &.is-different-month {
+          color: var(--litepicker-different-month-day-color);
+          background-color: var(--litepicker-different-month-day-color-bg);
         }
       }
 
