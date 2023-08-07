@@ -83,4 +83,7 @@ export interface ILPConfiguration {
   keyboardnav?: {
     firstTabIndex?: number;
   };
+  mobilefriendly?: {
+    breakpoint?: number;
+  };
 }
